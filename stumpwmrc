@@ -1,0 +1,78 @@
+; exec nitrogen --restore
+(in-package :stumpwm)
+(load "/usr/share/stumpwm/amixer.lisp")
+
+(defcommand show-bat () () (echo (run-shell-command "/home/wilfried/bat" T)))
+
+; Command that runs or raises a tmux in an xterm. First a check is done if a tmux
+; session exists and if so an xterm is run or raised if its is running that contains
+; the tmux session. Known issue: If an xterm is started while the tmux session is started
+; and this is not the xterm for the tmux session this will be raised. This however is not
+; a problem for me since I use only tmux sessions to do my console tasks.
+(defun run-or-raise-tmux (session)
+	(when (not (eq (run-shell-command (concatenate 'string "tmux has-session -t " session)) 0))
+		(run-shell-command (concatenate 'string "tmux new-session -d -s " session " bash")))
+	(let ((cmd (concatenate 'string "xterm -e \"tmux attach-session -d -t " session "\"")))
+		(run-or-raise cmd '(:class "XTerm"))))
+; This runs a single xterm with a tmux session in it depending on the screen
+; This is work in progress since the number of screens is currently fixed to two.
+; It also assumes my standard setup though run-or-raise-tmux does allow arbitrary session names
+(defcommand single-xterm () () (run-or-raise-tmux (if (eq (screen-id (current-screen)) 0) "left" "right")))
+; Redefine time command to include bat
+(defcommand echo-date () ()
+	(
+		message (remove #\Newline (concatenate 'string 
+					(run-shell-command "date +'%A %d %B %Y %T week %V'" T) 
+						" ^6*(" (run-shell-command "/home/wilfried/bat" T) ")")
+				)
+	)
+)
+
+; Use dbus to allow shutdown and reboot from stumpwm
+(defcommand shutdown () ()
+	(run-shell-command "dbus-send --system --print-reply --dest=\"org.freedesktop.ConsoleKit\" /org/freedesktop/ConsoleKit/Manager org.freedesktop.ConsoleKit.Manager.Stop"))
+(defcommand reboot () ()
+	(run-shell-command "dbus-send --system --print-reply --dest=\"org.freedesktop.ConsoleKit\" /org/freedesktop/ConsoleKit/Manager org.freedesktop.ConsoleKit.Manager.Restart"))
+; Add visual feedback when switching screens
+(defcommand osnext () ()
+	(snext)
+	(echo "Current Screen"))
+(defcommand osprev () ()
+	(sprev)
+	(echo "Current Screen"))
+
+; Alt-Tab Window switching and top level audio control
+(define-key *top-map* (kbd "M-Tab") "pull-hidden-next")
+(define-key *top-map* (kbd "M-ISO_Left_Tab") "pull-hidden-previous")
+(define-key *top-map* (kbd "s-KP_Add") "amixer-Master-1+")
+(define-key *top-map* (kbd "s-KP_Subtract") "amixer-Master-1-")
+(define-key *top-map* (kbd "s-m") "amixer-Master-toggle")
+(define-key *top-map* (kbd "C-M-Left") "move-focus left")
+(define-key *top-map* (kbd "C-M-Right") "move-focus right")
+(define-key *top-map* (kbd "C-M-Up") "move-focus up")
+(define-key *top-map* (kbd "C-M-Down") "move-focus down")
+(define-key *top-map* (kbd "S-C-M-Left") "osprev")
+(define-key *top-map* (kbd "S-C-M-Right") "osnext")
+; Start firefox with the profile manager since I use a
+; multiple screen X session and firefox can only be active
+; on both screens using seperate profiles. 
+(bind "M-f" "exec firefox -ProfileManager")
+(bind "x" "exec xlock -mode blank")
+(bind "c" "single-xterm")
+(bind "%" "show-bat")
+(bind "e" "exec eclipse")
+
+; Load Xresource file
+(run-shell-command "xrdb ~/.Xresources")
+
+; Capture all windows of particular programs in a single group
+; define-frame-preference arguments: (frame raise lock create restore class instance type role title
+(define-frame-preference "Okular" (0 T T :create T :class "Okular" :title NIL))
+(define-frame-preference "KTorrent" (0 T T :create T :class "Ktorrent" :title NIL))
+
+
+; We don't need the startup message
+(setf *startup-message* NIL)
+(set-font "mono-8")
+(setf *window-border-style* :none)
+;(set-contrib-dir "/usr/share/stumpwm")
