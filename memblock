@@ -1,0 +1,19 @@
+#!/bin/sh
+
+if type bc > /dev/null 2>&1 ; then
+	PERC=`free | grep -e '-/+' | sed 's#^[^0-9]*\([0-9][0-9]*\)[^0-9][^0-9]*\([0-9][0-9]*\)$#scale = 2; (\1 / (\1 + \2))*10;#g' | bc | sed 's/^\([0-9][0-9]*\)\..*$/\1/g'`
+	COLOR='green'
+	NORMAL="3"
+	PROBLEM="8"
+	if [ "$PERC" -gt "$NORMAL" ] ; then
+		COLOR='yellow'
+		if [ "$PERC" -gt "$PROBLEM" ] ; then
+			COLOR='red'
+		fi
+	fi
+
+	OUTPUT=`awk "BEGIN{printf \"[\"; for(c = 0; c < int($PERC + 0.5); c++) printf \"|\"; for(c = 0; c < 10 - int($PERC + 0.5); c++) printf \".\"; printf \"]\"}"`
+	echo '#[fg='$COLOR']'$OUTPUT'#[fg=default]'
+else
+	echo "NO BC!!!"
+fi

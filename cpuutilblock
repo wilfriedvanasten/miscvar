@@ -1,0 +1,31 @@
+#!/bin/sh
+
+NUMCPUS=2
+
+LOAD=`cat /proc/loadavg | sed 's/^\([0-9][0-9]*\.[0-9][0-9]*\)[^0-9].*$/\1/g'`
+
+COLOR='default'
+
+OUTPUT=`awk "BEGIN{
+	ld=int(($LOAD / $NUMCPUS * 10) + 0.5);
+	low = \".\";
+	high = \"|\";
+	color = \"green\";
+	if (ld > 3) {
+		color = \"yellow\";
+		if (ld > 8) color = \"red\";
+	}
+	while(ld > 10) {
+		ld = ld - 10;
+		low = high;
+		if(high == \"|\")
+			high = 1;
+		else
+			high = high+1;
+	}
+	printf \"#[fg=\" color \"][\";
+	for(c = 0; c < ld; c++) printf high;
+	for(c = 0; c < 10 - ld; c++) printf low;
+	printf \"]\"
+}"`
+echo $OUTPUT'#[fg=default]'
