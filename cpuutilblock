@@ -1,11 +1,17 @@
 #!/bin/sh
+# A script that outputs a cpu load bar compatible with the tmux status bar
+# Supports low to full load and above.
 
+# Configure number of cpus. TODO: This information should be retrievable
+# dynamically
 NUMCPUS=2
 
+# Read the current load
 LOAD=`cat /proc/loadavg | sed 's/^\([0-9][0-9]*\.[0-9][0-9]*\)[^0-9].*$/\1/g'`
 
 COLOR='default'
 
+# Build the bar. e.g.: [..........] [||||......] [111|||||||] [3333222222]
 OUTPUT=`awk "BEGIN{
 	ld=int(($LOAD / $NUMCPUS * 10) + 0.5);
 	low = \".\";
