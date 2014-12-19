@@ -7,8 +7,16 @@
 if type bc > /dev/null 2>&1 ; then
 	# Greps relative information from the free command and sed it to a ready for bc format
 	# Then remove the part following the decimal point.
-	TOTAL=`cat /proc/meminfo | grep 'MemTotal' | sed 's#^[^0-9]*\([0-9][0-9]*\)[^0-9]*$#\1#g'`
-	AVAILABLE=`cat /proc/meminfo | grep 'MemAvailable' | sed 's#^[^0-9]*\([0-9][0-9]*\)[^0-9]*$#\1#g'`
+	MEMINFO=`cat /proc/meminfo`
+	TOTAL=`echo "$MEMINFO" | grep -e '^MemTotal:' | sed 's#^[^0-9]*\([0-9][0-9]*\)[^0-9]*$#\1#g'`
+	AVAILABLE=`echo "$MEMINFO" | grep -e '^MemAvailable:' | sed 's#^[^0-9]*\([0-9][0-9]*\)[^0-9]*$#\1#g'`
+	if [ -z "$AVAILABLE" ] ; then
+		# Meminfo available not yet in the output. Use the Free Buffers and Cache values instead
+		FREE=`echo "$MEMINFO" | grep -e '^MemFree:' | sed 's#^[^0-9]*\([0-9][0-9]*\)[^0-9]*$#\1#g'`
+		BUFFERS=`echo "$MEMINFO" | grep -e '^Buffers:' | sed 's#^[^0-9]*\([0-9][0-9]*\)[^0-9]*$#\1#g'`
+		CACHED=`echo "$MEMINFO" | grep -e '^Cached:' | sed 's#^[^0-9]*\([0-9][0-9]*\)[^0-9]*$#\1#g'`
+		AVAILABLE=`echo "$FREE+$BUFFERS+$CACHED;" | bc`
+	fi
 	RAW_PERC=`echo "scale=2; (($TOTAL-$AVAILABLE)/$TOTAL)*10;" | bc`
 	PERC=`echo "scale=0; (((10^0)*$RAW_PERC)+0.5)/(10^0)" | bc`
 	# Green is good
