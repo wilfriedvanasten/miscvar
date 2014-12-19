@@ -5,8 +5,7 @@
 
 # A check to see if bc is present
 if type bc > /dev/null 2>&1 ; then
-	# Greps relative information from the free command and sed it to a ready for bc format
-	# Then remove the part following the decimal point.
+	# Grep the required information from /proc/meminfo
 	MEMINFO=`cat /proc/meminfo`
 	TOTAL=`echo "$MEMINFO" | grep -e '^MemTotal:' | sed 's#^[^0-9]*\([0-9][0-9]*\)[^0-9]*$#\1#g'`
 	AVAILABLE=`echo "$MEMINFO" | grep -e '^MemAvailable:' | sed 's#^[^0-9]*\([0-9][0-9]*\)[^0-9]*$#\1#g'`
