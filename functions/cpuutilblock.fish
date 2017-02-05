@@ -28,16 +28,7 @@ function cpuutilblock
 		end
 	end
 	echo -n "#[fg=$color]["
-	set -l c 0
-	while [ $c -lt $ld ]
-		echo -n $high
-		set c (math $c + 1)
-	end
-	set -l c 0
-	set -l l (math 10 - $ld)
-	while [ $c -lt $l ]
-		echo -n $low
-		set c (math $c + 1)
-	end
+	repeatc $ld $high
+	repeatc (math 10 - $ld) $low
 	echo -n ']#[fg=default]'
 end
