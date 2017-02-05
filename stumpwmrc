@@ -1,6 +1,7 @@
 ; exec nitrogen --restore
 (in-package :stumpwm)
-(load "/usr/share/stumpwm/amixer.lisp")
+(load "/opt/stumpwm/share/stumpwm/amixer.lisp")
+(load "/opt/stumpwm/share/stumpwm/mpd.lisp")
 
 (defcommand show-bat () () (echo (run-shell-command "/home/wilfried/bat" T)))
 
@@ -30,9 +31,11 @@
 
 ; Use dbus to allow shutdown and reboot from stumpwm
 (defcommand shutdown () ()
-	(run-shell-command "dbus-send --system --print-reply --dest=\"org.freedesktop.ConsoleKit\" /org/freedesktop/ConsoleKit/Manager org.freedesktop.ConsoleKit.Manager.Stop"))
+	(run-shell-command "systemctl poweroff"))
 (defcommand reboot () ()
-	(run-shell-command "dbus-send --system --print-reply --dest=\"org.freedesktop.ConsoleKit\" /org/freedesktop/ConsoleKit/Manager org.freedesktop.ConsoleKit.Manager.Restart"))
+	(run-shell-command "systemctl reboot"))
+(defcommand suspend () ()
+	(run-shell-command "systemctl suspend"))
 ; Add visual feedback when switching screens
 (defcommand osnext () ()
 	(snext)
@@ -47,6 +50,9 @@
 (define-key *top-map* (kbd "s-KP_Add") "amixer-Master-1+")
 (define-key *top-map* (kbd "s-KP_Subtract") "amixer-Master-1-")
 (define-key *top-map* (kbd "s-m") "amixer-Master-toggle")
+(define-key *top-map* (kbd "XF86AudioRaiseVolume") "amixer-Master-1+")
+(define-key *top-map* (kbd "XF86AudioLowerVolume") "amixer-Master-1-")
+(define-key *top-map* (kbd "XF86AudioMute") "amixer-Master-toggle")
 (define-key *top-map* (kbd "C-M-Left") "move-focus left")
 (define-key *top-map* (kbd "C-M-Right") "move-focus right")
 (define-key *top-map* (kbd "C-M-Up") "move-focus up")
@@ -56,7 +62,7 @@
 ; Start firefox with the profile manager since I use a
 ; multiple screen X session and firefox can only be active
 ; on both screens using seperate profiles. 
-(bind "M-f" "exec firefox -ProfileManager")
+(bind "M-f" "exec chromium --process-per-site")
 (bind "x" "exec xlock -mode blank")
 (bind "c" "single-xterm")
 (bind "%" "show-bat")
@@ -64,6 +70,10 @@
 
 ; Load Xresource file
 (run-shell-command "xrdb ~/.Xresources")
+(run-shell-command "setxkbmap -option compose:lwin")
+
+; Set background image
+(run-shell-command (concatenate 'string "display -window root /usr/share/archlinux/wallpaper/archlinux-simplyblack.png"))
 
 ; Capture all windows of particular programs in a single group
 ; define-frame-preference arguments: (frame raise lock create restore class instance type role title
@@ -75,4 +85,5 @@
 (setf *startup-message* NIL)
 (set-font "mono-8")
 (setf *window-border-style* :none)
+(setf *screen-mode-line-format* "%m")
 ;(set-contrib-dir "/usr/share/stumpwm")

@@ -1,5 +1,3 @@
-autocmd! BufNewFile * silent! 0r ~/.vim/skel/tmpl.%:e
-
 syntax on
 
 set background=dark
@@ -17,10 +15,17 @@ autocmd FileType haskell
   \ vmap <buffer> <silent> gg :s/^/--/<CR> |
   \ vmap <buffer> <silent> gq :s/^--\(.*\)/\1/<CR>
 
+autocmd FileType lhaskell
+  \ setlocal shiftwidth=2 |
+  \ setlocal tabstop=2 |
+  \ setlocal expandtab |
+  \ vmap <buffer> <silent> gg :s/^/--/<CR> |
+  \ vmap <buffer> <silent> gq :s/^--\(.*\)/\1/<CR>
+
 autocmd FileType python
-  \ setlocal shiftwidth=4 |
-  \ setlocal tabstop=4 |
-  \ setlocal expandtab
+  \ setlocal shiftwidth=2 |
+  \ setlocal tabstop=2 |
+  \ setlocal expandtab |
   \ vmap <buffer> <silent> gg :s/^/#/<CR> |
   \ vmap <buffer> <silent> gq :s/^#\(.*\)/\1/<CR>
 
@@ -44,8 +49,18 @@ autocmd FileType cabal
   \ setlocal tabstop=4 |
   \ setlocal expandtab
 
+autocmd FileType xml
+  \ setlocal shiftwidth=2 |
+  \ setlocal tabstop=2 |
+  \ setlocal equalprg=xmllint\ --format\ --recover\ -\ 2>/dev/null
+
 autocmd BufRead,BufNewFile ~/.stumpwmrc
   \ setlocal syntax=lisp
+
+autocmd FileType fish
+  \ setlocal shiftwidth=2 |
+  \ setlocal tabstop=2 |
+  \ setlocal expandtab
 
 highlight ExtraWhitespace ctermbg=red guibg=red
 au ColorScheme * highlight ExtraWhitespace guibg=red
@@ -54,7 +69,7 @@ au InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 au InsertLeave * match ExtraWhiteSpace /\s\+$/
 
 " use ghc functionality for haskell files
-au Bufenter *.hs compiler ghc
+"au Bufenter *.hs compiler ghc
 
 au BufRead,BufNewFile *.hsc set filetype=haskell
 
@@ -70,3 +85,13 @@ autocmd WinLeave * :set number
 autocmd FocusGained * :set relativenumber
 autocmd FocusLost * :set number
 
+autocmd User plugin-skeleton-detect
+  \ if expand('%:t') ==# 'pom.xml'
+  \ |   SkeletonLoad xml-pom
+  \ | endif
+
+autocmd User plugin-skeleton-detect
+  \ if expand('%:t') =~ '\.tex$'
+  \ |	setlocal syntax=tex
+  \ |   SkeletonLoad tex
+  \ | endif
