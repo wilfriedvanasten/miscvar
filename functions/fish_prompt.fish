@@ -18,30 +18,36 @@ function _prompt_segment
   set_color normal
 end
 
+# Calls git status in such a way that it is suitable
+# for use in a script
+function _git_status
+  command git status --porcelain $argv
+end
+
 # A function to check if the current directory
 # is or is part of a git repo
 function _git_is_git_repo
-  command git status --porcelain ^/dev/null > /dev/null
+  _git_status ^/dev/null > /dev/null
 end
 
 # Gets the currently checked out git branch
 # name, if any.
 function _git_branch_name
-  command git status --porcelain -b | grep '##' | sed -e 's/\\.\\.\\..*//g' | sed -e 's/^## \\(.*\\)$/\\1/'
+  _git_status -b | grep '##' | sed -e 's/\\.\\.\\..*//g' | sed -e 's/^## \\(.*\\)$/\\1/'
 end
 
 # Checks if the git repo is dirty.
 function _git_is_git_dirty
   # Test will return true if the string is not empty
   # use head -n 1 to not give multiple lines to test
-  test (command git status --porcelain --ignore-submodules=dirty | head -n 1)
+  test (_git_status --ignore-submodules=dirty | head -n 1)
 end
 
 # Checks if the git repo is not synced
 # with its remote. Always returns false
 # for branches with no remote
 function _git_remote_not_synced
-  command git status --porcelain -b | grep '##' | grep '\\[' > /dev/null
+  _git_status -b | grep '##' | grep '\\[' > /dev/null
 end
 
 # Outputs information about the current
@@ -49,7 +55,7 @@ end
 # the remote is not synced
 function _git_remote_status
   if _git_remote_not_synced
-    set -l synced (command git status -b --porcelain | grep '##' | sed -e 's/^.*\[\\(.*\\)\]$/\1/g' | sed -e 's/ahead /+/g' | sed -e 's/behind /-/g')
+    set -l synced (_git_status -b | grep '##' | sed -e 's/^.*\[\\(.*\\)\]$/\1/g' | sed -e 's/ahead /+/g' | sed -e 's/behind /-/g')
     if echo $synced | grep '+' > /dev/null
       _prompt_segment brgreen $synced
     else if echo $synced | grep '-' > /dev/null
