@@ -29,15 +29,12 @@ function cpuutilblock
 	end
 	echo -n "#[fg=$color]["
 	set -l c 0
-	while [ $c -lt $ld ]
+	for c in (seq $ld)
 		echo -n $high
-		set c (math $c + 1)
 	end
 	set -l c 0
-	set -l l (math 10 - $ld)
-	while [ $c -lt $l ]
+	for c in (seq (math 10 - $ld))
 		echo -n $low
-		set c (math $c + 1)
 	end
 	echo -n ']#[fg=default]'
 end
