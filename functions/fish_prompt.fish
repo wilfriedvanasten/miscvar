@@ -57,9 +57,9 @@ function _git_remote_status
   if _git_remote_not_synced
     set -l synced (_git_status -b | grep '##' | sed -e 's/^.*\[\\(.*\\)\]$/\1/g' | sed -e 's/ahead /+/g' | sed -e 's/behind /-/g')
     if echo $synced | grep '+' > /dev/null
-      _prompt_segment brgreen $synced
+      _prompt_segment green $synced
     else if echo $synced | grep '-' > /dev/null
-      _prompt_segment brred $synced
+      _prompt_segment red $synced
     end
   end
 end
@@ -96,7 +96,7 @@ function _prompt_git
   	set -l git_branch_glyph "⎇"
   	_use_simple_glyph
       and set -l git_branch_glyph "_/"
-    _prompt_segment brmagenta "$git_branch_glyph $git_branch"
+    _prompt_segment magenta "$git_branch_glyph $git_branch"
 
 	  _git_remote_status
     if _git_is_git_dirty
