@@ -1,16 +1,13 @@
-
-function _use_simple_glyph -d '
-A function used to determine if the unicode glyphs
-should be used. This allows the prompt to still
-look nice on terminals with a limited set of
-glyphs
-'
+# A function used to determine if the unicode glyphs
+# should be used. This allows the prompt to still
+# look nice on terminals with a limited set of
+# glyphs
+function _use_simple_glyph
   test $TERM = "linux"
 end
 
-function _prompt_segment -d '
-Prints out an arrow segment.
-'
+# Prints out an arrow segment.
+function _prompt_segment
   set_color $argv[1]
   set -l arrow_head_glyph "❯"
   set -l arrow_shaft_glyph "—|"
@@ -21,41 +18,36 @@ Prints out an arrow segment.
   set_color normal
 end
 
-function _git_is_git_repo -d '
-A function to check if the current directory
-is or is part of a git repo
-'
+# A function to check if the current directory
+# is or is part of a git repo
+function _git_is_git_repo
   command git status ^/dev/null > /dev/null
 end
 
-function _git_branch_name -d '
-Gets the currently checked out git branch
-name, if any.
-'
+# Gets the currently checked out git branch
+# name, if any.
+function _git_branch_name
   command git status --porcelain -b | grep '##' | sed -e 's/\\.\\.\\..*//g' | sed -e 's/^## \\(.*\\)$/\\1/'
 end
 
-function _git_is_git_dirty -d '
-Checks if the git repo is dirty.
-'
+# Checks if the git repo is dirty.
+function _git_is_git_dirty
   # Test will return true if the string is not empty
   # use head -n 1 to not give multiple lines to test
   test (command git status --porcelain --ignore-submodules=dirty | head -n 1)
 end
 
-function _git_remote_not_synced -d '
-Checks if the git repo is not synced
-with its remote. Always returns false
-for branches with no remote
-'
+# Checks if the git repo is not synced
+# with its remote. Always returns false
+# for branches with no remote
+function _git_remote_not_synced
   command git status --porcelain -b | grep '##' | grep '\\[' > /dev/null
 end
 
-function _git_remote_status -d '
-Outputs information about the current
-sync status with the remote if
-the remote is not synced
-'
+# Outputs information about the current
+# sync status with the remote if
+# the remote is not synced
+function _git_remote_status
   if _git_remote_not_synced
     set -l synced (command git status -b --porcelain | grep '##' | sed -e 's/^.*\[\\(.*\\)\]$/\1/g' | sed -e 's/ahead /+/g' | sed -e 's/behind /-/g')
     if echo $synced | grep '+' > /dev/null
@@ -66,35 +58,33 @@ the remote is not synced
   end
 end
 
+# Checks if the user is root
 function _is_user_root
   set -l uid (id -u $USER)
   test $uid -eq 0
 end
 
-function _prompt_root -d '
-Outputs a segment if the currently
-active user is root.
-'
+# Outputs a segment if the currently
+# active user is root.
+function _prompt_root
   set -l su_glyph "⚡"
   _use_simple_glyph
     and set -l su_glyph "#"
   _prompt_segment yellow $su_glyph
 end
 
-function _prompt_dir -d '
-Outputs a segment with the
-prompt_pwd output
-'
+# Outputs a segment with the
+# prompt_pwd output
+function _prompt_dir
   _prompt_segment cyan (prompt_pwd)
 end
 
 
-function _prompt_git -d '
-Outputs one or more segments related
-to git.
-
-Requires the git command
-'
+# Outputs one or more segments related
+# to git.
+#
+# Requires the git command
+function _prompt_git
   if _git_is_git_repo
     set -l git_branch (_git_branch_name)
   	set -l git_branch_glyph "⎇"
@@ -112,11 +102,10 @@ Requires the git command
   end
 end
 
-function _prompt_arrow -d '
-Outputs the final arrow head
-and the return status of the
-last command if non zero
-'
+# Outputs the final arrow head
+# and the return status of the
+# last command if non zero
+function _prompt_arrow
   if test $last_status = 0
     set_color green
   else
@@ -129,10 +118,9 @@ last command if non zero
   echo -n "$prompt_glyph "
 end
 
-function _prompt_fletching -d '
-Outputs the fletching of the arrow
-in the given color
-'
+# Outputs the fletching of the arrow
+# in the given color
+function _prompt_fletching
   set -l arrow_fletching_glyph "≫"
   _use_simple_glyph
     and set -l arrow_fletching_glyph ">>"
