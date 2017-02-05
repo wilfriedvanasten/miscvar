@@ -124,6 +124,11 @@ function _prompt_arrow
   echo -n "$prompt_glyph "
 end
 
+# Checks if git is present
+function _git_exists
+  type git ^/dev/null >/dev/null
+end
+
 # Outputs the fletching of the arrow
 # in the given color
 function _prompt_fletching
@@ -145,7 +150,7 @@ function fish_prompt
     _prompt_fletching cyan
   end
   _prompt_dir
-  type -q git; and _prompt_git
+  _git_exists; and _prompt_git
   _prompt_arrow
 
   set_color normal
