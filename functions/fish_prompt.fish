@@ -21,7 +21,7 @@ end
 # A function to check if the current directory
 # is or is part of a git repo
 function _git_is_git_repo
-  command git status ^/dev/null > /dev/null
+  command git status --porcelain ^/dev/null > /dev/null
 end
 
 # Gets the currently checked out git branch
