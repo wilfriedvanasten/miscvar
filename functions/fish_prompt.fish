@@ -9,11 +9,11 @@ end
 # Prints out an arrow segment.
 function _prompt_segment
   set_color $argv[1]
-  set -l arrow_head_glyph "❯"
-  set -l arrow_shaft_glyph "—|"
+  set -l arrow_head_glyph "├"
+  set -l arrow_shaft_glyph "─┤"
   _use_simple_glyph
-    and set -l arrow_head_glyph ">"
-    and set -l arrow_shaft_glyph "-|"
+    and set arrow_head_glyph "|"
+    and set arrow_shaft_glyph "-|"
   echo -n -s $arrow_shaft_glyph $argv[2..-1] $arrow_head_glyph
   set_color normal
 end
@@ -139,7 +139,7 @@ function _prompt_arrow
       echo -n "($last_status✘)"
     end
   end
-  set -l prompt_glyph "—❯"
+  set -l prompt_glyph "─▶"
   _use_simple_glyph
     and set -l prompt_glyph "->"
   echo -n "$prompt_glyph "
