@@ -114,14 +114,16 @@ function _prompt_git
       and set git_dirty_glyph "*"
     _git_is_git_dirty
       and set -l git_dirty $git_dirty_glyph
+    set -l git_project_root (command git rev-parse --show-toplevel)
+    set -l git_project_path (shorten_path $PWD $git_project_root (basename $git_project_root))
     switch (_git_checkout_type)
       case branch
         set -l remote_status (_git_remote_status)
         if test $remote_status
             or _git_is_git_dirty
-          _prompt_segment yellow "$git_branch_glyph $git_branch $remote_status$git_dirty"
+          _prompt_segment yellow "$git_branch_glyph $git_project_path@$git_branch $remote_status$git_dirty"
         else
-          _prompt_segment magenta "$git_branch_glyph $git_branch"
+          _prompt_segment cyan "$git_branch_glyph $git_project_path@$git_branch"
         end
       case tag detached
         _prompt_segment red "$git_branch_glyph $git_branch $git_dirty"
@@ -169,8 +171,12 @@ function fish_prompt
   else
     _prompt_fletching cyan
   end
-  _prompt_dir
-  git_exists; and _prompt_git
+  if git_exists
+      and git_is_git_repo
+    _prompt_git
+  else
+    _prompt_dir
+  end
   _prompt_arrow
 
   set_color normal

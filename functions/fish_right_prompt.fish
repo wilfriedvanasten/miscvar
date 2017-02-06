@@ -5,7 +5,15 @@ function fish_right_prompt
     set -l virtual_env_short (shorten_path $VIRTUAL_ENV)
     set_color -b yellow
     set_color black
-    echo "$virtual_env_short@$python_version"
+    echo -n "$virtual_env_short@$python_version"
     set_color normal
   end
+  if git_exists
+      and git_is_git_repo
+    set_color -b cyan
+    set_color black
+    echo -n (shorten_path (command git rev-parse --show-toplevel))
+  end
+  set_color normal
+  echo ""
 end
