@@ -30,10 +30,29 @@ function _git_is_git_repo
   _git_status ^/dev/null > /dev/null
 end
 
+function _git_is_head_symbolic_ref
+  command git symbolic-ref HEAD ^/dev/null > /dev/null
+end
+
 # Gets the currently checked out git branch
 # name, if any.
 function _git_branch_name
-  _git_status -b | grep '##' | sed -e 's/\\.\\.\\..*//g' | sed -e 's/^## \\(.*\\)$/\\1/'
+  if _git_is_head_symbolic_ref
+    set -l branch_info (_git_status -b | grep '##')
+    set branch_info (string replace -r '\\.\\.\\..*$' '' $branch_info)
+    string replace '## ' '' $branch_info
+  else if set -l tag (command git describe --tags --exact-match ^/dev/null)
+    set -l tag_glyph \u2302
+    _use_simple_glyph
+      and set tag_glyph 't'
+      echo "$tag_glyph $tag"
+  else
+    set -l detached_glyph \u27A6
+    _use_simple_glyph
+      and set detached_glyph 'd'
+    set -l commit (command git show-ref --head -s --abbrev | head -n1 ^/dev/null)
+    echo "$detached_glyph $commit"
+  end
 end
 
 # Checks if the git repo is dirty.
@@ -93,16 +112,16 @@ end
 function _prompt_git
   if _git_is_git_repo
     set -l git_branch (_git_branch_name)
-  	set -l git_branch_glyph "⎇"
-  	_use_simple_glyph
+    set -l git_branch_glyph \uE0A0
+    _use_simple_glyph
       and set -l git_branch_glyph "_/"
     _prompt_segment magenta "$git_branch_glyph $git_branch"
 
-	  _git_remote_status
+    _git_remote_status
     if _git_is_git_dirty
       set -g git_dirty_glyph "±"
-  	  _use_simple_glyph
-  	    and set -g git_dirty_glyph "+-"
+      _use_simple_glyph
+        and set -g git_dirty_glyph "+-"
       _prompt_segment yellow $git_dirty_glyph
     end
   end
@@ -116,7 +135,11 @@ function _prompt_arrow
     set_color green
   else
     set_color red
-    echo -n "($last_status)-"
+    if _use_simple_glyph
+      echo -n "($last_status)"
+    else
+      echo -n "($last_status✘)"
+    end
   end
   set -l prompt_glyph "—❯"
   _use_simple_glyph
