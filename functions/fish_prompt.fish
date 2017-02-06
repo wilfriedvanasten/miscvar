@@ -136,7 +136,7 @@ end
 # last command if non zero
 function _prompt_arrow
   if test $last_status = 0
-    set_color green
+    set_color cyan
   else
     set_color red
     if use_simple_glyph
