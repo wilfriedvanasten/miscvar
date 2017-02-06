@@ -16,12 +16,6 @@ function _git_status
   command git status --porcelain $argv
 end
 
-# A function to check if the current directory
-# is or is part of a git repo
-function _git_is_git_repo
-  _git_status ^/dev/null > /dev/null
-end
-
 function _git_is_head_symbolic_ref
   command git symbolic-ref -q HEAD > /dev/null
 end
@@ -110,7 +104,7 @@ end
 #
 # Requires the git command
 function _prompt_git
-  if _git_is_git_repo
+  if git_is_git_repo
     set -l git_branch (_git_branch_name)
     set -l git_branch_glyph ""
     use_simple_glyph
