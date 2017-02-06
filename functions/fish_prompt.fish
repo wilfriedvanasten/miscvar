@@ -160,7 +160,6 @@ function _prompt_fletching
   set -l arrow_fletching_glyph "≫"
   use_simple_glyph
     and set -l arrow_fletching_glyph ">>"
-  set_color $argv[1]
   echo -n $arrow_fletching_glyph
   set_color normal
 end
