@@ -1,3 +1,7 @@
+function _do_prompt_git
+  git_exists; and git_is_git_repo
+end
+
 function fish_right_prompt
   if set -q VIRTUAL_ENV
     # Let's hope python won't break this way to read the version
@@ -8,8 +12,7 @@ function fish_right_prompt
     echo -n "$virtual_env_short@$python_version"
     set_color normal
   end
-  if git_exists
-      and git_is_git_repo
+  if _do_prompt_git
     set_color -b cyan
     set_color black
     echo -n (shorten_path (command git rev-parse --show-toplevel))

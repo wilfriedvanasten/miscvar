@@ -162,6 +162,10 @@ function _prompt_fletching
   set_color normal
 end
 
+function _do_prompt_git
+  git_exists; and git_is_git_repo
+end
+
 function fish_prompt
   set -g last_status $status
   set -l fletching_color cyan
@@ -171,8 +175,7 @@ function fish_prompt
   else
     _prompt_fletching cyan
   end
-  if git_exists
-      and git_is_git_repo
+  if _do_prompt_git
     _prompt_git
   else
     _prompt_dir
