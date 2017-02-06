@@ -43,7 +43,7 @@ end
 function _git_branch_name
   switch (_git_checkout_type)
     case branch
-      _git_status -b | grep '##' | sed -e 's/\\.\\.\\..*//g' | sed -e 's/^## \\(.*\\)$/\\1/'
+      command git symbolic-ref --short HEAD
     case tag
       _git_tag
     case detached
