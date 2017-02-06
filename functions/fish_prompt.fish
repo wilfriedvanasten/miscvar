@@ -38,9 +38,7 @@ end
 # name, if any.
 function _git_branch_name
   if _git_is_head_symbolic_ref
-    set -l branch_info (_git_status -b | grep '##')
-    set branch_info (string replace -r '\\.\\.\\..*$' '' $branch_info)
-    string replace '## ' '' $branch_info
+    _git_status -b | grep '##' | sed -e 's/\\.\\.\\..*//g' | sed -e 's/^## \\(.*\\)$/\\1/'
   else if set -l tag (command git describe --tags --exact-match ^/dev/null)
     set -l tag_glyph \u2302
     _use_simple_glyph
