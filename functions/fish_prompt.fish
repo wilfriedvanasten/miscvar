@@ -41,17 +41,9 @@ function _git_branch_name
     case branch
       _git_status -b | grep '##' | sed -e 's/\\.\\.\\..*//g' | sed -e 's/^## \\(.*\\)$/\\1/'
     case tag
-      set -l tag (_git_tag)
-      set -l tag_glyph "⌂"
-      use_simple_glyph
-        and set tag_glyph 't'
-      echo "$tag_glyph $tag"
+      _git_tag
     case detached
-      set -l detached_glyph "➦"
-      use_simple_glyph
-        and set detached_glyph 'd'
-      set -l commit (command git show-ref --head -s --abbrev | head -n1 ^/dev/null)
-      echo "$detached_glyph $commit"
+      command git show-ref --head -s --abbrev | head -n1 ^/dev/null
   end
 end
 
@@ -125,8 +117,16 @@ function _prompt_git
         else
           _prompt_segment cyan "$git_branch_glyph $git_project_path@$git_branch"
         end
-      case tag detached
-        _prompt_segment red "$git_branch_glyph $git_branch $git_dirty"
+      case tag
+        set -l tag_glyph "⌂"
+        use_simple_glyph
+          and set tag_glyph 't'
+        _prompt_segment red "$git_branch_glyph $tag_glyph $git_project_path@$git_branch $git_dirty"
+      case detached
+        set -l detached_glyph "➦"
+        use_simple_glyph
+          and set detached_glyph 'd'
+        _prompt_segment red "$git_branch_glyph $detached_glyph $git_project_path@$git_branch $git_dirty"
     end
   end
 end
