@@ -31,7 +31,7 @@ function _git_is_git_repo
 end
 
 function _git_is_head_symbolic_ref
-  command git symbolic-ref HEAD ^/dev/null > /dev/null
+  command git -q symbolic-ref HEAD > /dev/null
 end
 
 # Gets the currently checked out git branch
