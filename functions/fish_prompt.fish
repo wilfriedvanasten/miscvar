@@ -47,7 +47,7 @@ function _git_branch_name
     case branch
       _git_status -b | grep '##' | sed -e 's/\\.\\.\\..*//g' | sed -e 's/^## \\(.*\\)$/\\1/'
     case tag
-      set -l tag _git_tag
+      set -l tag (_git_tag)
       set -l tag_glyph \u2302
       use_simple_glyph
         and set tag_glyph 't'
