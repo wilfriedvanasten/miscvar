@@ -1,17 +1,9 @@
-# A function used to determine if the unicode glyphs
-# should be used. This allows the prompt to still
-# look nice on terminals with a limited set of
-# glyphs
-function _use_simple_glyph
-  test $TERM = "linux"
-end
-
 # Prints out an arrow segment.
 function _prompt_segment
   set_color $argv[1]
   set -l arrow_head_glyph "├"
   set -l arrow_shaft_glyph "─┤"
-  _use_simple_glyph
+  use_simple_glyph
     and set arrow_head_glyph "|"
     and set arrow_shaft_glyph "-|"
   echo -n -s $arrow_shaft_glyph $argv[2..-1] $arrow_head_glyph
@@ -41,12 +33,12 @@ function _git_branch_name
     _git_status -b | grep '##' | sed -e 's/\\.\\.\\..*//g' | sed -e 's/^## \\(.*\\)$/\\1/'
   else if set -l tag (command git describe --tags --exact-match ^/dev/null)
     set -l tag_glyph \u2302
-    _use_simple_glyph
+    use_simple_glyph
       and set tag_glyph 't'
       echo "$tag_glyph $tag"
   else
     set -l detached_glyph \u27A6
-    _use_simple_glyph
+    use_simple_glyph
       and set detached_glyph 'd'
     set -l commit (command git show-ref --head -s --abbrev | head -n1 ^/dev/null)
     echo "$detached_glyph $commit"
@@ -91,7 +83,7 @@ end
 # active user is root.
 function _prompt_root
   set -l su_glyph "⚡"
-  _use_simple_glyph
+  use_simple_glyph
     and set -l su_glyph "#"
   _prompt_segment yellow $su_glyph
 end
@@ -111,14 +103,14 @@ function _prompt_git
   if _git_is_git_repo
     set -l git_branch (_git_branch_name)
     set -l git_branch_glyph \uE0A0
-    _use_simple_glyph
+    use_simple_glyph
       and set -l git_branch_glyph "_/"
     _prompt_segment magenta "$git_branch_glyph $git_branch"
 
     _git_remote_status
     if _git_is_git_dirty
       set -g git_dirty_glyph "±"
-      _use_simple_glyph
+      use_simple_glyph
         and set -g git_dirty_glyph "+-"
       _prompt_segment yellow $git_dirty_glyph
     end
@@ -133,14 +125,14 @@ function _prompt_arrow
     set_color green
   else
     set_color red
-    if _use_simple_glyph
+    if use_simple_glyph
       echo -n "($last_status)"
     else
       echo -n "($last_status✘)"
     end
   end
   set -l prompt_glyph "─▶"
-  _use_simple_glyph
+  use_simple_glyph
     and set -l prompt_glyph "->"
   echo -n "$prompt_glyph "
 end
@@ -154,7 +146,7 @@ end
 # in the given color
 function _prompt_fletching
   set -l arrow_fletching_glyph "≫"
-  _use_simple_glyph
+  use_simple_glyph
     and set -l arrow_fletching_glyph ">>"
   set_color $argv[1]
   echo -n $arrow_fletching_glyph
