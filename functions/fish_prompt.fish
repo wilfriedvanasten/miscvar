@@ -48,12 +48,12 @@ function _git_branch_name
       _git_status -b | grep '##' | sed -e 's/\\.\\.\\..*//g' | sed -e 's/^## \\(.*\\)$/\\1/'
     case tag
       set -l tag (_git_tag)
-      set -l tag_glyph \u2302
+      set -l tag_glyph "⌂"
       use_simple_glyph
         and set tag_glyph 't'
       echo "$tag_glyph $tag"
     case detached
-      set -l detached_glyph \u27A6
+      set -l detached_glyph "➦"
       use_simple_glyph
         and set detached_glyph 'd'
       set -l commit (command git show-ref --head -s --abbrev | head -n1 ^/dev/null)
@@ -112,7 +112,7 @@ end
 function _prompt_git
   if _git_is_git_repo
     set -l git_branch (_git_branch_name)
-    set -l git_branch_glyph \uE0A0
+    set -l git_branch_glyph ""
     use_simple_glyph
       and set git_branch_glyph "_/"
     set -l git_dirty_glyph "∗"
