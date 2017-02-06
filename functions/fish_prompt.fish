@@ -23,25 +23,41 @@ function _git_is_git_repo
 end
 
 function _git_is_head_symbolic_ref
-  command git -q symbolic-ref HEAD > /dev/null
+  command git symbolic-ref -q HEAD > /dev/null
+end
+
+function _git_tag
+  command git describe --tags --exact-match ^/dev/null
+end
+
+function _git_checkout_type
+  if _git_is_head_symbolic_ref
+    echo "branch"
+  else if _git_tag > /dev/null
+    echo "tag"
+  else
+    echo "detached"
+  end
 end
 
 # Gets the currently checked out git branch
 # name, if any.
 function _git_branch_name
-  if _git_is_head_symbolic_ref
-    _git_status -b | grep '##' | sed -e 's/\\.\\.\\..*//g' | sed -e 's/^## \\(.*\\)$/\\1/'
-  else if set -l tag (command git describe --tags --exact-match ^/dev/null)
-    set -l tag_glyph \u2302
-    use_simple_glyph
-      and set tag_glyph 't'
+  switch (_git_checkout_type)
+    case branch
+      _git_status -b | grep '##' | sed -e 's/\\.\\.\\..*//g' | sed -e 's/^## \\(.*\\)$/\\1/'
+    case tag
+      set -l tag _git_tag
+      set -l tag_glyph \u2302
+      use_simple_glyph
+        and set tag_glyph 't'
       echo "$tag_glyph $tag"
-  else
-    set -l detached_glyph \u27A6
-    use_simple_glyph
-      and set detached_glyph 'd'
-    set -l commit (command git show-ref --head -s --abbrev | head -n1 ^/dev/null)
-    echo "$detached_glyph $commit"
+    case detached
+      set -l detached_glyph \u27A6
+      use_simple_glyph
+        and set detached_glyph 'd'
+      set -l commit (command git show-ref --head -s --abbrev | head -n1 ^/dev/null)
+      echo "$detached_glyph $commit"
   end
 end
 
@@ -59,17 +75,11 @@ function _git_remote_not_synced
   _git_status -b | grep '##' | grep '\\[' > /dev/null
 end
 
-# Outputs information about the current
-# sync status with the remote if
-# the remote is not synced
+# Returns the current git remote status like (+4, -1)
+# but only if the current branch is not synced
 function _git_remote_status
   if _git_remote_not_synced
-    set -l synced (_git_status -b | grep '##' | sed -e 's/^.*\[\\(.*\\)\]$/\1/g' | sed -e 's/ahead /+/g' | sed -e 's/behind /-/g')
-    if echo $synced | grep '+' > /dev/null
-      _prompt_segment green $synced
-    else if echo $synced | grep '-' > /dev/null
-      _prompt_segment red $synced
-    end
+    echo -n -s "(" (_git_status -b | grep '##' | sed -e 's/^.*\[\\(.*\\)\]$/\1/g' | sed -e 's/ahead /+/g' | sed -e 's/behind /-/g') ")"
   end
 end
 
@@ -104,15 +114,23 @@ function _prompt_git
     set -l git_branch (_git_branch_name)
     set -l git_branch_glyph \uE0A0
     use_simple_glyph
-      and set -l git_branch_glyph "_/"
-    _prompt_segment magenta "$git_branch_glyph $git_branch"
-
-    _git_remote_status
-    if _git_is_git_dirty
-      set -g git_dirty_glyph "±"
-      use_simple_glyph
-        and set -g git_dirty_glyph "+-"
-      _prompt_segment yellow $git_dirty_glyph
+      and set git_branch_glyph "_/"
+    set -l git_dirty_glyph "∗"
+    use_simple_glyph
+      and set git_dirty_glyph "*"
+    _git_is_git_dirty
+      and set -l git_dirty $git_dirty_glyph
+    switch (_git_checkout_type)
+      case branch
+        set -l remote_status (_git_remote_status)
+        if test $remote_status
+            or _git_is_git_dirty
+          _prompt_segment yellow "$git_branch_glyph $git_branch $remote_status$git_dirty"
+        else
+          _prompt_segment magenta "$git_branch_glyph $git_branch"
+        end
+      case tag detached
+        _prompt_segment red "$git_branch_glyph $git_branch $git_dirty"
     end
   end
 end
