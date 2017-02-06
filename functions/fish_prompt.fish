@@ -139,10 +139,8 @@ end
 # and the return status of the
 # last command if non zero
 function _prompt_arrow
-  if test $last_status = 0
-    set_color $arrow_color
-  else
-    set_color red
+  set_color $arrow_color
+  if test $last_status -ne 0
     if use_simple_glyph
       echo -n "($last_status)"
     else
@@ -174,8 +172,12 @@ end
 function fish_prompt
   set -g last_status $status
   set -g arrow_color cyan
+  if test $last_status -ne 0
+    set arrow_color red
+  else if _is_user_root
+    set arrow_color yellow
+  end
   if _is_user_root
-  	set arrow_color yellow
     _prompt_fletching
     _prompt_root
   else
