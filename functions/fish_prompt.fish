@@ -1,12 +1,16 @@
 # Prints out an arrow segment.
 function _prompt_segment
-  set_color $argv[1]
   set -l arrow_head_glyph "├"
   set -l arrow_shaft_glyph "─┤"
   use_simple_glyph
     and set arrow_head_glyph "|"
     and set arrow_shaft_glyph "-|"
-  echo -n -s $arrow_shaft_glyph $argv[2..-1] $arrow_head_glyph
+  set_color $arrow_color
+  echo -n -s $arrow_shaft_glyph
+  set_color $argv[1]
+  echo -n $argv[2..-1]
+  set_color $arrow_color
+  echo -n $arrow_head_glyph
   set_color normal
 end
 
@@ -136,7 +140,7 @@ end
 # last command if non zero
 function _prompt_arrow
   if test $last_status = 0
-    set_color cyan
+    set_color $arrow_color
   else
     set_color red
     if use_simple_glyph
@@ -154,6 +158,7 @@ end
 # Outputs the fletching of the arrow
 # in the given color
 function _prompt_fletching
+  set_color $arrow_color
   set -l arrow_fletching_glyph "≫"
   use_simple_glyph
     and set -l arrow_fletching_glyph ">>"
@@ -168,12 +173,13 @@ end
 
 function fish_prompt
   set -g last_status $status
-  set -l fletching_color cyan
+  set -g arrow_color cyan
   if _is_user_root
-    _prompt_fletching yellow
+  	set arrow_color yellow
+    _prompt_fletching
     _prompt_root
   else
-    _prompt_fletching cyan
+    _prompt_fletching
   end
   if _do_prompt_git
     _prompt_git
