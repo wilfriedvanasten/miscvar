@@ -103,7 +103,7 @@ end
 # Outputs a segment with the
 # prompt_pwd output
 function _prompt_dir
-  _prompt_segment cyan (prompt_pwd)
+  _prompt_segment $arrow_color (prompt_pwd)
 end
 
 function _git_unstaged_changes
