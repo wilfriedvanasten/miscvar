@@ -142,7 +142,7 @@ function _prompt_git
     set -l git_branch (_git_branch_name)
     set -l git_branch_glyph ""
     use_simple_glyph
-      and set git_branch_glyph "_/"
+      and set git_branch_glyph "Y"
     set -l git_project_root (command git rev-parse --show-toplevel)
     set -l git_project_name (command basename $git_project_root)
     set -l git_project_path (shorten_path $PWD $git_project_root "~")
