@@ -111,26 +111,28 @@ function _prompt_git
     _git_is_git_dirty
       and set -l git_dirty $git_dirty_glyph
     set -l git_project_root (command git rev-parse --show-toplevel)
-    set -l git_project_path (shorten_path $PWD $git_project_root (basename $git_project_root))
+	set -l git_project_name (command basename $git_project_root)
+    set -l git_project_path (shorten_path $PWD $git_project_root "~")
+	set -l git_branch_context "$git_project_name $git_project_path@$git_branch"
     switch (_git_checkout_type)
       case branch
         set -l remote_status (_git_remote_status)
         if test $remote_status
             or _git_is_git_dirty
-          _prompt_segment yellow "$git_branch_glyph $git_project_path@$git_branch $remote_status$git_dirty"
+          _prompt_segment yellow "$git_branch_glyph $git_branch_context $remote_status$git_dirty"
         else
-          _prompt_segment cyan "$git_branch_glyph $git_project_path@$git_branch"
+          _prompt_segment cyan "$git_branch_glyph $git_branch_context"
         end
       case tag
         set -l tag_glyph "⌂"
         use_simple_glyph
           and set tag_glyph 't'
-        _prompt_segment red "$git_branch_glyph $tag_glyph $git_project_path@$git_branch $git_dirty"
+        _prompt_segment red "$git_branch_glyph $tag_glyph $git_branch_context $git_dirty"
       case detached
         set -l detached_glyph "➦"
         use_simple_glyph
           and set detached_glyph 'd'
-        _prompt_segment red "$git_branch_glyph $detached_glyph $git_project_path@$git_branch $git_dirty"
+        _prompt_segment red "$git_branch_glyph $detached_glyph $git_branch_context $git_dirty"
     end
   end
 end

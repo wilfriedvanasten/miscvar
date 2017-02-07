@@ -15,7 +15,7 @@ function fish_right_prompt
   if _do_prompt_git
     set_color -b cyan
     set_color black
-    echo -n (shorten_path (command git rev-parse --show-toplevel))
+    echo -n (shorten_path (command dirname (command git rev-parse --show-toplevel)))
   end
   set_color normal
   echo ""
