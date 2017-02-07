@@ -153,7 +153,7 @@ function _prompt_git
         if test $git_status_symbols
           _prompt_segment yellow "$git_branch_glyph $git_branch_context $git_status_symbols"
         else
-          _prompt_segment cyan "$git_branch_glyph $git_branch_context"
+          _prompt_segment $arrow_color "$git_branch_glyph $git_branch_context"
         end
       case tag
         set -l tag_glyph "⌂"
