@@ -13,7 +13,7 @@ function fish_right_prompt
     set_color normal
   end
   if _do_prompt_git
-    set_color -b cyan
+    set_color -b $arrow_color
     set_color black
     echo -n (shorten_path (command dirname (command git rev-parse --show-toplevel)))
   end

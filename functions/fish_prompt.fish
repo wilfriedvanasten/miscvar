@@ -204,7 +204,9 @@ end
 
 function fish_prompt
   set -g last_status $status
-  set -g arrow_color cyan
+  set_color 0087ff ^/dev/null
+    and set -g arrow_color 0087ff
+    or set -g arrow_color cyan
   if test $last_status -ne 0
     set arrow_color red
   else if _is_user_root
