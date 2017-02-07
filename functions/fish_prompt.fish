@@ -94,7 +94,7 @@ end
 # Outputs a segment if the currently
 # active user is root.
 function _prompt_root
-  set -l su_glyph "⚡"
+  set -l su_glyph "#"
   use_simple_glyph
     and set -l su_glyph "#"
   _prompt_segment yellow $su_glyph
