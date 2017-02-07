@@ -12,13 +12,13 @@
 ; a problem for me since I use only tmux sessions to do my console tasks.
 (defun run-or-raise-tmux (session)
 	(when (not (eq (run-shell-command (concatenate 'string "tmux has-session -t " session)) 0))
-		(run-shell-command (concatenate 'string "tmux new-session -d -s " session " bash")))
-	(let ((cmd (concatenate 'string "xterm -e \"tmux attach-session -d -t " session "\"")))
+		(run-shell-command (concatenate 'string "tmux new-session -d -s " session " " (sb-unix::posix-getenv "SHELL"))))
+	(let ((cmd (concatenate 'string "termite -e \"tmux attach-session -d -t " session "\"")))
 		(run-or-raise cmd '(:class "XTerm"))))
 ; This runs a single xterm with a tmux session in it depending on the screen
 ; This is work in progress since the number of screens is currently fixed to two.
 ; It also assumes my standard setup though run-or-raise-tmux does allow arbitrary session names
-(defcommand single-xterm () () (run-or-raise-tmux (if (eq (screen-id (current-screen)) 0) "left" "right")))
+(defcommand single-terminal () () (run-or-raise-tmux (if (eq (screen-id (current-screen)) 0) "left" "right")))
 ; Redefine time command to include bat
 (defcommand echo-date () ()
 	(
@@ -64,7 +64,7 @@
 ; on both screens using seperate profiles. 
 (bind "M-f" "exec chromium --process-per-site")
 (bind "x" "exec xlock -mode blank")
-(bind "c" "single-xterm")
+(bind "c" "single-terminal")
 (bind "%" "show-bat")
 (bind "e" "exec eclipse")
 
