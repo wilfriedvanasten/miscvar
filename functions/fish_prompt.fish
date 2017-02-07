@@ -204,8 +204,8 @@ end
 
 function fish_prompt
   set -g last_status $status
-  set_color 0087ff ^/dev/null
-    and set -g prompt_color 0087ff
+  set_color 00BFFF ^/dev/null
+    and set -g prompt_color 00BFFF
     or set -g prompt_color cyan
   set -g arrow_color $prompt_color
   if test $last_status -ne 0
