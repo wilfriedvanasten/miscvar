@@ -69,7 +69,19 @@ end
 # but only if the current branch is not synced
 function _git_remote_status
   if _git_remote_not_synced
-    echo -n -s "(" (_git_status -b | grep '##' | sed -e 's/^.*\[\\(.*\\)\]$/\1/g' | sed -e 's/ahead /+/g' | sed -e 's/behind /-/g') ")"
+    set -l remote_status (_git_status -b | grep '##' | sed -e 's/^.*\[\\(.*\\)\]$/\1/g')
+    if echo $remote_status | grep "ahead" > /dev/null
+      if echo $remote_status | grep "behind" > /dev/null
+        set remote_status "±"
+        use_simple_glyph
+          set remote_status "+-"
+      else
+        set remote_status "+"
+      end
+    else if echo $remote_status | grep "behind" > /dev/null
+      set remote_status "-"
+    end
+    echo $remote_status
   end
 end
 
@@ -94,6 +106,32 @@ function _prompt_dir
   _prompt_segment cyan (prompt_pwd)
 end
 
+function _git_unstaged_changes
+  _git_status | grep -e "^[MADRC]" > /dev/null
+end
+
+function _git_staged_changes
+  _git_status | grep -e "^[ MADRC][MD]" > /dev/null
+end
+
+function _git_untracked_files
+  _git_status | grep -e "^??" > /dev/null
+end
+
+function _git_status_symbols
+  set -l git_status_symbols (_git_remote_status)
+  _git_staged_changes
+    and set git_status_symbols "$git_status_symbols^"
+  if _git_unstaged_changes
+    set -l git_dirty_glyph "∗"
+    use_simple_glyph
+      and set git_dirty_glyph "*"
+    set git_status_symbols "$git_status_symbols$git_dirty_glyph"
+  end
+  _git_untracked_files
+    and set git_status_symbols "$git_status_symbols"_
+  echo $git_status_symbols
+end
 
 # Outputs one or more segments related
 # to git.
@@ -105,21 +143,15 @@ function _prompt_git
     set -l git_branch_glyph ""
     use_simple_glyph
       and set git_branch_glyph "_/"
-    set -l git_dirty_glyph "∗"
-    use_simple_glyph
-      and set git_dirty_glyph "*"
-    _git_is_git_dirty
-      and set -l git_dirty $git_dirty_glyph
     set -l git_project_root (command git rev-parse --show-toplevel)
-	set -l git_project_name (command basename $git_project_root)
+    set -l git_project_name (command basename $git_project_root)
     set -l git_project_path (shorten_path $PWD $git_project_root "~")
-	set -l git_branch_context "$git_project_name $git_project_path@$git_branch"
+    set -l git_branch_context "$git_project_name $git_project_path@$git_branch"
+    set -l git_status_symbols (_git_status_symbols)
     switch (_git_checkout_type)
       case branch
-        set -l remote_status (_git_remote_status)
-        if test $remote_status
-            or _git_is_git_dirty
-          _prompt_segment yellow "$git_branch_glyph $git_branch_context $remote_status$git_dirty"
+        if test $git_status_symbols
+          _prompt_segment yellow "$git_branch_glyph $git_branch_context $git_status_symbols"
         else
           _prompt_segment cyan "$git_branch_glyph $git_branch_context"
         end
@@ -127,12 +159,12 @@ function _prompt_git
         set -l tag_glyph "⌂"
         use_simple_glyph
           and set tag_glyph 't'
-        _prompt_segment red "$git_branch_glyph $tag_glyph $git_branch_context $git_dirty"
+        _prompt_segment red "$git_branch_glyph $tag_glyph $git_branch_context $git_status_symbols"
       case detached
         set -l detached_glyph "➦"
         use_simple_glyph
           and set detached_glyph 'd'
-        _prompt_segment red "$git_branch_glyph $detached_glyph $git_branch_context $git_dirty"
+        _prompt_segment red "$git_branch_glyph $detached_glyph $git_branch_context $git_status_symbols"
     end
   end
 end
@@ -176,7 +208,9 @@ function fish_prompt
   if test $last_status -ne 0
     set arrow_color red
   else if _is_user_root
-    set arrow_color yellow
+    set_color FF8000 ^/dev/null
+      and set arrow_color FF8000
+      or set arrow_color yellow
   end
   if _is_user_root
     _prompt_fletching
