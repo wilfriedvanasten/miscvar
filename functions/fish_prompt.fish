@@ -103,7 +103,7 @@ end
 # Outputs a segment with the
 # prompt_pwd output
 function _prompt_dir
-  _prompt_segment $arrow_color (prompt_pwd)
+  _prompt_segment $prompt_color (prompt_pwd)
 end
 
 function _git_unstaged_changes
@@ -153,7 +153,7 @@ function _prompt_git
         if test $git_status_symbols
           _prompt_segment yellow "$git_branch_glyph $git_branch_context $git_status_symbols"
         else
-          _prompt_segment $arrow_color "$git_branch_glyph $git_branch_context"
+          _prompt_segment $prompt_color "$git_branch_glyph $git_branch_context"
         end
       case tag
         set -l tag_glyph "⌂"
@@ -205,8 +205,9 @@ end
 function fish_prompt
   set -g last_status $status
   set_color 0087ff ^/dev/null
-    and set -g arrow_color 0087ff
-    or set -g arrow_color cyan
+    and set -g prompt_color 0087ff
+    or set -g prompt_color cyan
+  set -g arrow_color $prompt_color
   if test $last_status -ne 0
     set arrow_color red
   else if _is_user_root
