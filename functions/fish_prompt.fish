@@ -107,11 +107,11 @@ function _prompt_dir
 end
 
 function _git_unstaged_changes
-  _git_status | grep -e "^[MADRC]" > /dev/null
+  _git_status | grep -e "^[ MADRC][MD]" > /dev/null
 end
 
 function _git_staged_changes
-  _git_status | grep -e "^[ MADRC][MD]" > /dev/null
+  _git_status | grep -e "^[MADRC]" > /dev/null
 end
 
 function _git_untracked_files
