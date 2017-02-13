@@ -11,7 +11,7 @@ function fish_title
         set title "$_ *"
       end
     case '*'
-	    set title "$argv"
- end
- printf "\033k$title\033\\"
+    set title "$argv"
+  end
+  printf "\033k$title\033\\"
 end
