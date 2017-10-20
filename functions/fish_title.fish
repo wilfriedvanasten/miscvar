@@ -1,3 +1,7 @@
+function _ssh_find_config_value
+ ssh -G $argv[2..-1] | grep -ie "^$argv[1] " | sed "s/^$argv[1] \(.*\)/\1/I"
+end
+
 function fish_title
   set -l title ""
   switch $_
@@ -12,13 +16,15 @@ function fish_title
       end
     case ssh
       set -l args (string split " " $argv)
+      set ssh_user (_ssh_find_config_value "User" $args[2..-1])
+      set ssh_host (_ssh_find_config_value "Hostname" $args[2..-1] | cut -d '.' -f 1)
       if test (count $args -eq 2)
-        set title (echo $args[2] | cut -d '.' -f 1)
+        set title "$ssh_user@$ssh_host"
       else
         set title "$argv"
       end
     case '*'
-    set title "$argv"
+      set title "$argv"
   end
   printf "\033k$title\033\\"
 end
