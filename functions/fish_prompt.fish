@@ -146,7 +146,7 @@ function _prompt_git
     set -l git_project_root (command git rev-parse --show-toplevel)
     set -l git_project_name (command basename $git_project_root)
     set -l git_project_path (shorten_path $PWD $git_project_root "~")
-    set -l git_branch_context "$git_project_name $git_project_path@$git_branch"
+    set -l git_branch_context "$git_project_name@$git_branch $git_project_path"
     set -l git_status_symbols (_git_status_symbols)
     switch (_git_checkout_type)
       case branch
