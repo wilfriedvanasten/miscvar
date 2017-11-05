@@ -6,10 +6,7 @@ endif
 
 syntax case match
 
-" syntax keyword fishKeyword function begin end
-" syntax keyword fishConditional if else switch
 syntax keyword fishRepeat in
-" syntax keyword fishLabel case
 syntax match fishComment "\v#.*$"
 syntax match fishExpand contained "\$"
 syntax match fishIdentifier contained "\v\h\w*"
