@@ -1,15 +1,10 @@
-#!/bin/fish
+#!/bin/fish -i
 
 set -l protected_branches (git config --get-all "hook-pre-push.protected")
 set -l current_branch (git symbolic-ref --short HEAD)
 if contains $current_branch $protected_branches
-  read -l -n 1 -P "Are you sure you want to push to $current_branch?(y/n)" confirmed
-  switch $confirmed
-    case Y y
-      exit 0
-    case '*'
-      exit 1
-  end
+  echo "On protected branch $current_branch" >&2
+  exit 1
 else
 	exit 0
 end
