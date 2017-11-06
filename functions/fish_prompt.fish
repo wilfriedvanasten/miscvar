@@ -151,7 +151,7 @@ function _prompt_git
     set -l git_project_name (command basename $git_project_root)
     set -l git_project_path (shorten_path $PWD $git_project_root "~")
     set -l git_branch (_git_branch_name)
-    set -l git_context_line (fold_string $git_path_replace $COLUMNS "$git_branch_glyph $git_project_name@$git_branch")
+    set -l git_context_line (fold_string $git_path_replace $COLUMNS " $git_project_name@$git_branch")
     set -l git_status_symbols (_git_status_symbols)
     set -l git_glyphs "$git_branch_glyph"
     set -l git_status_color $prompt_color
@@ -180,13 +180,14 @@ function _prompt_git
       echo -n "│"
     end
     set_color $git_status_color
+    echo -n (string repeat -N -n (string length $git_glyphs) " ")
     echo $git_context_line
     set_color $prompt_color
     _prompt_fletching
     if test $git_status_symbols
-      _prompt_segment $git_status_color "$git_project_path $git_status_symbols"
+      _prompt_segment $git_status_color "$git_glyphs $git_project_path $git_status_symbols"
     else
-      _prompt_segment $git_status_color "$git_project_path"
+      _prompt_segment $git_status_color "$git_glyphs $git_project_path"
     end
     _prompt_arrow
   end
