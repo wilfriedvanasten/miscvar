@@ -151,7 +151,7 @@ function _prompt_git
     set -l git_project_name (command basename $git_project_root)
     set -l git_project_path (shorten_path $PWD $git_project_root "~")
     set -l git_branch (_git_branch_name)
-    set -l git_context_line (fold_string $git_path_replace $COLUMNS " $git_project_name@$git_branch")
+    set -l git_context_line (fold_string $git_path_replace (math $COLUMNS - 4) " $git_project_name@$git_branch")
     set -l git_status_symbols (_git_status_symbols)
     set -l git_glyphs "$git_branch_glyph"
     set -l git_status_color $prompt_color
