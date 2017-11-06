@@ -172,13 +172,14 @@ function _prompt_git
         set git_glyphs "$git_glyphs $tag_glyph"
         set git_status_color red
     end
+    set_color $prompt_color
     echo -n "  "
-    set_color $git_status_color
     if use_simple_glyph
       echo -n "|"
     else
       echo -n "│"
     end
+    set_color $git_status_color
     echo $git_context_line
     set_color $prompt_color
     _prompt_fletching
