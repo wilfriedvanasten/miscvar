@@ -172,9 +172,10 @@ function _prompt_git
         set git_glyphs "$git_glyphs $tag_glyph"
         set git_status_color red
     end
-    set_color $git_status_color
-    echo $git_context_line
-    set_color $prompt_color
+    _prompt_fletching
+    _prompt_segment $git_status_color $git_context_line
+    _prompt_arrow
+    echo
     _prompt_fletching
     if test $git_status_symbols
       _prompt_segment $git_status_color "$git_project_path $git_status_symbols"
