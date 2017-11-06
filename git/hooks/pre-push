@@ -1,6 +1,6 @@
 #!/bin/fish
 
-set -l protected_branches (git config --get-all "hook-pre-push.protected")
+set -l protected_branches (git config --get-all "hook.pre-push.protected")
 set -l current_branch (git symbolic-ref --short HEAD)
 if contains $current_branch $protected_branches
   echo "On protected branch $current_branch" >&2
