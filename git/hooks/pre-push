@@ -1,4 +1,4 @@
-#!/bin/fish -i
+#!/bin/fish
 
 set -l protected_branches (git config --get-all "hook-pre-push.protected")
 set -l current_branch (git symbolic-ref --short HEAD)
