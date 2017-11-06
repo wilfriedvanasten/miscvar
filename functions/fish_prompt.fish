@@ -139,7 +139,10 @@ end
 # Requires the git command
 function _prompt_git
   if git_is_git_repo
-    set -l git_branch (_git_branch_name)
+    set -l git_path_replace "…"
+    use_simple_glyph
+      and set git_path_replace "..."
+    set -l git_branch (fold_string $git_path_replace 20 (_git_branch_name))
     set -l git_branch_glyph ""
     use_simple_glyph
       and set git_branch_glyph "Y"
