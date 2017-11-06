@@ -103,7 +103,9 @@ end
 # Outputs a segment with the
 # prompt_pwd output
 function _prompt_dir
+  _prompt_fletching
   _prompt_segment $prompt_color (prompt_pwd)
+  _prompt_arrow
 end
 
 function _git_unstaged_changes
@@ -142,33 +144,44 @@ function _prompt_git
     set -l git_path_replace "…"
     use_simple_glyph
       and set git_path_replace "..."
-    set -l git_branch (fold_string $git_path_replace 20 (_git_branch_name))
     set -l git_branch_glyph ""
     use_simple_glyph
       and set git_branch_glyph "Y"
     set -l git_project_root (command git rev-parse --show-toplevel)
     set -l git_project_name (command basename $git_project_root)
     set -l git_project_path (shorten_path $PWD $git_project_root "~")
-    set -l git_branch_context "$git_project_name@$git_branch $git_project_path"
+    set -l git_branch (_git_branch_name)
+    set -l git_context_line (fold_string $git_path_replace $COLUMNS "$git_branch_glyph $git_project_name@$git_branch")
     set -l git_status_symbols (_git_status_symbols)
+    set -l git_glyphs "$git_branch_glyph"
+    set -l git_status_color $prompt_color
     switch (_git_checkout_type)
       case branch
-        if test $git_status_symbols
-          _prompt_segment yellow "$git_branch_glyph $git_branch_context $git_status_symbols"
-        else
-          _prompt_segment $prompt_color "$git_branch_glyph $git_branch_context"
-        end
+        test $git_status_symbols
+          and set git_status_color yellow
       case tag
         set -l tag_glyph "⌂"
         use_simple_glyph
           and set tag_glyph 't'
-        _prompt_segment red "$git_branch_glyph $tag_glyph $git_branch_context $git_status_symbols"
+        set git_glyphs "$git_glyphs $tag_glyph"
+        set git_status_color red
       case detached
         set -l detached_glyph "➦"
         use_simple_glyph
           and set detached_glyph 'd'
-        _prompt_segment red "$git_branch_glyph $detached_glyph $git_branch_context $git_status_symbols"
+        set git_glyphs "$git_glyphs $tag_glyph"
+        set git_status_color red
     end
+    set_color $git_status_color
+    echo $git_context_line
+    set_color $prompt_color
+    _prompt_fletching
+    if test $git_status_symbols
+      _prompt_segment $git_status_color "$git_project_path $git_status_symbols"
+    else
+      _prompt_segment $git_status_color "$git_project_path"
+    end
+    _prompt_arrow
   end
 end
 
@@ -199,6 +212,8 @@ function _prompt_fletching
     and set -l arrow_fletching_glyph ">>"
   echo -n $arrow_fletching_glyph
   set_color normal
+  _is_user_root
+    and _prompt_root
 end
 
 function _do_prompt_git
@@ -218,18 +233,11 @@ function fish_prompt
       and set arrow_color FF8000
       or set arrow_color yellow
   end
-  if _is_user_root
-    _prompt_fletching
-    _prompt_root
-  else
-    _prompt_fletching
-  end
   if _do_prompt_git
     _prompt_git
   else
     _prompt_dir
   end
-  _prompt_arrow
 
   set_color normal
 end
