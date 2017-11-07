@@ -12,11 +12,6 @@ function fish_right_prompt
     echo -n "$virtual_env_short@$python_version"
     set_color normal
   end
-  if _do_prompt_git
-    set_color $git_status_color
-    set_color -r
-    echo -n (shorten_path (command dirname (command git rev-parse --show-toplevel)))
-  end
   set_color normal
   echo ""
 end
