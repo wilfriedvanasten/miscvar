@@ -57,6 +57,11 @@ function _git_remote_not_synced
   _git_status -b | grep '##' | grep '\\[' > /dev/null
 end
 
+function _git_remote_name
+  set -l branch_name (_git_branch_name)
+  command git config --get "branch.$branch_name.remote" ^ /dev/null
+end
+
 # Returns the current git remote status like (+4, -1)
 # but only if the current branch is not synced
 function _git_remote_status
@@ -142,27 +147,35 @@ function _prompt_git
     set -l git_project_path (shorten_path $PWD $git_project_root "")
     set -l git_short_root (shorten_path $git_project_root)
     set -l git_branch (_git_branch_name)
-    set -l git_context_line (fold_string $git_path_replace (math $COLUMNS - 4) " $git_short_root@$git_branch")
+    set -l git_branch_details ""
     set -l git_status_symbols (_git_status_symbols)
-    set -l git_glyphs "$git_branch_glyph"
     set -g git_status_color $prompt_color
+    set -l git_glyphs "$git_branch_glyph"
     switch (_git_checkout_type)
       case branch
         test $git_status_symbols
           and set git_status_color yellow
+        set git_branch_details "local"
+        set -l git_remote_name (_git_remote_name)
+        if test $git_remote_name
+          set git_branch_details "$git_remote_name"
+        end
       case tag
         set -l tag_glyph "⌂"
         use_simple_glyph
           and set tag_glyph 't'
         set git_glyphs "$git_glyphs $tag_glyph"
         set git_status_color red
+        set git_branch_details "tag"
       case detached
         set -l detached_glyph "➦"
         use_simple_glyph
           and set detached_glyph 'd'
         set git_glyphs "$git_glyphs $detached_glyph"
         set git_status_color red
+        set git_branch_details "detached"
     end
+    set -l git_context_line (fold_string $git_path_replace (math $COLUMNS - 4) " $git_short_root@$git_branch ($git_branch_details)")
     set -l git_upper_padding (math (string length $git_glyphs) + 1)
     set_color $prompt_color
     set_color -r
