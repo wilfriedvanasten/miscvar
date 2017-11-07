@@ -3,7 +3,7 @@ function _prompt_segment
   set_color $argv[1]
   echo -n " "
   echo -n $argv[2..-1]
-  echo -n " "
+  echo -n " >"
 end
 
 # Calls git status in such a way that it is suitable
@@ -187,17 +187,12 @@ function _prompt_arrow
   set_color normal
   set_color $argv[1]
   if test $last_status -ne 0
-    set_color red
-    set_color -r
     if use_simple_glyph
-      echo -n " ($last_status) "
+      _prompt_segment red "($last_status)"
     else
-      echo -n " ($last_status✘) "
+      _prompt_segment red "($last_status✘)"
     end
-    set_color normal
-    set_color red
   end
-  echo -n "> "
 end
 
 function _do_prompt_git
@@ -221,4 +216,5 @@ function fish_prompt
   end
 
   set_color normal
+  echo -n " "
 end
