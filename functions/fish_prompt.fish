@@ -1,7 +1,6 @@
 # Prints out an arrow segment.
 function _prompt_segment
   set_color $argv[1]
-  set_color -r
   echo -n " "
   echo -n $argv[2..-1]
   echo -n " "
@@ -166,11 +165,12 @@ function _prompt_git
     end
     set -l git_upper_padding (math (string length $git_glyphs) + 1)
     set_color $prompt_color
-    set_color $git_status_color
     set_color -r
     echo -n (string repeat -N -n $git_upper_padding " ")
     echo -n $git_context_line
     echo (string repeat -N -n (math $COLUMNS - (string length $git_context_line) - $git_upper_padding) " ")
+    set_color normal
+    set_color $git_status_color
     if test $git_status_symbols
       _prompt_segment $git_status_color "$git_glyphs $git_project_path $git_status_symbols"
     else
@@ -190,17 +190,14 @@ function _prompt_arrow
     set_color red
     set_color -r
     if use_simple_glyph
-      echo -n " ($last_status)"
+      echo -n " ($last_status) "
     else
-      echo -n " ($last_status✘)"
+      echo -n " ($last_status✘) "
     end
     set_color normal
     set_color red
   end
-  set -l prompt_glyph \ue0b0
-  use_simple_glyph
-    and set -l prompt_glyph ""
-  echo -n "$prompt_glyph "
+  echo -n "> "
 end
 
 function _do_prompt_git
