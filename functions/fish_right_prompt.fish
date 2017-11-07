@@ -13,8 +13,8 @@ function fish_right_prompt
     set_color normal
   end
   if _do_prompt_git
-    set_color -b $prompt_color
-    set_color black
+    set_color $git_status_color
+    set_color -r
     echo -n (shorten_path (command dirname (command git rev-parse --show-toplevel)))
   end
   set_color normal

@@ -1,17 +1,10 @@
 # Prints out an arrow segment.
 function _prompt_segment
-  set -l arrow_head_glyph "├"
-  set -l arrow_shaft_glyph "─┤"
-  use_simple_glyph
-    and set arrow_head_glyph "|"
-    and set arrow_shaft_glyph "-|"
-  set_color $arrow_color
-  echo -n -s $arrow_shaft_glyph
   set_color $argv[1]
+  set_color -r
+  echo -n " "
   echo -n $argv[2..-1]
-  set_color $arrow_color
-  echo -n $arrow_head_glyph
-  set_color normal
+  echo -n " "
 end
 
 # Calls git status in such a way that it is suitable
@@ -103,9 +96,8 @@ end
 # Outputs a segment with the
 # prompt_pwd output
 function _prompt_dir
-  _prompt_fletching
   _prompt_segment $prompt_color (prompt_pwd)
-  _prompt_arrow
+  _prompt_arrow $prompt_color
 end
 
 function _git_unstaged_changes
@@ -154,7 +146,7 @@ function _prompt_git
     set -l git_context_line (fold_string $git_path_replace (math $COLUMNS - 4) " $git_project_name@$git_branch")
     set -l git_status_symbols (_git_status_symbols)
     set -l git_glyphs "$git_branch_glyph"
-    set -l git_status_color $prompt_color
+    set -g git_status_color $prompt_color
     switch (_git_checkout_type)
       case branch
         test $git_status_symbols
@@ -173,23 +165,17 @@ function _prompt_git
         set git_status_color red
     end
     set_color $prompt_color
-    echo -n "  "
-    if use_simple_glyph
-      echo -n "|"
-    else
-      echo -n "│"
-    end
     set_color $git_status_color
+    set_color -r
     echo -n (string repeat -N -n (string length $git_glyphs) " ")
-    echo $git_context_line
-    set_color $prompt_color
-    _prompt_fletching
+    echo -n $git_context_line
+    echo (string repeat -N -n (math $COLUMNS - (string length $git_context_line) - (string length $git_glyphs)) " ")
     if test $git_status_symbols
       _prompt_segment $git_status_color "$git_glyphs $git_project_path $git_status_symbols"
     else
       _prompt_segment $git_status_color "$git_glyphs $git_project_path"
     end
-    _prompt_arrow
+    _prompt_arrow $git_status_color
   end
 end
 
@@ -197,31 +183,20 @@ end
 # and the return status of the
 # last command if non zero
 function _prompt_arrow
-  set_color $arrow_color
+  set_color normal
+  set_color $argv[1]
   if test $last_status -ne 0
     if use_simple_glyph
       echo -n "($last_status)"
     else
+      setcolor red
       echo -n "($last_status✘)"
     end
   end
-  set -l prompt_glyph "─▶"
+  set -l prompt_glyph \ue0b0
   use_simple_glyph
-    and set -l prompt_glyph "->"
+    and set -l prompt_glyph ""
   echo -n "$prompt_glyph "
-end
-
-# Outputs the fletching of the arrow
-# in the given color
-function _prompt_fletching
-  set_color $arrow_color
-  set -l arrow_fletching_glyph "≫"
-  use_simple_glyph
-    and set -l arrow_fletching_glyph ">>"
-  echo -n $arrow_fletching_glyph
-  set_color normal
-  _is_user_root
-    and _prompt_root
 end
 
 function _do_prompt_git
@@ -233,13 +208,10 @@ function fish_prompt
   set_color 007FFF ^/dev/null
     and set -g prompt_color 007FFF
     or set -g prompt_color cyan
-  set -g arrow_color $prompt_color
-  if test $last_status -ne 0
-    set arrow_color red
-  else if _is_user_root
+  if _is_user_root
     set_color FF8000 ^/dev/null
-      and set arrow_color FF8000
-      or set arrow_color yellow
+      and set prompt_color FF8000
+      or set prompt_color yellow
   end
   if _do_prompt_git
     _prompt_git
