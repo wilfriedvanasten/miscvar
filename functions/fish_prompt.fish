@@ -187,12 +187,15 @@ function _prompt_arrow
   set_color normal
   set_color $argv[1]
   if test $last_status -ne 0
+    set_color red
+    set_color -r
     if use_simple_glyph
-      echo -n "($last_status)"
+      echo -n " ($last_status)"
     else
-      set_color red
-      echo -n "($last_status✘)"
+      echo -n " ($last_status✘)"
     end
+    set_color normal
+    set_color red
   end
   set -l prompt_glyph \ue0b0
   use_simple_glyph
