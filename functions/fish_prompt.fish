@@ -161,7 +161,7 @@ function _prompt_git
         set -l detached_glyph "➦"
         use_simple_glyph
           and set detached_glyph 'd'
-        set git_glyphs "$git_glyphs $tag_glyph"
+        set git_glyphs "$git_glyphs $detached_glyph"
         set git_status_color red
     end
     set_color $prompt_color
@@ -189,7 +189,7 @@ function _prompt_arrow
     if use_simple_glyph
       echo -n "($last_status)"
     else
-      setcolor red
+      set_color red
       echo -n "($last_status✘)"
     end
   end
