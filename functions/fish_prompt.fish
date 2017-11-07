@@ -164,12 +164,13 @@ function _prompt_git
         set git_glyphs "$git_glyphs $detached_glyph"
         set git_status_color red
     end
+    set -l git_upper_padding (math (string length $git_glyphs) + 1)
     set_color $prompt_color
     set_color $git_status_color
     set_color -r
-    echo -n (string repeat -N -n (string length $git_glyphs) " ")
+    echo -n (string repeat -N -n $git_upper_padding " ")
     echo -n $git_context_line
-    echo (string repeat -N -n (math $COLUMNS - (string length $git_context_line) - (string length $git_glyphs)) " ")
+    echo (string repeat -N -n (math $COLUMNS - (string length $git_context_line) - $git_upper_padding) " ")
     if test $git_status_symbols
       _prompt_segment $git_status_color "$git_glyphs $git_project_path $git_status_symbols"
     else
