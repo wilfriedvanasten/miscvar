@@ -73,7 +73,7 @@
 (run-shell-command "setxkbmap -option compose:lwin")
 
 ; Set background image
-(run-shell-command (concatenate 'string "display -window root /usr/share/archlinux/wallpaper/archlinux-simplyblack.png"))
+(run-shell-command (concatenate 'string "display -size 1920x1080 -window root /usr/share/archlinux/wallpaper/archlinux-simplyblack.png"))
 
 ; Capture all windows of particular programs in a single group
 ; define-frame-preference arguments: (frame raise lock create restore class instance type role title
