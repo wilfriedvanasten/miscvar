@@ -26,9 +26,5 @@ function fish_title
     case '*'
       set title "$argv"
   end
-  if test $TMUX
-    printf "\033k$title\033\\"
-  else
-    echo $title
-  end
+  echo $title
 end
