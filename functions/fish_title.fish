@@ -24,7 +24,7 @@ function fish_title
         set title "$argv"
       end
     case '*'
-      set title "$argv"
+      set title "$_"
   end
   echo $title
 end
