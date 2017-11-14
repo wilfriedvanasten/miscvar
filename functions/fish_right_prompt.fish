@@ -1,7 +1,3 @@
-function _do_prompt_git
-  git_exists; and git_is_git_repo
-end
-
 function fish_right_prompt
   if set -q VIRTUAL_ENV
     # Let's hope python won't break this way to read the version
