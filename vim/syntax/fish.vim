@@ -25,9 +25,9 @@ syntax region fishStatement matchgroup=fishCommand start='\v\zs\k+>' skip='\\$' 
           \ fishRepeat,fishLabel,fishRedirect,fishNumber,fishString,fishCharacter,fishExpansion,
           \ fishComment
 syntax region fishStatement matchgroup=fishCommand start="if" end="\vend|\zeelse"
-          \ keepend extend contains=fishStatement
+          \ keepend extend contains=fishComment,fishStatement
 syntax region fishStatement matchgroup=fishCommand start="else" end="end"
-          \ keepend extend contains=fishStatement
+          \ keepend extend contains=fishComment,fishStatement
 syntax region fishFunctionHead matchgroup=fishCommand start="function" skip='\\$' end="\v\||;|$"
           \ contains=fishIdentifier,fishOption,fishGNULongOption
 syntax region fishStatement matchgroup=fishCommand start="and" skip='\\$' end="\v\||;|$"
@@ -37,9 +37,9 @@ syntax region fishStatement matchgroup=fishCommand start="or" skip='\\$' end="\v
 syntax region fishStatement matchgroup=fishCommand start="command" skip='\\$' end="\v\||;|$"
           \ contains=fishStatement
 syntax region fishStatement matchgroup=fishCommand start="while" keepend extend end="end"
-          \ contains=fishStatement
+          \ contains=fishComment,fishStatement
 syntax region fishStatement matchgroup=fishCommand start="\[" keepend extend end="\]"
-          \ contains=fishCommandSub,fishExpansion,fishString,fishOption,fishGNULongOption,fishNumber,fishCharacter
+          \ contains=fishCommandSub,fishExpansion,fishString,fishOption,fishGNULongOption,fishNumber,fishCharacter,fishComment
 " This will prevent the else group from extending past an if
 syntax match fishElseIfMatch "\velse\ze\s+if"
 syntax region fishCommandSub start="(" end=")" keepend extend contains=fishStatement
