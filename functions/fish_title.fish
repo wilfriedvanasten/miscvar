@@ -2,20 +2,25 @@ function _ssh_find_config_value
  ssh -G $argv[2..-1] | grep -ie "^$argv[1] " | sed "s/^$argv[1] \(.*\)/\1/I"
 end
 
+function _fish_version_check
+  set -l running_version (expr $FISH_VERSION : '\([0-9]\+.[0-9]\+\)')
+  expr '2.2' '<=' '$running_version' > /dev/null
+end
+
 function fish_title
   set -l title ""
   switch $_
     case fish
       set title (prompt_pwd)
     case vim
-      set -l args (string split " " $argv)
-      if test (count $args -gt 1)
+      set -l args (echo $argv[1] | sed 's/ /\n/g')
+      if test (count $args) -gt 1
         set title "$_ "(shorten_path $args[2])
       else
         set title "$_ *"
       end
     case ssh
-      set -l args (string split " " $argv)
+      set -l args (echo $argv[1] | sed 's/ /\n/g')
       set ssh_user (_ssh_find_config_value "User" $args[2..-1])
       set ssh_host (_ssh_find_config_value "Hostname" $args[2..-1] | cut -d '.' -f 1)
       if test (count $args -eq 2)

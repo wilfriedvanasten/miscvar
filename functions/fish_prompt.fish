@@ -178,12 +178,12 @@ function _prompt_git
         set git_branch_details "detached"
     end
     set -l git_context_line (fold_string $git_path_replace (math $COLUMNS - 4) " $git_short_root@$git_branch ($git_branch_details)")
-    set -l git_upper_padding (math (string length $git_glyphs) + 1)
+    set -l git_upper_padding (math (expr length + $git_glyphs) + 1)
     set_color $prompt_color
     set_color -r
-    echo -n (string repeat -N -n $git_upper_padding " ")
+    echo -n (repeatc $git_upper_padding " ")
     echo -n $git_context_line
-    echo (string repeat -N -n (math $COLUMNS - (string length $git_context_line) - $git_upper_padding) " ")
+    echo (repeatc (math $COLUMNS - (expr length + $git_context_line) - $git_upper_padding) " ")
     set_color normal
     set_color $git_status_color
     if test $git_status_symbols
