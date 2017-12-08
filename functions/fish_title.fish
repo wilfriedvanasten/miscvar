@@ -2,11 +2,6 @@ function _ssh_find_config_value
  ssh -G $argv[2..-1] | grep -ie "^$argv[1] " | sed "s/^$argv[1] \(.*\)/\1/I"
 end
 
-function _fish_version_check
-  set -l running_version (expr $FISH_VERSION : '\([0-9]\+.[0-9]\+\)')
-  expr '2.2' '<=' '$running_version' > /dev/null
-end
-
 function fish_title
   set -l title ""
   switch $_
