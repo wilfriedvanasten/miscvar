@@ -8,7 +8,7 @@ end
 function cpuutilblock
   set -l current_load (_current_load)
 	set -l num_cpus (command nproc)
-	set -l ld (math (math "scale=2; $current_load / $num_cpus * 10 + 0.5") / 1)
+	set -l ld (math -s 0 (math -s 2 "$current_load / $num_cpus * 10 + 0.5") / 1)
 	set -l low "."
 	set -l high "|"
 	set -l color "green"
