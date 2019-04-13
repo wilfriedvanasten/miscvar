@@ -1,3 +1,4 @@
+; kate: syntax Common Lisp;
 ; exec nitrogen --restore
 (in-package :stumpwm)
 (load "/opt/stumpwm/share/stumpwm/amixer.lisp")
