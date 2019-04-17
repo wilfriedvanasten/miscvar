@@ -1,4 +1,4 @@
-; kate: syntax Common Lisp;
+; kate: syntax Common Lisp; indent-width 2; indent-mode lisp; tab-width 2;
 ; exec nitrogen --restore
 (in-package :stumpwm)
 (load "/opt/stumpwm/share/stumpwm/amixer.lisp")
@@ -12,38 +12,35 @@
 ; and this is not the xterm for the tmux session this will be raised. This however is not
 ; a problem for me since I use only tmux sessions to do my console tasks.
 (defun run-or-raise-tmux (session)
-	(when (not (eq (run-shell-command (concatenate 'string "tmux has-session -t " session)) 0))
-		(run-shell-command (concatenate 'string "tmux new-session -d -s " session " " (sb-unix::posix-getenv "SHELL"))))
-	(let ((cmd (concatenate 'string "termite -e \"tmux attach-session -d -t " session "\"")))
-		(run-or-raise cmd '(:class "XTerm"))))
+  (when (not (eq (run-shell-command (concatenate 'string "tmux has-session -t " session)) 0))
+    (run-shell-command (concatenate 'string "tmux new-session -d -s " session " " (sb-unix::posix-getenv "SHELL"))))
+  (let ((cmd (concatenate 'string "termite -e \"tmux attach-session -d -t " session "\"")))
+    (run-or-raise cmd '(:class "XTerm"))))
 ; This runs a single xterm with a tmux session in it depending on the screen
 ; This is work in progress since the number of screens is currently fixed to two.
 ; It also assumes my standard setup though run-or-raise-tmux does allow arbitrary session names
 (defcommand single-terminal () () (run-or-raise-tmux (if (eq (screen-id (current-screen)) 0) "left" "right")))
 ; Redefine time command to include bat
-(defcommand echo-date () ()
-	(
-		message (remove #\Newline (concatenate 'string 
-					(run-shell-command "date +'%A %d %B %Y %T week %V'" T) 
-						" ^6*(" (run-shell-command "/home/wilfried/bat" T) ")")
-				)
-	)
-)
+(defcommand echo-date () () (message
+  (remove #\Newline (concatenate 'string
+    (run-shell-command "date +'%A %d %B %Y %T week %V'" T)
+    " ^6*("
+    (run-shell-command "/home/wilfried/bat" T) ")"))))
 
 ; Use dbus to allow shutdown and reboot from stumpwm
 (defcommand shutdown () ()
-	(run-shell-command "systemctl poweroff"))
+  (run-shell-command "systemctl poweroff"))
 (defcommand reboot () ()
-	(run-shell-command "systemctl reboot"))
+  (run-shell-command "systemctl reboot"))
 (defcommand suspend () ()
-	(run-shell-command "systemctl suspend"))
+  (run-shell-command "systemctl suspend"))
 ; Add visual feedback when switching screens
 (defcommand osnext () ()
-	(snext)
-	(echo "Current Screen"))
+  (snext)
+  (echo "Current Screen"))
 (defcommand osprev () ()
-	(sprev)
-	(echo "Current Screen"))
+  (sprev)
+  (echo "Current Screen"))
 
 ; Alt-Tab Window switching and top level audio control
 (define-key *top-map* (kbd "M-Tab") "pull-hidden-next")
@@ -62,7 +59,7 @@
 (define-key *top-map* (kbd "S-C-M-Right") "osnext")
 ; Start firefox with the profile manager since I use a
 ; multiple screen X session and firefox can only be active
-; on both screens using seperate profiles. 
+; on both screens using seperate profiles.
 (bind "M-f" "exec chromium --process-per-site")
 (bind "x" "exec xlock -mode blank")
 (bind "c" "single-terminal")
