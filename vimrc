@@ -6,8 +6,8 @@ set shiftwidth=4
 set relativenumber
 set autoindent
 
-" When developing in haskell or amanda 
-" we want expanded short tabs 
+" When developing in haskell or amanda
+" we want expanded short tabs
 autocmd FileType haskell
   \ setlocal shiftwidth=2 |
   \ setlocal tabstop=2 |
@@ -63,15 +63,15 @@ autocmd FileType fish
   \ setlocal expandtab
 
 highlight ExtraWhitespace ctermbg=red guibg=red
-au ColorScheme * highlight ExtraWhitespace guibg=red
-au BufEnter * match ExtraWhitespace /\s\+$/
-au InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
-au InsertLeave * match ExtraWhiteSpace /\s\+$/
+autocmd ColorScheme * highlight ExtraWhitespace guibg=red
+autocmd BufEnter * match ExtraWhitespace /\s\+$/
+autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+autocmd InsertLeave * match ExtraWhiteSpace /\s\+$/
 
 " use ghc functionality for haskell files
-"au Bufenter *.hs compiler ghc
+"autocmd Bufenter *.hs compiler ghc
 
-au BufRead,BufNewFile *.hsc set filetype=haskell
+autocmd BufRead,BufNewFile *.hsc set filetype=haskell
 
 filetype plugin on
 
@@ -92,7 +92,7 @@ autocmd User plugin-skeleton-detect
 
 autocmd User plugin-skeleton-detect
   \ if expand('%:t') =~ '\.tex$'
-  \ |	setlocal syntax=tex
+  \ |   setlocal syntax=tex
   \ |   SkeletonLoad tex
   \ | endif
 

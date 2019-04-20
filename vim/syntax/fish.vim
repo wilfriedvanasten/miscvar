@@ -18,11 +18,11 @@ syntax region fishString contained extend start="'" skip="\v[^\\]\\'" end="'"
 syntax match fishNumber contained "\v<\x+>"
 syntax match fishEscape contained "\\\\"
 syntax region fishString contained extend start="\"" skip="\v[^\\]\\\"" end="\"" contains=fishExpansion,fishEscape
-syntax match fishCharacter contained /\v\\[abefnrtv *?~%#(){}\[\]<>&;"']|\\[xX][0-9a-f]{1,2}|\\o[0-7]{1,2}|\\u[0-9a-f]{1,4}|\\U[0-9a-f]{1,8}|\\c[a-z]/
+syntax match fishCharacter contained '\v\\[abefnrtv *?~%#(){}\[\]<>&;"'']|\\[xX][0-9a-f]{1,2}|\\o[0-7]{1,2}|\\u[0-9a-f]{1,4}|\\U[0-9a-f]{1,8}|\\c[a-z]'
 syntax match fishOption contained "\v\s\zs-\k+>"
 syntax match fishGNULongOption contained "\v\s\zs--\a[-[:alnum:]]*>"
 syntax match fishRedirect contained "\v(\<\<?|\>\>?|\^\^?)\&?"
-syntax match fishCommand contained /\v\s*\zs\k+>/
+syntax match fishCommand contained '\v\s*\zs\k+>'
 syntax region fishStatement matchgroup=fishCommand start='\v\zs\k+>' skip='\\$' end='\v\||;|$'
           \ contains=fishComment,fishCommandSub,fishOption,fishGNULongOption,fishKeyword,fishConditional,
           \ fishRepeat,fishLabel,fishRedirect,fishNumber,fishString,fishCharacter,fishExpansion
