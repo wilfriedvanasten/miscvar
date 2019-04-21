@@ -1,61 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<language name="VIM" version="3" kateversion="2.4" section="Scripts" extensions="*.vim">
+<language name="VIM" version="4" kateversion="2.4" section="Scripts" extensions="*.vim">
   <highlighting>
     <list name="tasks">
       <item>TODO</item>
       <item>FIXME</item>
       <item>XXX</item>
     </list>
-    <list name="operators">
-      <item>&amp;&amp;</item>
-      <item>||</item>
-      <item>&amp;</item>
-      <item>:</item>
-      <item>==#</item>
-      <item>!=#</item>
-      <item>&gt;=#</item>
-      <item>&gt;#</item>
-      <item>&lt;=#</item>
-      <item>&lt;#</item>
-      <item>=~#</item>
-      <item>!~#</item>
-      <item>==?</item>
-      <item>!=?</item>
-      <item>&gt;=?</item>
-      <item>&gt;?</item>
-      <item>&lt;=?</item>
-      <item>&lt;?</item>
-      <item>=~?</item>
-      <item>!~?</item>
-      <item>==</item>
-      <item>!=</item>
-      <item>&gt;=</item>
-      <item>&gt;</item>
-      <item>&lt;=</item>
-      <item>&lt;</item>
-      <item>=~</item>
-      <item>!~</item>
-      <item>is</item>
-      <item>isnot</item>
-      <item>+</item>
-      <item>-</item>
-      <item>.</item>
-      <item>*</item>
-      <item>/</item>
-      <item>%</item>
-      <item>!</item>
-      <!-- delimiters -->
-      <item>[</item>
-      <item>]</item>
-      <item>(</item>
-      <item>)</item>
-      <item>{</item>
-      <item>}</item>
-      <item>,</item>
-      <item>:</item>
-      <item>-&gt;</item>
-      <item>|</item>
-      <item>\</item>
+    <list name="userCommandEscapeSequences">
+      <item>&lt;lt&gt;</item>
+      <item>&lt;line1&gt;</item>
+      <item>&lt;line2&gt;</item>
+      <item>&lt;count&gt;</item>
+      <item>&lt;args&gt;</item>
+      <item>&lt;bang&gt;</item>
+      <item>&lt;reg&gt;</item>
+      <item>&lt;register&gt;</item>
+      <item>&lt;q-args&gt;</item>
+      <item>&lt;f-args&gt;</item>
+    </list>
+    <list name="mapOptions">
+      <item>&lt;buffer&gt;</item>
+      <item>&lt;silent&gt;</item>
+      <item>&lt;expr&gt;</item>
+      <item>&lt;special&gt;</item>
+      <item>&lt;script&gt;</item>
+      <item>&lt;unique&gt;</item>
     </list>
     <list name="beginBlockFlow">
       <item>if</item>
@@ -796,11 +765,368 @@
       <item>MenuPopup</item>
       <item>User</item>
     </list>
+    <list name="options">
+      <item>aleph</item>
+      <item>allowrevins</item>
+      <item>altkeymap</item>
+      <item>ambiwidth</item>
+      <item>antialias</item>
+      <item>autochdir</item>
+      <item>arabic</item>
+      <item>arabicshape</item>
+      <item>autoindent</item>
+      <item>autoread</item>
+      <item>autowrite</item>
+      <item>autowriteall</item>
+      <item>background</item>
+      <item>backspace</item>
+      <item>backup</item>
+      <item>backupcopy</item>
+      <item>backupdir</item>
+      <item>backupext</item>
+      <item>backupskip</item>
+      <item>balloondelay</item>
+      <item>ballooneval</item>
+      <item>balloonexpr</item>
+      <item>binary</item>
+      <item>bioskey</item>
+      <item>bomb</item>
+      <item>breakat</item>
+      <item>browsedir</item>
+      <item>bufhidden</item>
+      <item>buflisted</item>
+      <item>buftype</item>
+      <item>casemap</item>
+      <item>cdpath</item>
+      <item>cedit</item>
+      <item>charconvert</item>
+      <item>cindent</item>
+      <item>cinkeys</item>
+      <item>cinoptions</item>
+      <item>cinwords</item>
+      <item>clipboard</item>
+      <item>cmdheight</item>
+      <item>cmdwinheight</item>
+      <item>colorcolumn</item>
+      <item>columns</item>
+      <item>comments</item>
+      <item>commentstring</item>
+      <item>compatible</item>
+      <item>complete</item>
+      <item>completefunc</item>
+      <item>completeopt</item>
+      <item>concealcursor</item>
+      <item>conceallevel</item>
+      <item>confirm</item>
+      <item>conskey</item>
+      <item>copyindent</item>
+      <item>cpoptions</item>
+      <item>cryptmethod</item>
+      <item>cscopepathcomp</item>
+      <item>cscopeprg</item>
+      <item>cscopequickfix</item>
+      <item>cscopetag</item>
+      <item>cscopetagorder</item>
+      <item>cscopeverbose</item>
+      <item>cursorbind</item>
+      <item>cursorcolumn</item>
+      <item>cursorline</item>
+      <item>debug</item>
+      <item>define</item>
+      <item>delcombine</item>
+      <item>dictionary</item>
+      <item>diff</item>
+      <item>diffexpr</item>
+      <item>diffopt</item>
+      <item>digraph</item>
+      <item>directory</item>
+      <item>display</item>
+      <item>eadirection</item>
+      <item>edcompatible</item>
+      <item>encoding</item>
+      <item>endofline</item>
+      <item>equalalways</item>
+      <item>equalprg</item>
+      <item>errorbells</item>
+      <item>errorfile</item>
+      <item>errorformat</item>
+      <item>esckeys</item>
+      <item>eventignore</item>
+      <item>expandtab</item>
+      <item>exrc</item>
+      <item>fileencoding</item>
+      <item>fileencodings</item>
+      <item>fileformat</item>
+      <item>fileformats</item>
+      <item>filetype</item>
+      <item>fillchars</item>
+      <item>fkmap</item>
+      <item>foldclose</item>
+      <item>foldcolumn</item>
+      <item>foldenable</item>
+      <item>foldexpr</item>
+      <item>foldignore</item>
+      <item>foldlevel</item>
+      <item>foldlevelstart</item>
+      <item>foldmarker</item>
+      <item>foldmethod</item>
+      <item>foldminlines</item>
+      <item>foldnestmax</item>
+      <item>foldopen</item>
+      <item>foldtext</item>
+      <item>formatlistpat</item>
+      <item>formatoptions</item>
+      <item>formatprg</item>
+      <item>formatexpr</item>
+      <item>fsync</item>
+      <item>gdefault</item>
+      <item>grepformat</item>
+      <item>grepprg</item>
+      <item>guicursor</item>
+      <item>guifont</item>
+      <item>guifontset</item>
+      <item>guifontwide</item>
+      <item>guiheadroom</item>
+      <item>guioptions</item>
+      <item>guipty</item>
+      <item>guitablabel</item>
+      <item>guitabtooltip</item>
+      <item>helpfile</item>
+      <item>helpheight</item>
+      <item>helplang</item>
+      <item>hidden</item>
+      <item>highlight</item>
+      <item>hlsearch</item>
+      <item>history</item>
+      <item>hkmap</item>
+      <item>hkmapp</item>
+      <item>icon</item>
+      <item>iconstring</item>
+      <item>ignorecase</item>
+      <item>imactivatekey</item>
+      <item>imcmdline</item>
+      <item>imdisable</item>
+      <item>iminsert</item>
+      <item>imsearch</item>
+      <item>include</item>
+      <item>includeexpr</item>
+      <item>incsearch</item>
+      <item>indentexpr</item>
+      <item>indentkeys</item>
+      <item>infercase</item>
+      <item>insertmode</item>
+      <item>isfname</item>
+      <item>isident</item>
+      <item>iskeyword</item>
+      <item>isprint</item>
+      <item>joinspaces</item>
+      <item>key</item>
+      <item>keymap</item>
+      <item>keymodel</item>
+      <item>keywordprg</item>
+      <item>langmap</item>
+      <item>langmenu</item>
+      <item>laststatus</item>
+      <item>lazyredraw</item>
+      <item>linebreak</item>
+      <item>lines</item>
+      <item>linespace</item>
+      <item>lisp</item>
+      <item>lispwords</item>
+      <item>list</item>
+      <item>listchars</item>
+      <item>loadplugins</item>
+      <item>macatsui</item>
+      <item>magic</item>
+      <item>makeef</item>
+      <item>makeprg</item>
+      <item>matchpairs</item>
+      <item>matchtime</item>
+      <item>maxcombine</item>
+      <item>maxfuncdepth</item>
+      <item>maxmapdepth</item>
+      <item>maxmem</item>
+      <item>maxmempattern</item>
+      <item>maxmemtot</item>
+      <item>menuitems</item>
+      <item>mkspellmem</item>
+      <item>modeline</item>
+      <item>modelines</item>
+      <item>modifiable</item>
+      <item>modified</item>
+      <item>more</item>
+      <item>mouse</item>
+      <item>mousefocus</item>
+      <item>mousehide</item>
+      <item>mousemodel</item>
+      <item>mouseshape</item>
+      <item>mousetime</item>
+      <item>mzquantum</item>
+      <item>nrformats</item>
+      <item>number</item>
+      <item>numberwidth</item>
+      <item>omnifunc</item>
+      <item>opendevice</item>
+      <item>operatorfunc</item>
+      <item>osfiletype</item>
+      <item>paragraphs</item>
+      <item>paste</item>
+      <item>pastetoggle</item>
+      <item>patchexpr</item>
+      <item>patchmode</item>
+      <item>path</item>
+      <item>preserveindent</item>
+      <item>previewheight</item>
+      <item>previewwindow</item>
+      <item>printdevice</item>
+      <item>printencoding</item>
+      <item>printexpr</item>
+      <item>printfont</item>
+      <item>printheader</item>
+      <item>printmbcharset</item>
+      <item>printmbfont</item>
+      <item>printoptions</item>
+      <item>pumheight</item>
+      <item>quoteescape</item>
+      <item>readonly</item>
+      <item>redrawtime</item>
+      <item>relativenumber</item>
+      <item>remap</item>
+      <item>report</item>
+      <item>restorescreen</item>
+      <item>revins</item>
+      <item>rightleft</item>
+      <item>rightleftcmd</item>
+      <item>ruler</item>
+      <item>rulerformat</item>
+      <item>runtimepath</item>
+      <item>scroll</item>
+      <item>scrollbind</item>
+      <item>scrolljump</item>
+      <item>scrolloff</item>
+      <item>scrollopt</item>
+      <item>sections</item>
+      <item>secure</item>
+      <item>selection</item>
+      <item>selectmode</item>
+      <item>sessionoptions</item>
+      <item>shell</item>
+      <item>shellcmdflag</item>
+      <item>shellpipe</item>
+      <item>shellquote</item>
+      <item>shellredir</item>
+      <item>shellslash</item>
+      <item>shelltemp</item>
+      <item>shelltype</item>
+      <item>shellxquote</item>
+      <item>shiftround</item>
+      <item>shiftwidth</item>
+      <item>shortmess</item>
+      <item>shortname</item>
+      <item>showbreak</item>
+      <item>showcmd</item>
+      <item>showfulltag</item>
+      <item>showmatch</item>
+      <item>showmode</item>
+      <item>showtabline</item>
+      <item>sidescroll</item>
+      <item>sidescrolloff</item>
+      <item>smartcase</item>
+      <item>smartindent</item>
+      <item>smarttab</item>
+      <item>softtabstop</item>
+      <item>spell</item>
+      <item>spellcapcheck</item>
+      <item>spellfile</item>
+      <item>spelllang</item>
+      <item>spellsuggest</item>
+      <item>splitbelow</item>
+      <item>splitright</item>
+      <item>startofline</item>
+      <item>statusline</item>
+      <item>suffixes</item>
+      <item>suffixesadd</item>
+      <item>swapfile</item>
+      <item>swapsync</item>
+      <item>switchbuf</item>
+      <item>synmaxcol</item>
+      <item>syntax</item>
+      <item>tabstop</item>
+      <item>tabline</item>
+      <item>tabpagemax</item>
+      <item>tagbsearch</item>
+      <item>taglength</item>
+      <item>tagrelative</item>
+      <item>tags</item>
+      <item>tagstack</item>
+      <item>term</item>
+      <item>termbidi</item>
+      <item>termencoding</item>
+      <item>terse</item>
+      <item>textauto</item>
+      <item>textmode</item>
+      <item>textwidth</item>
+      <item>thesaurus</item>
+      <item>tildeop</item>
+      <item>timeout</item>
+      <item>timeoutlen</item>
+      <item>title</item>
+      <item>titlelen</item>
+      <item>titleold</item>
+      <item>titlestring</item>
+      <item>toolbar</item>
+      <item>toolbariconsize</item>
+      <item>ttimeout</item>
+      <item>ttimeoutlen</item>
+      <item>ttybuiltin</item>
+      <item>ttyfast</item>
+      <item>ttymouse</item>
+      <item>ttyscroll</item>
+      <item>ttytype</item>
+      <item>undodir</item>
+      <item>undofile</item>
+      <item>undolevels</item>
+      <item>undoreload</item>
+      <item>updatecount</item>
+      <item>updatetime</item>
+      <item>verbose</item>
+      <item>verbosefile</item>
+      <item>viewdir</item>
+      <item>viewoptions</item>
+      <item>viminfo</item>
+      <item>virtualedit</item>
+      <item>visualbell</item>
+      <item>warn</item>
+      <item>weirdinvert</item>
+      <item>whichwrap</item>
+      <item>wildchar</item>
+      <item>wildcharm</item>
+      <item>wildignore</item>
+      <item>wildignorecase</item>
+      <item>wildmenu</item>
+      <item>wildmode</item>
+      <item>wildoptions</item>
+      <item>winaltkeys</item>
+      <item>window</item>
+      <item>winheight</item>
+      <item>winfixheight</item>
+      <item>winfixwidth</item>
+      <item>winminheight</item>
+      <item>winminwidth</item>
+      <item>winwidth</item>
+      <item>wrap</item>
+      <item>wrapmargin</item>
+      <item>wrapscan</item>
+      <item>write</item>
+      <item>writeany</item>
+      <item>writebackup</item>
+      <item>writedelay</item>
+    </list>
     <contexts>
       <context attribute="Normal Text" lineEndContext="#pop" name="exCommand" fallthrough="true" fallthroughContext="#pop!simpleCommand">
         <DetectSpaces attribute="Normal Text" context="#stay"/>
         <!-- When at the exCommand level, skip over continuation characters -->
-        <DetectChar attribute="Operator" char="\" firstNonSpace="true" />
+        <DetectChar attribute="Operator" char="\" firstNonSpace="true"/>
         <!-- Start of line comment. -->
         <DetectChar attribute="Comment" context="comment" char="&quot;" firstNonSpace="true"/>
         <!-- Shebang -->
@@ -826,9 +1152,16 @@
       interpretation. Bars work.
       -->
       <context attribute="Normal Text" lineEndContext="continuationCheck" name="simpleCommand">
-        <keyword attribute="Operator" context="#stay" String="operators"/>
         <keyword attribute="Event" context="#stay" String="events"/>
-        <RegExpr attribute="Operator" context="#stay" String="\(\|| |(#([0-9]|#|&lt;[1-9]))"/>
+        <keyword attribute="Option" context="#stay" String="options"/>
+        <keyword attribute="EscapeSequence" context="#stay" String="userCommandEscapeSequences"/>
+        <keyword attribute="EscapeSequence" context="#stay" String="mapOptions"/>
+        <HlCOct attribute="OctalNumber" context="#stay" />
+        <HlCHex attribute="HexNumber" context="stay" />
+        <Float attribute="Number" context="#stay" />
+        <Int attribute="Number" context="#stay" />
+        <IncludeRules context="operators" />
+        <RegExpr attribute="Operator" context="#stay" String="\\(\|| |(#([0-9]|#|&lt;[1-9])))"/>
         <RegExpr attribute="VerbatimString" context="#stay" String="'(''|[^'])*'"/>
         <RegExpr attribute="String" context="#stay" String="&quot;(\\.|[^&quot;\\])*&quot;"/>
         <DetectChar attribute="Operator" context="#pop#pop" char="|"/>
@@ -840,6 +1173,16 @@
       </context>
       <context attribute="Comment" lineEndContext="#pop" name="comment">
         <keyword attribute="Alert" context="#stay" String="tasks"/>
+      </context>
+      <!-- TODO: This can now only be included in top level command rules -->
+      <context attribute="Normal Text" lineEndContext="continuationCheck" name="operators">
+        <DetectChar attribute="Operator" context="#stay" char="?" />
+        <DetectChar attribute="Operator" context="#stay" char=":" />
+        <Detect2Chars attribute="Operator" context="#stay" char="&amp;" char1="&amp;"/>
+        <Detect2Chars attribute="Operator" context="#stay" char="|" char1="|"/>
+        <RegExpr attribute="Operator" context="#stay" String="(=[=~]|![=~]?|[&lt;&gt;]=?)[?#]?" />
+        <RegExpr attribute="Keyword" context="#stay" String="is(not)?" />
+        <RegExpr attribute="Operator" context="#stay" String="[+.-]" />
       </context>
       <!-- <RegExpr attribute="SpecialChar" context="#stay" String="\\([0-7]{1,3}|(x|X)[0-9a-fA-F]{1,2}|u[0-9a-fA-F]{1,4}|U[0-9a-fA-F]{1,8}|[befnrt\\&quot;]|&lt;([a-zA-Z0-9_-])*&gt;)" /> -->
     </contexts>
@@ -854,13 +1197,18 @@
       <itemData name="SpecialChar" defStyleNum="dsSpecialChar"/>
       <itemData name="VerbatimString" defStyleNum="dsVerbatimString"/>
       <itemData name="Flow" defStyleNum="dsControlFlow"/>
-      <itemData name="Event" defStyleNum="dsOthers" />
+      <itemData name="Event" defStyleNum="dsOthers"/>
+      <itemData name="EscapeSequence" defStyleNum="dsSpecialChar"/>
+      <itemData name="Option" defStyleNum="dsVariable"/>
+      <itemData name="Number" defStyleNum="dsDecVal" />
+      <itemData name="OctalNumber" defStyleNum="dsBaseN" />
+      <itemData name="HexNumber" defStyleNum="dsBaseN" />
     </itemDatas>
   </highlighting>
   <general>
     <comments>
       <comment name="singleLine" start="&quot;"/>
     </comments>
-    <keywords casesensitive="1"/>
+    <keywords casesensitive="1" weakDeliminator="&lt;&gt;"/>
   </general>
 </language>
