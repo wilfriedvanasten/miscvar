@@ -1,0 +1,866 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language name="VIM" version="3" kateversion="2.4" section="Scripts" extensions="*.vim">
+  <highlighting>
+    <list name="tasks">
+      <item>TODO</item>
+      <item>FIXME</item>
+      <item>XXX</item>
+    </list>
+    <list name="operators">
+      <item>&amp;&amp;</item>
+      <item>||</item>
+      <item>&amp;</item>
+      <item>:</item>
+      <item>==#</item>
+      <item>!=#</item>
+      <item>&gt;=#</item>
+      <item>&gt;#</item>
+      <item>&lt;=#</item>
+      <item>&lt;#</item>
+      <item>=~#</item>
+      <item>!~#</item>
+      <item>==?</item>
+      <item>!=?</item>
+      <item>&gt;=?</item>
+      <item>&gt;?</item>
+      <item>&lt;=?</item>
+      <item>&lt;?</item>
+      <item>=~?</item>
+      <item>!~?</item>
+      <item>==</item>
+      <item>!=</item>
+      <item>&gt;=</item>
+      <item>&gt;</item>
+      <item>&lt;=</item>
+      <item>&lt;</item>
+      <item>=~</item>
+      <item>!~</item>
+      <item>is</item>
+      <item>isnot</item>
+      <item>+</item>
+      <item>-</item>
+      <item>.</item>
+      <item>*</item>
+      <item>/</item>
+      <item>%</item>
+      <item>!</item>
+      <!-- delimiters -->
+      <item>[</item>
+      <item>]</item>
+      <item>(</item>
+      <item>)</item>
+      <item>{</item>
+      <item>}</item>
+      <item>,</item>
+      <item>:</item>
+      <item>-&gt;</item>
+      <item>|</item>
+      <item>\</item>
+    </list>
+    <list name="beginBlockFlow">
+      <item>if</item>
+      <item>for</item>
+      <item>while</item>
+      <item>try</item>
+    </list>
+    <list name="endBlockFlow">
+      <item>endif</item>
+      <item>endfor</item>
+      <item>endwhile</item>
+      <item>endtry</item>
+    </list>
+    <list name="flow">
+      <item>else</item>
+      <item>elseif</item>
+      <item>return</item>
+      <item>catch</item>
+      <item>continue</item>
+      <item>break</item>
+      <!-- TODO: Only keyword in for loop -->
+      <item>in</item>
+      <item>finally</item>
+      <item>finish</item>
+      <item>throw</item>
+    </list>
+    <list name="builtInCommand">
+      <!-- TODO: executes external command. No comments, No bar -->
+      <item>!</item>
+      <item>!!</item>
+      <item>&amp;</item>
+      <item>*</item>
+      <item>&lt;</item>
+      <item>=</item>
+      <item>&gt;</item>
+      <item>@</item>
+      <item>@@</item>
+      <item>Next</item>
+      <item>Print</item>
+      <item>X</item>
+      <!-- TODO:
+                Turns all next lines into verbatimStrings until a line
+                with just a .
+            -->
+      <item>append</item>
+      <!-- TODO: Like map -->
+      <item>abbreviate</item>
+      <item>abclear</item>
+      <item>aboveleft</item>
+      <item>all</item>
+      <!-- TODO: First argument is menu item, afterwards like map -->
+      <item>amenu</item>
+      <!-- TODO: Like amenu -->
+      <item>anoremenu</item>
+      <!-- TODO: Something ++opt -->
+      <item>args</item>
+      <!-- TODO: Something ++opt -->
+      <item>argadd</item>
+      <item>argdelete</item>
+      <item>argedit</item>
+      <!-- TODO: Takes command -->
+      <item>argdo</item>
+      <item>argglobal</item>
+      <item>arglocal</item>
+      <item>argument</item>
+      <item>ascii</item>
+      <!-- TODO: Takes command -->
+      <item>autocmd</item>
+      <item>augroup</item>
+      <!-- TODO: Take menu item -->
+      <item>aunmenu</item>
+      <item>buffer</item>
+      <item>bNext</item>
+      <item>ball</item>
+      <item>badd</item>
+      <item>bdelete</item>
+      <item>behave</item>
+      <item>belowright</item>
+      <item>bfirst</item>
+      <item>blast</item>
+      <item>bmodified</item>
+      <item>bnext</item>
+      <item>botright</item>
+      <item>bprevious</item>
+      <item>brewind</item>
+      <item>break</item>
+      <item>breakadd</item>
+      <item>breakdel</item>
+      <item>breaklist</item>
+      <item>browse</item>
+      <!-- TODO: Takes command -->
+      <item>bufdo</item>
+      <item>buffers</item>
+      <item>bunload</item>
+      <item>bwipeout</item>
+      <!-- TODO: Like append -->
+      <item>change</item>
+      <item>cNext</item>
+      <item>cNfile</item>
+      <!-- TODO: Like abbreviate -->
+      <item>cabbrev</item>
+      <item>cabclear</item>
+      <item>caddbuffer</item>
+      <!-- TODO: Like cexpr -->
+      <item>caddexpr</item>
+      <item>caddfile</item>
+      <!-- TODO: Like a function call expression. -->
+      <item>call</item>
+      <item>catch</item>
+      <item>cbuffer</item>
+      <item>cc</item>
+      <item>cclose</item>
+      <item>cd</item>
+      <item>center</item>
+      <!-- TODO: Takes expression, no comments -->
+      <item>cexpr</item>
+      <item>cfile</item>
+      <item>cfirst</item>
+      <item>cgetbuffer</item>
+      <!-- TODO: Takes expression, no comments -->
+      <item>cgetexpr</item>
+      <item>cgetfile</item>
+      <item>changes</item>
+      <item>chdir</item>
+      <item>checkpath</item>
+      <item>checktime</item>
+      <item>clist</item>
+      <item>clast</item>
+      <item>close</item>
+      <!-- TODO: Like map -->
+      <item>cmap</item>
+      <item>cmapclear</item>
+      <!-- TODO: Like amenu -->
+      <item>cmenu</item>
+      <item>cnext</item>
+      <item>cnewer</item>
+      <item>cnfile</item>
+      <!-- TODO: Like map -->
+      <item>cnoremap</item>
+      <!-- TODO: Like abbreviate -->
+      <item>cnoreabbrev</item>
+      <!-- TODO: Like amenu -->
+      <item>cnoremenu</item>
+      <item>copy</item>
+      <item>colder</item>
+      <item>colorscheme</item>
+      <!-- TODO: Takes a replacement command -->
+      <item>command</item>
+      <item>comclear</item>
+      <item>compiler</item>
+      <item>continue</item>
+      <item>confirm</item>
+      <item>copen</item>
+      <item>cprevious</item>
+      <item>cpfile</item>
+      <item>cquit</item>
+      <item>crewind</item>
+      <item>cscope</item>
+      <item>cstag</item>
+      <item>cunmap</item>
+      <item>cunabbrev</item>
+      <item>cunmenu</item>
+      <item>cwindow</item>
+      <item>delete</item>
+      <item>delmarks</item>
+      <!-- TODO: Takes a command -->
+      <item>debug</item>
+      <item>debuggreedy</item>
+      <item>delcommand</item>
+      <item>delfunction</item>
+      <item>diffupdate</item>
+      <item>diffget</item>
+      <item>diffoff</item>
+      <item>diffpatch</item>
+      <item>diffput</item>
+      <item>diffsplit</item>
+      <item>diffthis</item>
+      <item>digraphs</item>
+      <!-- TODO: No comments, takes regiters -->
+      <item>display</item>
+      <item>djump</item>
+      <item>dlist</item>
+      <item>doautocmd</item>
+      <item>doautoall</item>
+      <item>drop</item>
+      <item>dsearch</item>
+      <item>dsplit</item>
+      <!-- TODO: Something ++opt -->
+      <item>edit</item>
+      <item>earlier</item>
+      <!-- TODO: Takes expresion -->
+      <item>echo</item>
+      <!-- TODO: Like echo -->
+      <item>echoerr</item>
+      <item>echohl</item>
+      <!-- TODO: Like echo -->
+      <item>echomsg</item>
+      <!-- TODO: Like echo -->
+      <item>echon</item>
+      <item>else</item>
+      <item>elseif</item>
+      <item>emenu</item>
+      <item>endif</item>
+      <item>endfor</item>
+      <item>endfunction</item>
+      <item>endtry</item>
+      <item>endwhile</item>
+      <item>enew</item>
+      <item>ex</item>
+      <!-- TODO: Takes expression -->
+      <item>execute</item>
+      <item>exit</item>
+      <item>exusage</item>
+      <item>file</item>
+      <item>files</item>
+      <item>filetype</item>
+      <item>find</item>
+      <item>finally</item>
+      <item>finish</item>
+      <item>first</item>
+      <item>fixdel</item>
+      <item>fold</item>
+      <item>foldclose</item>
+      <!-- TODO: Takes command -->
+      <item>folddoopen</item>
+      <item>folddoclosed</item>
+      <item>foldopen</item>
+      <item>for</item>
+      <item>function</item>
+      <!-- TODO: Takes pattern and then command -->
+      <item>global</item>
+      <item>goto</item>
+      <!-- TODO: Executes grep. No Comments -->
+      <item>grep</item>
+      <!-- TODO: Like grep -->
+      <item>grepadd</item>
+      <item>gui</item>
+      <item>gvim</item>
+      <item>hardcopy</item>
+      <item>help</item>
+      <item>helpfind</item>
+      <!-- TODO: Like grep -->
+      <item>helpgrep</item>
+      <item>helptags</item>
+      <item>highlight</item>
+      <item>hide</item>
+      <item>history</item>
+      <!-- TODO: Like append -->
+      <item>insert</item>
+      <!-- TODO: Like abbreviate -->
+      <item>iabbrev</item>
+      <item>iabclear</item>
+      <item>if</item>
+      <item>ijump</item>
+      <item>ilist</item>
+      <!-- TODO: Like map -->
+      <item>imap</item>
+      <item>imapclear</item>
+      <!-- TODO: Like amenu -->
+      <item>imenu</item>
+      <!-- TODO: Like amenu -->
+      <item>inoremap</item>
+      <!-- TODO: Like abbreviate -->
+      <item>inoreabbrev</item>
+      <!-- TODO: Like amenu -->
+      <item>inoremenu</item>
+      <item>intro</item>
+      <item>isearch</item>
+      <item>isplit</item>
+      <item>iunmap</item>
+      <item>iunabbrev</item>
+      <item>iunmenu</item>
+      <item>join</item>
+      <item>jumps</item>
+      <item>k</item>
+      <!-- TODO: Takes command -->
+      <item>keepalt</item>
+      <item>keepmarks</item>
+      <!-- TODO: Takes command -->
+      <item>keepjjumps</item>
+      <item>lNext</item>
+      <item>lNfile</item>
+      <item>list</item>
+      <!-- TODO: Takes expression -->
+      <item>laddexpr</item>
+      <item>laddbuffer</item>
+      <item>laddfile</item>
+      <item>last</item>
+      <item>language</item>
+      <item>later</item>
+      <item>lbuffer</item>
+      <item>lcd</item>
+      <item>lchdir</item>
+      <item>lclose</item>
+      <item>lcscope</item>
+      <item>left</item>
+      <item>leftabove</item>
+      <!-- TODO: No comments
+                Definition syntax: let variable(= value) variable (= value).
+                Value must escape spaces.
+                Use expression after =.
+            -->
+      <item>let</item>
+      <!-- TODO: No comments, takes expression -->
+      <item>lexpr</item>
+      <item>lfile</item>
+      <item>lfirst</item>
+      <item>lgetbuffer</item>
+      <!-- TODO: No comments, takes expression -->
+      <item>lgetexpr</item>
+      <item>lgetfile</item>
+      <!-- TODO: Like grep -->
+      <item>lgrep</item>
+      <!-- TODO: Like grep -->
+      <item>lgrepadd</item>
+      <!-- TODO: Like grep -->
+      <item>lhelpgrep</item>
+      <item>ll</item>
+      <item>llast</item>
+      <item>llist</item>
+      <!-- TODO: Like make -->
+      <item>lmake</item>
+      <!-- TODO: Like map -->
+      <item>lmap</item>
+      <item>lmapclear</item>
+      <item>lnext</item>
+      <item>lnewer</item>
+      <item>lnfile</item>
+      <!-- TODO: Like map -->
+      <item>lnoremap</item>
+      <!-- TODO: Makes remainder of file keybindings -->
+      <item>loadkeymap</item>
+      <item>loadview</item>
+      <!-- TODO: Takes command -->
+      <item>lockmarks</item>
+      <item>lockvar</item>
+      <item>lolder</item>
+      <item>lopen</item>
+      <item>lprevious</item>
+      <item>lpfile</item>
+      <item>lrewind</item>
+      <item>ls</item>
+      <item>ltag</item>
+      <item>lunmap</item>
+      <!-- TODO: Involve lua syntax -->
+      <item>lua</item>
+      <!-- TODO: Involve lua syntax -->
+      <item>luado</item>
+      <item>luafile</item>
+      <!-- TODO: No comments -->
+      <item>lvimgrep</item>
+      <item>lvimgrepadd</item>
+      <item>lwindow</item>
+      <item>move</item>
+      <item>mark</item>
+      <!-- TODO: Executes make, No comments No bar -->
+      <item>make</item>
+      <!-- TODO: No comments. RHS may be an expression or a command. Check for <expr> -->
+      <item>map</item>
+      <item>mapclear</item>
+      <item>marks</item>
+      <item>match</item>
+      <!-- TODO: Like amenu -->
+      <item>menu</item>
+      <item>menutranslate</item>
+      <item>messages</item>
+      <item>mkexrc</item>
+      <item>mksession</item>
+      <item>mkspell</item>
+      <item>mkvimrc</item>
+      <item>mkview</item>
+      <item>mode</item>
+      <item>mzscheme</item>
+      <item>mzfile</item>
+      <item>nbclose</item>
+      <item>nbkey</item>
+      <item>nbstart</item>
+      <item>next</item>
+      <item>new</item>
+      <!-- TODO: Like map -->
+      <item>nmap</item>
+      <item>nmapclear</item>
+      <!-- TODO: Like amenu -->
+      <item>nmenu</item>
+      <!-- TODO: Like map -->
+      <item>nnoremap</item>
+      <!-- TODO: Like amenu -->
+      <item>nnoremenu</item>
+      <!-- TODO: Takes command -->
+      <item>noautocmd</item>
+      <!-- TODO: Like map -->
+      <item>noremap</item>
+      <item>nohlsearch</item>
+      <!-- TODO: Like abbreviate -->
+      <item>noreabbrev</item>
+      <!-- TODO: Like amenu -->
+      <item>noremenu</item>
+      <item>normal</item>
+      <item>number</item>
+      <item>nunmap</item>
+      <item>nunmenu</item>
+      <item>oldfiles</item>
+      <item>open</item>
+      <!-- TODO: Like map -->
+      <item>omap</item>
+      <item>omapclear</item>
+      <!-- TODO: Like amenu -->
+      <item>omenu</item>
+      <item>only</item>
+      <!-- TODO: Like map -->
+      <item>onoremap</item>
+      <!-- TODO: Like amenu -->
+      <item>onoremenu</item>
+      <item>options</item>
+      <item>ounmap</item>
+      <item>ounmenu</item>
+      <item>ownsyntax</item>
+      <item>pclose</item>
+      <item>pedit</item>
+      <!-- TODO: Involve perl syntax -->
+      <item>perl</item>
+      <item>print</item>
+      <item>profdel</item>
+      <item>profile</item>
+      <item>promptfind</item>
+      <item>promptrepl</item>
+      <!-- TODO: Involve perl syntax -->
+      <item>perldo</item>
+      <item>pop</item>
+      <item>popup</item>
+      <item>ppop</item>
+      <item>preserve</item>
+      <item>previous</item>
+      <item>psearch</item>
+      <item>ptag</item>
+      <item>ptNext</item>
+      <item>ptfirst</item>
+      <item>ptjump</item>
+      <item>ptlast</item>
+      <item>ptnext</item>
+      <item>ptprevious</item>
+      <item>ptrewind</item>
+      <item>ptselect</item>
+      <item>put</item>
+      <item>pwd</item>
+      <!-- TODO: Involve python highlighting -->
+      <item>python3</item>
+      <item>py3file</item>
+      <!-- TODO: Involve python highlighting -->
+      <item>python</item>
+      <item>pyfile</item>
+      <item>quit</item>
+      <item>quitall</item>
+      <item>qall</item>
+      <item>read</item>
+      <item>recover</item>
+      <item>redo</item>
+      <item>redir</item>
+      <item>redraw</item>
+      <item>redrawstatus</item>
+      <item>registers</item>
+      <item>resize</item>
+      <item>retab</item>
+      <item>return</item>
+      <item>rewind</item>
+      <item>right</item>
+      <item>rightbelow</item>
+      <!-- TODO: Involve ruby highlighting -->
+      <item>ruby</item>
+      <item>rubydo</item>
+      <item>rubyfile</item>
+      <item>rundo</item>
+      <item>runtime</item>
+      <item>rviminfo</item>
+      <!-- TODO: Patterns!!! -->
+      <item>substitute</item>
+      <item>sNext</item>
+      <item>list</item>
+      <item>sandbox</item>
+      <item>sargument</item>
+      <item>sall</item>
+      <item>saveas</item>
+      <item>sbuffer</item>
+      <item>sbNext</item>
+      <item>list</item>
+      <item>sball</item>
+      <item>sbfirst</item>
+      <item>sblast</item>
+      <item>sbmodified</item>
+      <item>sbnext</item>
+      <item>sbprevious</item>
+      <item>sbrewind</item>
+      <item>scriptnames</item>
+      <item>scriptencoding</item>
+      <item>scscope</item>
+      <!-- TODO: Similar to let, but more limited. Does not except expressions -->
+      <item>set</item>
+      <item>setfiletype</item>
+      <!-- TODO: Like set -->
+      <item>setglobal</item>
+      <item>setlocal</item>
+      <item>sfind</item>
+      <item>sfirst</item>
+      <item>shell</item>
+      <item>simalt</item>
+      <item>sign</item>
+      <!-- TODO: Takes a command -->
+      <item>silent</item>
+      <item>sleep</item>
+      <item>slast</item>
+      <item>smagic</item>
+      <!-- TODO: Like map -->
+      <item>smap</item>
+      <item>smapclear</item>
+      <!-- TODO: Line amenu -->
+      <item>smenu</item>
+      <item>snext</item>
+      <item>sniff</item>
+      <item>snomagic</item>
+      <!-- TODO: Like map -->
+      <item>snoremap</item>
+      <!-- TODO: Like amenu -->
+      <item>snoremenu</item>
+      <item>sort</item>
+      <item>source</item>
+      <item>spelldump</item>
+      <item>spellgood</item>
+      <item>spellinfo</item>
+      <item>spellrepall</item>
+      <item>spellundo</item>
+      <item>spellwrong</item>
+      <item>split</item>
+      <item>sprevious</item>
+      <item>srewind</item>
+      <item>stop</item>
+      <item>stag</item>
+      <item>startinsert</item>
+      <item>startgreplace</item>
+      <item>startreplace</item>
+      <item>stopinsert</item>
+      <item>stjump</item>
+      <item>stselect</item>
+      <item>sunhide</item>
+      <item>sunmap</item>
+      <item>sunmenu</item>
+      <item>suspend</item>
+      <item>sview</item>
+      <item>swapname</item>
+      <!-- TODO: Accepts patterns and various arguments -->
+      <item>syntax</item>
+      <item>syncbind</item>
+      <item>t</item>
+      <item>tNext</item>
+      <item>tabNext</item>
+      <item>tabclose</item>
+      <!-- TODO: Takes commands -->
+      <item>tabdo</item>
+      <item>tabedit</item>
+      <item>tabfind</item>
+      <item>tabfirst</item>
+      <item>tablast</item>
+      <item>tabmove</item>
+      <item>tabnew</item>
+      <item>tabnext</item>
+      <item>tabonly</item>
+      <item>tabprevious</item>
+      <item>tabrewind</item>
+      <item>tabs</item>
+      <item>tab</item>
+      <item>tag</item>
+      <item>tags</item>
+      <!-- TODO: Involve tcl highlighting -->
+      <item>tcl</item>
+      <item>tcldo</item>
+      <item>tclfile</item>
+      <item>tearoff</item>
+      <item>tfirst</item>
+      <item>throw</item>
+      <item>tjump</item>
+      <item>tlast</item>
+      <item>tmenu</item>
+      <item>tnext</item>
+      <item>topleft</item>
+      <item>tprevious</item>
+      <item>trewind</item>
+      <item>try</item>
+      <item>tselect</item>
+      <item>tunmenu</item>
+      <item>undo</item>
+      <item>undojoin</item>
+      <item>undolist</item>
+      <item>unabbreviate</item>
+      <item>unhide</item>
+      <item>unlet</item>
+      <item>unlockvar</item>
+      <item>unmap</item>
+      <item>unmenu</item>
+      <item>unsilent</item>
+      <item>update</item>
+      <item>v</item>
+      <!-- TODO: Like global -->
+      <item>vglobal</item>
+      <item>version</item>
+      <item>verbose</item>
+      <item>vertical</item>
+      <!-- TODO: No comments, Takes pattern -->
+      <item>vimgrep</item>
+      <!-- TODO: No comments, Takes pattern -->
+      <item>vimgrepadd</item>
+      <item>visual</item>
+      <item>viusage</item>
+      <item>view</item>
+      <!-- TODO: Like map -->
+      <item>vmap</item>
+      <item>vmapclear</item>
+      <!-- TODO: Like amenu -->
+      <item>vmenu</item>
+      <item>vnew</item>
+      <!-- TODO: Like map -->
+      <item>vnoremap</item>
+      <!-- TODO: Like amenu -->
+      <item>vnoremenu</item>
+      <item>vsplit</item>
+      <item>vunmap</item>
+      <item>vunmenu</item>
+      <!-- TODO: Takes command -->
+      <item>windo</item>
+      <item>write</item>
+      <item>wNext</item>
+      <item>wall</item>
+      <item>while</item>
+      <item>winsize</item>
+      <!-- TODO: Window command? -->
+      <item>wincmd</item>
+      <item>winpos</item>
+      <item>wnext</item>
+      <item>wprevious</item>
+      <item>wq</item>
+      <item>wqall</item>
+      <item>wsverb</item>
+      <item>wundo</item>
+      <item>wviminfo</item>
+      <item>xit</item>
+      <item>xall</item>
+      <item>xmapclear</item>
+      <!-- TODO: Like map -->
+      <item>xmap</item>
+      <!-- TODO: Like amenu -->
+      <item>xmenu</item>
+      <!-- TODO: Like map -->
+      <item>xnoremap</item>
+      <!-- TODO: Like amenu -->
+      <item>xnoremenu</item>
+      <item>xunmap</item>
+      <item>xunmenu</item>
+      <item>yank</item>
+      <item>z</item>
+      <item>~</item>
+    </list>
+    <list name="events">
+      <item>BufNewFile</item>
+      <item>BufReadPre</item>
+      <item>BufRead</item>
+      <item>BufReadPost</item>
+      <item>BufReadCmd</item>
+      <item>FileReadPre</item>
+      <item>FileReadPost</item>
+      <item>FileReadCmd</item>
+      <item>FilterReadPre</item>
+      <item>FilterReadPost</item>
+      <item>StdinReadPre</item>
+      <item>StdinReadPost</item>
+      <item>BufWrite</item>
+      <item>BufWritePre</item>
+      <item>BufWritePost</item>
+      <item>BufWriteCmd</item>
+      <item>FileWritePre</item>
+      <item>FileWritePost</item>
+      <item>FileWriteCmd</item>
+      <item>FileAppendPre</item>
+      <item>FileAppendPost</item>
+      <item>FileAppendCmd</item>
+      <item>FilterWritePre</item>
+      <item>FilterWritePost</item>
+      <item>BufAdd</item>
+      <item>BufCreate</item>
+      <item>BufDelete</item>
+      <item>BufWipeout</item>
+      <item>BufFilePre</item>
+      <item>BufFilePost</item>
+      <item>BufEnter</item>
+      <item>BufLeave</item>
+      <item>BufWinEnter</item>
+      <item>BufWinLeave</item>
+      <item>BufUnload</item>
+      <item>BufHidden</item>
+      <item>BufNew</item>
+      <item>SwapExists</item>
+      <item>FileType</item>
+      <item>Syntax</item>
+      <item>EncodingChanged</item>
+      <item>TermChanged</item>
+      <item>VimEnter</item>
+      <item>GUIEnter</item>
+      <item>TermResponse</item>
+      <item>VimLeavePre</item>
+      <item>VimLeave</item>
+      <item>FileChangedShell</item>
+      <item>FileChangedShellPost</item>
+      <item>FileChangedRO</item>
+      <item>ShellCmdPost</item>
+      <item>ShellFilterPost</item>
+      <item>FuncUndefined</item>
+      <item>SpellFileMissing</item>
+      <item>SourcePre</item>
+      <item>SourceCmd</item>
+      <item>VimResized</item>
+      <item>FocusGained</item>
+      <item>FocusLost</item>
+      <item>CursorHold</item>
+      <item>CursorHoldI</item>
+      <item>CursorMoved</item>
+      <item>CursorMovedI</item>
+      <item>WinEnter</item>
+      <item>WinLeave</item>
+      <item>TabEnter</item>
+      <item>TabLeave</item>
+      <item>CmdwinEnter</item>
+      <item>CmdwinLeave</item>
+      <item>InsertEnter</item>
+      <item>InsertChange</item>
+      <item>InsertLeave</item>
+      <item>ColorScheme</item>
+      <item>RemoteReply</item>
+      <item>QuickFixCmdPre</item>
+      <item>QuickFixCmdPost</item>
+      <item>SessionLoadPost</item>
+      <item>MenuPopup</item>
+      <item>User</item>
+    </list>
+    <contexts>
+      <context attribute="Normal Text" lineEndContext="#pop" name="exCommand" fallthrough="true" fallthroughContext="#pop!simpleCommand">
+        <DetectSpaces attribute="Normal Text" context="#stay"/>
+        <!-- When at the exCommand level, skip over continuation characters -->
+        <DetectChar attribute="Operator" char="\" firstNonSpace="true" />
+        <!-- Start of line comment. -->
+        <DetectChar attribute="Comment" context="comment" char="&quot;" firstNonSpace="true"/>
+        <!-- Shebang -->
+        <Detect2Chars attribute="Comment" context="comment" char="#" char1="!" firstNonSpace="true"/>
+        <DetectSpaces attribute="Normal Text" context="#stay"/>
+        <DetectChar attribute="Operator" context="#pop!exCommandRange" char=":"/>
+        <IncludeRules context="exCommandHead"/>
+      </context>
+      <context attribute="Normal Text" name="exCommandRange" lineEndContext="#pop#pop" fallthrough="true" fallthroughContext="#pop!simpleCommand">
+        <RegExpr attribute="Normal Text" context="#pop!exCommandHead" String="%|(\d+|\.|\$)([+-]\d+)?([,;](\d+|\.|\$)([+-]\d+)?)?"/>
+      </context>
+      <context attribute="Normal Text" name="exCommandHead" lineEndContext="#pop#pop" fallthrough="true" fallthroughContext="#pop!simpleCommand">
+        <WordDetect attribute="Keyword" context="#pop!simpleCommand" String="function" beginRegion="block"/>
+        <WordDetect attribute="Keyword" context="#pop!simpleCommand" String="endfunction" endRegion="block"/>
+        <keyword attribute="Flow" context="#pop!simpleCommand" String="beginBlockFlow" beginRegion="block"/>
+        <keyword attribute="Flow" context="#pop!simpleCommand" String="endBlockFlow" endRegion="block"/>
+        <keyword attribute="Flow" context="#pop!simpleCommand" String="flow"/>
+        <keyword attribute="BuiltInCommand" context="#pop!simpleCommand" String="builtInCommand"/>
+      </context>
+      <!--
+      Simple command. Strings and numbers will be detected, but comments are allowed.
+      Depending on the command in question this might or might not be the correct
+      interpretation. Bars work.
+      -->
+      <context attribute="Normal Text" lineEndContext="continuationCheck" name="simpleCommand">
+        <keyword attribute="Operator" context="#stay" String="operators"/>
+        <keyword attribute="Event" context="#stay" String="events"/>
+        <RegExpr attribute="Operator" context="#stay" String="\(\|| |(#([0-9]|#|&lt;[1-9]))"/>
+        <RegExpr attribute="VerbatimString" context="#stay" String="'(''|[^'])*'"/>
+        <RegExpr attribute="String" context="#stay" String="&quot;(\\.|[^&quot;\\])*&quot;"/>
+        <DetectChar attribute="Operator" context="#pop#pop" char="|"/>
+        <DetectChar attribute="Comment" context="comment" char="&quot;"/>
+      </context>
+      <context attribute="Normal Text" lineEndContext="#stay" name="continuationCheck" fallthrough="true" fallthroughContext="#pop#pop">
+        <DetectSpaces attribute="Normal Text" context="#stay"/>
+        <DetectChar attribute="Operator" context="#pop" char="\" firstNonSpace="true"/>
+      </context>
+      <context attribute="Comment" lineEndContext="#pop" name="comment">
+        <keyword attribute="Alert" context="#stay" String="tasks"/>
+      </context>
+      <!-- <RegExpr attribute="SpecialChar" context="#stay" String="\\([0-7]{1,3}|(x|X)[0-9a-fA-F]{1,2}|u[0-9a-fA-F]{1,4}|U[0-9a-fA-F]{1,8}|[befnrt\\&quot;]|&lt;([a-zA-Z0-9_-])*&gt;)" /> -->
+    </contexts>
+    <itemDatas>
+      <itemData name="Normal Text" defStyleNum="dsNormal"/>
+      <itemData name="Keyword" defStyleNum="dsKeyword"/>
+      <itemData name="Operator" defStyleNum="dsOperator"/>
+      <itemData name="Comment" defStyleNum="dsComment"/>
+      <itemData name="BuiltInCommand" defStyleNum="dsBuiltIn"/>
+      <itemData name="Alert" defStyleNum="dsAlert"/>
+      <itemData name="String" defStyleNum="dsString"/>
+      <itemData name="SpecialChar" defStyleNum="dsSpecialChar"/>
+      <itemData name="VerbatimString" defStyleNum="dsVerbatimString"/>
+      <itemData name="Flow" defStyleNum="dsControlFlow"/>
+      <itemData name="Event" defStyleNum="dsOthers" />
+    </itemDatas>
+  </highlighting>
+  <general>
+    <comments>
+      <comment name="singleLine" start="&quot;"/>
+    </comments>
+    <keywords casesensitive="1"/>
+  </general>
+</language>
