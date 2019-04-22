@@ -96,7 +96,8 @@ autocmd User plugin-skeleton-detect
   \ |   SkeletonLoad tex
   \ | endif
 
-map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
+command -nargs=0 UHLC echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
   \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
-  \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
+  \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"
 
+map <F10> :UHLC<CR>
