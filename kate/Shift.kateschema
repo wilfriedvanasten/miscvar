@@ -1,0 +1,110 @@
+[Default Item Styles - Schema Shift]
+; 0
+Normal=ffd5d5d5,ffd5d5d5,,,,,-,-,,---
+; 1
+Keyword=ffff7F00,ffff7F00,1,,,,-,-,,---
+; 2
+Function=ff7fff00,ff7fff00,,0,,,-,-,,---
+; 3
+Variable=ffbfff00,ffbfff00,0,,,,-,-,,---
+; 4
+Control Flow=ffff7F00,ffff7F00,1,,,,-,-,,---
+; 5
+Operator=ffd5d5d5,ffd5d5d5,,,,,-,-,,---
+; 6
+Built-in=ffff7F00,ffff7F00,,0,,,-,-,,---
+; TODO: Move to green/red schema
+; 7
+Extension=ff0095ff,ff0095ff,1,,,,-,-,,---
+; 8
+Preprocessor=ff00bf00,ff00bf00,,,,,-,-,,---
+; 9
+Attribute=ffffffff,ffffffff,,,,,-,-,,---
+; 10
+Character=ffffffff,ffffffff,1,,,,-,-,,---
+; 11
+Special Character=ff00bf00,ff00bf00,,,,,-,-,,---
+; 12
+String=ffffffff,ffffffff,1,,,,-,-,,---
+; 13
+Verbatim String=ffffffff,ffffffff,1,,,,-,-,,---
+; 14
+Special String=ffffffff,ffffffff,1,,,,-,-,,---
+; 15
+Import=ffffbf00,ffffbf00,1,,,,-,-,,---
+; 16
+Data Type=ffffbf00,ffffbf00,1,,,,-,-,,---
+; 17
+Decimal/Value=ffffffff,ffffffff,1,,,,-,-,,---
+; 18
+Base-N Integer=ffffffff,ffffffff,1,,,,-,-,,---
+; 19
+Floating Point=ffffffff,ffffffff,1,,,,-,-,,---
+; 20
+Constant=ff7fff00,ff7fff00,0,1,,,-,-,,---
+; 21
+Comment=ff80d5d5,ff80d5d5,,,,,-,-,,---
+; 22
+Documentation=ff80d5d5,ff80d5d5,,,,,-,-,,---
+; 23
+Annotation=ff80d5d5,ff80d5d5,1,,,,-,-,,---
+; 24
+Comment Variable=fffffff,fffffff,,,,,-,-,,---
+; 25
+Region Marker=ffffffff,ffffffff,,,,,-,-,,---
+; 26
+Information=fff67400,fff67400,,,,,-,-,,---
+; 27
+Warning=ffff5555,ffff5555,,,,,-,-,,---
+; 28
+Alert=ffffbf00,ffffbf00,1,,,,-,-,,---
+; 29
+Error=ffff5555,ffff5555,,,,,-,-,,---
+; 30
+Others=ffffbf00,ffffbf00,,,,,-,-,,---
+
+[Editor Colors]
+Color Background=31,31,31
+Color Code Folding=63,63,63
+Color Current Line Number=213,213,213
+Color Highlighted Bracket=127,63,0
+Color Highlighted Line=63,63,63
+Color Icon Bar=31,31,31
+# ???
+Color Indentation Line=98,114,164
+Color Line Number=106,106,106
+Color MarkType 1=213,213,213
+Color MarkType 2=255,47,0
+Color MarkType 3=255,213,0
+Color MarkType 4=213,213,213
+Color MarkType 5=63,63,63
+Color MarkType 6=255,213,0
+Color MarkType 7=255,47,0
+Color Modified Lines=255,47,0
+Color Replace Highlight=127,106,0
+Color Saved Lines=106,106,106
+Color Search Highlight=0,95,0
+Color Selection=95,95,95
+Color Separator=106,106,106
+Color Spelling Mistake Line=255,47,0
+Color Tab Marker=106,106,106
+Color Template Background=31,31,31
+Color Template Editable Placeholder=31,31,31
+Color Template Focused Editable Placeholder=31,31,31
+Color Template Not Editable Placeholder=63,63,63
+Color Word Wrap Marker=47,47,47
+
+; Some decent highlighting for Brackets
+[Highlighting Common Lisp - Schema Shift]
+Common Lisp:Brackets=10,,,,,,,,,,---
+
+; Make enitities a SpecialChar
+[Highlighting XML - Schema Shift]
+XML:EntityRef=11,,,,,,,,,,---
+XML:PEntityRef=11,,,,,,,,,,---
+
+[KateSchema]
+Font=Hack,9,-1,7,50,0,0,0,0,0
+full schema=true
+highlightings=Common Lisp,XML
+schema=Shift
