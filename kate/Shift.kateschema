@@ -12,12 +12,12 @@ Control Flow=ffff7F00,ffff7F00,1,,,,-,-,,---
 ; 5
 Operator=ffd5d5d5,ffd5d5d5,,,,,-,-,,---
 ; 6
-Built-in=ffff7F00,ffff7F00,,0,,,-,-,,---
+Built-in=ffffbf00,ffffbf00,,0,,,-,-,,---
 ; TODO: Move to green/red schema
 ; 7
 Extension=ff0095ff,ff0095ff,1,,,,-,-,,---
 ; 8
-Preprocessor=ff00bf00,ff00bf00,,,,,-,-,,---
+Preprocessor=ffff7F00,ffff7F00,,,,,-,-,,---
 ; 9
 Attribute=ffffffff,ffffffff,,,,,-,-,,---
 ; 10
@@ -31,9 +31,9 @@ Verbatim String=ffffffff,ffffffff,1,,,,-,-,,---
 ; 14
 Special String=ffffffff,ffffffff,1,,,,-,-,,---
 ; 15
-Import=ffffbf00,ffffbf00,1,,,,-,-,,---
+Import=ffff7F00,ffff7F00,1,,,,-,-,,---
 ; 16
-Data Type=ffffbf00,ffffbf00,1,,,,-,-,,---
+Data Type=ffffbf00,ffffbf00,0,,,,-,-,,---
 ; 17
 Decimal/Value=ffffffff,ffffffff,1,,,,-,-,,---
 ; 18
@@ -43,7 +43,7 @@ Floating Point=ffffffff,ffffffff,1,,,,-,-,,---
 ; 20
 Constant=ff7fff00,ff7fff00,0,1,,,-,-,,---
 ; 21
-Comment=ff80d5d5,ff80d5d5,,,,,-,-,,---
+Comment=ff7f7f7f,ffafafaf,,1,,,-,-,,---
 ; 22
 Documentation=ff80d5d5,ff80d5d5,,,,,-,-,,---
 ; 23
@@ -61,7 +61,7 @@ Alert=ffffbf00,ffffbf00,1,,,,-,-,,---
 ; 29
 Error=ffff5555,ffff5555,,,,,-,-,,---
 ; 30
-Others=ffffbf00,ffffbf00,,,,,-,-,,---
+Others=ffbfff00,ffbfff00,,,,,-,-,,---
 
 [Editor Colors]
 Color Background=31,31,31
