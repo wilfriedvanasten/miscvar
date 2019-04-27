@@ -4,6 +4,7 @@ set background=dark
 set tabstop=4
 set shiftwidth=4
 set relativenumber
+set number
 set autoindent
 
 " When developing in haskell or amanda
@@ -77,13 +78,6 @@ filetype plugin on
 
 " configure browser for haskell_doc.vim
 let g:haddock_browser = "/home/wilfried/screenlinks"
-
-autocmd InsertEnter * :set number
-autocmd InsertLeave * :set relativenumber
-autocmd WinEnter * :set relativenumber
-autocmd WinLeave * :set number
-autocmd FocusGained * :set relativenumber
-autocmd FocusLost * :set number
 
 autocmd User plugin-skeleton-detect
   \ if expand('%:t') ==# 'pom.xml'
