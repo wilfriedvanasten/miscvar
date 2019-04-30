@@ -64,12 +64,12 @@ Error=ffff5555,ffff5555,,,,,-,-,,---
 Others=ffbfff00,ffbfff00,,,,,-,-,,---
 
 [Editor Colors]
-Color Background=31,31,31
+Color Background=28,28,28
 Color Code Folding=63,63,63
 Color Current Line Number=213,213,213
 Color Highlighted Bracket=127,63,0
 Color Highlighted Line=63,63,63
-Color Icon Bar=31,31,31
+Color Icon Bar=28,28,28
 # ???
 Color Indentation Line=98,114,164
 Color Line Number=106,106,106
@@ -88,9 +88,9 @@ Color Selection=95,95,95
 Color Separator=106,106,106
 Color Spelling Mistake Line=255,47,0
 Color Tab Marker=106,106,106
-Color Template Background=31,31,31
-Color Template Editable Placeholder=31,31,31
-Color Template Focused Editable Placeholder=31,31,31
+Color Template Background=28,28,28
+Color Template Editable Placeholder=28,28,28
+Color Template Focused Editable Placeholder=28,28,28
 Color Template Not Editable Placeholder=63,63,63
 Color Word Wrap Marker=47,47,47
 
