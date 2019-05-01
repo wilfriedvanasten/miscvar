@@ -1,17 +1,18 @@
-if exists('+termguicolors')
-  let &t_8f = "\<esc>[38;2;%lu;%lu;%lum"
-  let &t_8b = "\<esc>[48;2;%lu;%lu;%lum"
-  set termguicolors
-endif
-
-syntax on
-
-set background=dark
 set tabstop=4
 set shiftwidth=4
 set relativenumber
 set number
 set autoindent
+
+if $TERM =~ '\v.*-256color' && exists('+termguicolors')
+  let &t_8f = "\<esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<esc>[48;2;%lu;%lu;%lum"
+  set termguicolors
+endif
+
+set background=dark
+syntax on
+colorscheme Shift
 
 " When developing in haskell or amanda
 " we want expanded short tabs
