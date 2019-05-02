@@ -66,7 +66,7 @@ if &t_Co >= 256
   highlight Repeat cterm=bold ctermfg=208 ctermbg=bg gui=bold guifg=#ff7f00 guibg=bg
   highlight Keyword cterm=bold ctermfg=208 ctermbg=bg gui=bold guifg=#ff7f00 guibg=bg
   highlight Exception cterm=bold ctermfg=208 ctermbg=bg gui=bold guifg=#ff7f00 guibg=bg
-  highlight Operator cterm=NONE ctermfg=fg ctermbg=bg gui=NONE guifg=fg guibg=bg
+  highlight Operator cterm=NONE ctermfg=226 ctermbg=bg gui=NONE guifg=#d5d500 guibg=bg
   highlight PreProc cterm=NONE ctermfg=208 ctermbg=bg gui=NONE guifg=#ff7f00 guibg=bg
   highlight Type cterm=NONE ctermfg=220 ctermbg=bg gui=NONE guifg=#ffbf00 guibg=bg
   highlight Special cterm=NONE ctermfg=34 ctermbg=bg gui=NONE guifg=#00bf00 guibg=bg

@@ -10,7 +10,7 @@ Variable=ffbfff00,ffbfff00,0,,,,-,-,,---
 ; 4
 Control Flow=ffff7F00,ffff7F00,1,,,,-,-,,---
 ; 5
-Operator=ffd5d5d5,ffd5d5d5,,,,,-,-,,---
+Operator=ffd5d500,ffd5d500,,,,,-,-,,---
 ; 6
 Built-in=ffffbf00,ffffbf00,,0,,,-,-,,---
 ; TODO: Move to green/red schema
