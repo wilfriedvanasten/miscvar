@@ -17,7 +17,7 @@ function _git_is_head_symbolic_ref
 end
 
 function _git_tag
-  command git describe --tags --exact-match ^/dev/null
+  command git describe --tags --exact-match 2> /dev/null
 end
 
 function _git_checkout_type
@@ -39,7 +39,7 @@ function _git_branch_name
     case tag
       _git_tag
     case detached
-      command git show-ref --head -s --abbrev | head -n1 ^/dev/null
+      command git show-ref --head -s --abbrev | head -n1 2> /dev/null
   end
 end
 
@@ -59,7 +59,7 @@ end
 
 function _git_remote_name
   set -l branch_name (_git_branch_name)
-  command git config --get "branch.$branch_name.remote" ^ /dev/null
+  command git config --get "branch.$branch_name.remote" 2> /dev/null
 end
 
 # Returns the current git remote status like (+4, -1)
@@ -216,11 +216,11 @@ end
 
 function fish_prompt
   set -g last_status $status
-  set_color 007FFF ^/dev/null
+  set_color 007FFF 2> /dev/null
     and set -g prompt_color 007FFF
     or set -g prompt_color cyan
   if _is_user_root
-    set_color FF8000 ^/dev/null
+    set_color FF8000 2> /dev/null
       and set prompt_color FF8000
       or set prompt_color yellow
   end
