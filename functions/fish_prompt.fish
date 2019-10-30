@@ -75,9 +75,9 @@ end
 # but only if the current branch is not synced
 function _git_remote_status
   if _git_remote_not_synced
-    set -l remote_status (_git_status | sed -e 's/^.*\[\\(.*\\)\]$/\1/g')
-    if string match -e "ahead" $remote_status > /dev/null
-      if string match -e "behind" $remote_status > /dev/null
+    set -l remote_status (string match -r '^.*\\[(.*)\\]$' (_git_status))
+    if string match -e "ahead" $remote_status[2] > /dev/null
+      if string match -e "behind" $remote_status[2] > /dev/null
         set remote_status "±"
         use_simple_glyph
           set remote_status "+-"
