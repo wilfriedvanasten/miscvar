@@ -63,7 +63,12 @@ function _git_remote_not_synced
 end
 
 function _git_remote_name
-  command git remote 2> /dev/null
+  set -l match (string match -r '\\.\\.\\.([^/]*)(/?)' (_git_status))
+  if test "$match"
+    echo $match[2]
+  else
+    return 1
+  end
 end
 
 # Returns the current git remote status like (+4, -1)
