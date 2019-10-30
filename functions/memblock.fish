@@ -2,14 +2,20 @@
 # a format that fits into the tmux status line. It uses free's +/- caches lines to achieve
 # this and uses bc to calculate the percentage
 
+function _read_meminfo
+  for line in (cat /proc/meminfo)
+    echo $line
+  end
+end
+
 function memblock
-  read -z meminfo  < /proc/meminfo
-  set -l total (echo "$meminfo" | grep -e "^MemTotal:" | sed 's#^[^0-9]*\([0-9][0-9]*\)[^0-9]*$#\1#g')
-  set -l available (echo "$meminfo" | grep -e "^MemAvailable:" | sed 's#^[^0-9]*\([0-9][0-9]*\)[^0-9]*$#\1#g')
+  set -l meminfo (_read_meminfo)
+  set -l total (string match -r '^MemTotal:[^0-9]*([0-9][0-9]*)' $meminfo)[2]
+  set -l available (string match -r '^MemAvailable:[^0-9]*([0-9][0-9]*)' $meminfo)[2]
   if test -z $available
-    set -l free (echo "$meminfo" | grep -e "^MemFree:" | sed 's#^[^0-9]*\([0-9][0-9]*\)[^0-9]*$#\1#g')
-    set -l buffers (echo "$meminfo" | grep -e "^Buffers:" | sed 's#^[^0-9]*\([0-9][0-9]*\)[^0-9]*$#\1#g')
-    set -l cached (echo "$meminfo" | grep -e '^Cached:' | sed 's#^[^0-9]*\([0-9][0-9]*\)[^0-9]*$#\1#g')
+    set -l free (string match -r '^MemFree:[^0-9]*([0-9][0-9]*)' $meminfo)[2]
+    set -l buffers (string match -r '^Buffers:[^0-9]*([0-9][0-9]*)' $meminfo)[2]
+    set -l cached (string match -r '^Cached:[^0-9]*([0-9][0-9]*)' $meminfo)[2]
     set available (math "$free + $buffers + $cached")
   end
   set -l raw_perc (math -s2 "(($total-$available)/$total)*10")
