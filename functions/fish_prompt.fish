@@ -9,7 +9,10 @@ end
 # Calls git status in such a way that it is suitable
 # for use in a script
 function _git_status
-  command git status --porcelain $argv
+  if not set -q _git_status_value
+    set -g _git_status_value (command git status --porcelain -b)
+  end
+  string join \n $_git_status_value
 end
 
 function _git_is_head_symbolic_ref
@@ -21,13 +24,16 @@ function _git_tag
 end
 
 function _git_checkout_type
-  if _git_is_head_symbolic_ref
-    echo "branch"
-  else if _git_tag > /dev/null
-    echo "tag"
-  else
-    echo "detached"
+  if not set -q _git_checkout_type_value
+    if _git_is_head_symbolic_ref
+      set -g _git_checkout_type_value "branch"
+    else if _git_tag > /dev/null
+      set -g _git_checkout_type_value "tag"
+    else
+      set -g _git_checkout_type_value "detached"
+    end
   end
+  echo $_git_checkout_type_value
 end
 
 # Gets the currently checked out git branch
@@ -45,37 +51,35 @@ end
 
 # Checks if the git repo is dirty.
 function _git_is_git_dirty
-  # Test will return true if the string is not empty
-  # use head -n 1 to not give multiple lines to test
-  test (_git_status --ignore-submodules=dirty | head -n 1)
+  # If the repo is dirty git status returns more than one line
+  test (count (_git_status)) -gt 1
 end
 
 # Checks if the git repo is not synced
 # with its remote. Always returns false
 # for branches with no remote
 function _git_remote_not_synced
-  _git_status -b | grep '##' | grep '\\[' > /dev/null
+  string match -e '[' (_git_status) > /dev/null
 end
 
 function _git_remote_name
-  set -l branch_name (_git_branch_name)
-  command git config --get "branch.$branch_name.remote" 2> /dev/null
+  command git remote 2> /dev/null
 end
 
 # Returns the current git remote status like (+4, -1)
 # but only if the current branch is not synced
 function _git_remote_status
   if _git_remote_not_synced
-    set -l remote_status (_git_status -b | grep '##' | sed -e 's/^.*\[\\(.*\\)\]$/\1/g')
-    if echo $remote_status | grep "ahead" > /dev/null
-      if echo $remote_status | grep "behind" > /dev/null
+    set -l remote_status (_git_status | sed -e 's/^.*\[\\(.*\\)\]$/\1/g')
+    if string match -e "ahead" $remote_status > /dev/null
+      if string match -e "behind" $remote_status > /dev/null
         set remote_status "±"
         use_simple_glyph
           set remote_status "+-"
       else
         set remote_status "+"
       end
-    else if echo $remote_status | grep "behind" > /dev/null
+    else if string match -e "behind" > /dev/null
       set remote_status "-"
     end
     echo $remote_status
@@ -105,15 +109,15 @@ function _prompt_dir
 end
 
 function _git_unstaged_changes
-  _git_status | grep -e "^[ MADRC][MD]" > /dev/null
+  string match -r "^[ MADRC][MD]" (_git_status) > /dev/null
 end
 
 function _git_staged_changes
-  _git_status | grep -e "^[MADRC]" > /dev/null
+  string match -r "^[MADRC]" (_git_status) > /dev/null
 end
 
 function _git_untracked_files
-  _git_status | grep -e "^??" > /dev/null
+  string match -r "^\?\?" (_git_status) > /dev/null
 end
 
 function _git_status_symbols
@@ -179,8 +183,7 @@ function _prompt_git
     end
     set -l git_context_line (fold_string $git_path_replace (math $COLUMNS - 4) " $git_short_root@$git_branch ($git_branch_details)")
     set -l git_upper_padding (math (expr length + $git_glyphs) + 1)
-    set_color $prompt_color
-    set_color -r
+    set_color -r $prompt_color
     echo -n (repeatc $git_upper_padding " ")
     echo -n $git_context_line
     echo (repeatc (math $COLUMNS - (expr length + $git_context_line) - $git_upper_padding) " ")
@@ -192,6 +195,8 @@ function _prompt_git
       _prompt_segment $git_status_color "$git_glyphs $git_project_path"
     end
     _prompt_arrow $git_status_color
+    set -e -g _git_status_value
+    set -e -g _git_checkout_type_value
   end
 end
 
