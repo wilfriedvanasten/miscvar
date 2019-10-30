@@ -1,3 +1,3 @@
 function repeatc
-  string repeat -n $argv[1] "$argv[2]"
+  string repeat -N -n $argv[1] "$argv[2]"
 end
