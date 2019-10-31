@@ -143,66 +143,65 @@ end
 # Outputs one or more segments related
 # to git.
 #
-# Requires the git command
+# Requires the git command and only
+# works in a git repository
 function _prompt_git
-  if git_is_git_repo
-    set -l git_path_replace "…"
-    use_simple_glyph
-      and set git_path_replace "..."
-    set -l git_branch_glyph ""
-    use_simple_glyph
-      and set git_branch_glyph "Y"
-    set -l git_project_root (command git rev-parse --show-toplevel)
-    set -l git_project_path (shorten_path $PWD $git_project_root "")
-    not test "$git_project_path"
-      and set git_project_path "/"
-    set -l git_short_root (shorten_path $git_project_root)
-    set -l git_branch (_git_branch_name)
-    set -l git_branch_details ""
-    set -l git_status_symbols (_git_status_symbols)
-    set -g git_status_color $prompt_color
-    set -l git_glyphs "$git_branch_glyph"
-    switch (_git_checkout_type)
-      case branch
-        test $git_status_symbols
-          and set git_status_color yellow
-        set git_branch_details "local"
-        set -l git_remote_name (_git_remote_name)
-        if test $git_remote_name
-          set git_branch_details "$git_remote_name"
-        end
-      case tag
-        set -l tag_glyph "⌂"
-        use_simple_glyph
-          and set tag_glyph 't'
-        set git_glyphs "$git_glyphs $tag_glyph"
-        set git_status_color red
-        set git_branch_details "tag"
-      case detached
-        set -l detached_glyph "➦"
-        use_simple_glyph
-          and set detached_glyph 'd'
-        set git_glyphs "$git_glyphs $detached_glyph"
-        set git_status_color red
-        set git_branch_details "detached"
-    end
-    set -l git_context_line (fold_string $git_path_replace (math $COLUMNS - 4) " $git_short_root@$git_branch ($git_branch_details)")
-    set -l git_upper_padding (math (expr length + $git_glyphs) + 1)
-    set_color -r $prompt_color
-    echo -n (repeatc $git_upper_padding " ")
-    echo -n $git_context_line
-    echo (repeatc (math $COLUMNS - (expr length + $git_context_line) - $git_upper_padding) " ")
-    set_color normal
-    set_color $git_status_color
-    if test $git_status_symbols
-      _prompt_segment $git_status_color "$git_glyphs $git_project_path $git_status_symbols"
-    else
-      _prompt_segment $git_status_color "$git_glyphs $git_project_path"
-    end
-    _prompt_arrow $git_status_color
-    set -e -g _git_status_value
-    set -e -g _git_checkout_type_value
+  set -l git_path_replace "…"
+  use_simple_glyph
+    and set git_path_replace "..."
+  set -l git_branch_glyph ""
+  use_simple_glyph
+    and set git_branch_glyph "Y"
+  set -l git_project_root (command git rev-parse --show-toplevel)
+  set -l git_project_path (shorten_path $PWD $git_project_root "")
+  not test "$git_project_path"
+    and set git_project_path "/"
+  set -l git_short_root (shorten_path $git_project_root)
+  set -l git_branch (_git_branch_name)
+  set -l git_branch_details ""
+  set -l git_status_symbols (_git_status_symbols)
+  set -g git_status_color $prompt_color
+  set -l git_glyphs "$git_branch_glyph"
+  switch (_git_checkout_type)
+    case branch
+      test $git_status_symbols
+        and set git_status_color yellow
+      set git_branch_details "local"
+      set -l git_remote_name (_git_remote_name)
+      if test $git_remote_name
+        set git_branch_details "$git_remote_name"
+      end
+    case tag
+      set -l tag_glyph "⌂"
+      use_simple_glyph
+        and set tag_glyph 't'
+      set git_glyphs "$git_glyphs $tag_glyph"
+      set git_status_color red
+      set git_branch_details "tag"
+    case detached
+      set -l detached_glyph "➦"
+      use_simple_glyph
+        and set detached_glyph 'd'
+      set git_glyphs "$git_glyphs $detached_glyph"
+      set git_status_color red
+      set git_branch_details "detached"
   end
+  set -l git_context_line (fold_string $git_path_replace (math $COLUMNS - 4) " $git_short_root@$git_branch ($git_branch_details)")
+  set -l git_upper_padding (math (expr length + $git_glyphs) + 1)
+  set_color -r $prompt_color
+  echo -n (repeatc $git_upper_padding " ")
+  echo -n $git_context_line
+  echo (repeatc (math $COLUMNS - (expr length + $git_context_line) - $git_upper_padding) " ")
+  set_color normal
+  set_color $git_status_color
+  if test $git_status_symbols
+    _prompt_segment $git_status_color "$git_glyphs $git_project_path $git_status_symbols"
+  else
+    _prompt_segment $git_status_color "$git_glyphs $git_project_path"
+  end
+  _prompt_arrow $git_status_color
+  set -e -g _git_status_value
+  set -e -g _git_checkout_type_value
 end
 
 # Outputs the final arrow head
