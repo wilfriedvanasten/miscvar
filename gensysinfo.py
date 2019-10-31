@@ -31,5 +31,5 @@ while True:
     with open(os.path.expanduser("~/.memblock"), "w") as memblock:
         memblock.write(create_bar((meminfo.total - meminfo.available) / meminfo.total))
     with open(os.path.expanduser("~/.cpuutilblock"), "w") as cpuutilblock:
-        cpuutilblock.write(create_bar(psutil.cpu_percent())
+        cpuutilblock.write(create_bar(psutil.cpu_percent()))
     time.sleep(20)
