@@ -27,10 +27,9 @@ def create_bar(filled):
 while True:
     meminfo = psutil.virtual_memory()
     numcpus = psutil.cpu_count()
-    load, _, _, = psutil.getloadavg()
 
     with open(os.path.expanduser("~/.memblock"), "w") as memblock:
         memblock.write(create_bar((meminfo.total - meminfo.available) / meminfo.total))
     with open(os.path.expanduser("~/.cpuutilblock"), "w") as cpuutilblock:
-        cpuutilblock.write(create_bar(load / numcpus))
+        cpuutilblock.write(create_bar(psutil.cpu_percent())
     time.sleep(20)
