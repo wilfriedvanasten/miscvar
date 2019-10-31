@@ -32,5 +32,8 @@ function fish_title
     case '*'
       set title "$_"
   end
+  if test "$SSH_CONNECTION"
+    set title "$title ($USER@"(hostname)")"
+  end
   echo $title
 end
