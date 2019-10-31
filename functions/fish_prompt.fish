@@ -10,13 +10,13 @@ end
 # for use in a script
 function _git_status
   if not set -q _git_status_value
-    set -g _git_status_value (command git status --porcelain -b)
+    set -g _git_status_value (command git status --porcelain=v2 -b)
   end
   string join \n $_git_status_value
 end
 
 function _git_is_head_symbolic_ref
-  command git symbolic-ref -q HEAD > /dev/null
+  not string match -r '^# branch.head \(detached\)' (_git_status) > /dev/null
 end
 
 function _git_tag
@@ -41,11 +41,11 @@ end
 function _git_branch_name
   switch (_git_checkout_type)
     case branch
-      command git symbolic-ref --short HEAD
+      echo (string match -r '^# branch.head (.*)' (_git_status))[2]
     case tag
       _git_tag
     case detached
-      command git show-ref --head -s --abbrev | head -n1 2> /dev/null
+      echo (string match -r '^# branch.oid (......).*' (_git_status))[2]
   end
 end
 
@@ -59,11 +59,11 @@ end
 # with its remote. Always returns false
 # for branches with no remote
 function _git_remote_not_synced
-  string match -e '[' (_git_status) > /dev/null
+  string match -r '^# branch.ab.*[1-9].*' (_git_status) > /dev/null
 end
 
 function _git_remote_name
-  set -l match (string match -r '\\.\\.\\.([^/]*)(/?)' (_git_status))
+  set -l match (string match -r '^# branch.upstream ([^/]*)/[^/]*' (_git_status))
   if test "$match"
     echo $match[2]
   else
@@ -75,16 +75,16 @@ end
 # but only if the current branch is not synced
 function _git_remote_status
   if _git_remote_not_synced
-    set -l remote_status (string match -r '^.*\\[(.*)\\]$' (_git_status))
-    if string match -e "ahead" $remote_status[2] > /dev/null
-      if string match -e "behind" $remote_status[2] > /dev/null
+    set -l remote_status (string match -r '^# branch.ab \\+([0-9]+) -([0-9]+)' (_git_status))
+    if test $remote_status[2] -gt 0 > /dev/null
+      if test $remote_status[3] -gt 0 > /dev/null
         set remote_status "±"
         use_simple_glyph
           set remote_status "+-"
       else
         set remote_status "+"
       end
-    else if string match -e "behind" > /dev/null
+    else if test $remote_status[3] -gt 0 > /dev/null
       set remote_status "-"
     end
     echo $remote_status
@@ -114,15 +114,15 @@ function _prompt_dir
 end
 
 function _git_unstaged_changes
-  string match -r "^[ MADRC][MD]" (_git_status) > /dev/null
+  string match -r "^[12u] [.AMDRC][AMDRC]" (_git_status) > /dev/null
 end
 
 function _git_staged_changes
-  string match -r "^[MADRC]" (_git_status) > /dev/null
+  string match -r "^[12u] [MADRC]" (_git_status) > /dev/null
 end
 
 function _git_untracked_files
-  string match -r "^\?\?" (_git_status) > /dev/null
+  string match -r "^\?" (_git_status) > /dev/null
 end
 
 function _git_status_symbols
