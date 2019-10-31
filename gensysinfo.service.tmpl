@@ -1,0 +1,10 @@
+[Unit]
+Description=Tmux status sysinfo generator
+
+[Service]
+Type=simple
+ExecStart=<gensysinfo.py here>
+Restart=always
+
+[Install]
+WantedBy=default.target
