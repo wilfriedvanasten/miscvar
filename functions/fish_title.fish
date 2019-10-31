@@ -34,7 +34,7 @@ function fish_title
   end
   if test "$SSH_CONNECTION"
     and not test "$TMUX"
-    set title "$title ($USER@"(hostname)")"
+    set title "$title - $USER@"(hostname)
   end
   echo $title
 end
