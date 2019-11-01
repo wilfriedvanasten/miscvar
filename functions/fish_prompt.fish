@@ -23,29 +23,20 @@ function _git_tag
   command git describe --tags --exact-match 2> /dev/null
 end
 
-function _git_checkout_type
-  if not set -q _git_checkout_type_value
-    if _git_is_head_symbolic_ref
-      set -g _git_checkout_type_value "branch"
-    else if _git_tag > /dev/null
-      set -g _git_checkout_type_value "tag"
-    else
-      set -g _git_checkout_type_value "detached"
-    end
-  end
-  echo $_git_checkout_type_value
-end
-
 # Gets the currently checked out git branch
 # name, if any.
-function _git_branch_name
-  switch (_git_checkout_type)
-    case branch
+function _git_head
+  if not set -q _git_checkout_type_value
+    if _git_is_head_symbolic_ref
+      echo "branch"
       echo (string match -r '^# branch.head (.*)' (_git_status))[2]
-    case tag
-      _git_tag
-    case detached
+    else if set -l _git_tag_name (_git_tag)
+      echo "tag"
+      echo $_git_tag_name
+    else
+      echo "detached"
       echo (string match -r '^# branch.oid (......).*' (_git_status))[2]
+    end
   end
 end
 
@@ -157,12 +148,13 @@ function _prompt_git
   not test "$git_project_path"
     and set git_project_path "/"
   set -l git_short_root (shorten_path $git_project_root)
-  set -l git_branch (_git_branch_name)
+  set -l git_head (_git_head)
+  set -l git_branch $git_head[2]
   set -l git_branch_details ""
   set -l git_status_symbols (_git_status_symbols)
   set -g git_status_color $prompt_color
   set -l git_glyphs "$git_branch_glyph"
-  switch (_git_checkout_type)
+  switch $git_head[1]
     case branch
       test $git_status_symbols
         and set git_status_color yellow
@@ -202,6 +194,7 @@ function _prompt_git
   _prompt_arrow $git_status_color
   set -e -g _git_status_value
   set -e -g _git_checkout_type_value
+  set -e -g _git_tag_name
 end
 
 # Outputs the final arrow head
