@@ -20,7 +20,7 @@ function _git_set_status
   set -g _git_branch_behind 0
   if set -g _git_status_value (command git status --porcelain=v2 -b 2> null)
     string join \n $_git_status_value | \
-    while read -al line
+    while read -al line -d ' '
       switch $line[1]
         case '#'
           switch $line[2]
