@@ -9,11 +9,56 @@ end
 # Calls git status in such a way that it is suitable
 # for use in a script
 function _git_set_status
-  set -g _git_status_value (command git status --porcelain=v2 -b 2> null)
+  set -g _git_has_untracked_files ""
+  set -g _git_has_staged_changes ""
+  set -g _git_has_unstaged_changes ""
+  set -g _git_branch_head ""
+  set -g _git_branch_upstream ""
+  set -g _git_branch_oid ""
+  # Will only turn non-nil when an upstream is present
+  set -g _git_branch_ahead 0
+  set -g _git_branch_behind 0
+  if set -g _git_status_value (command git status --porcelain=v2 -b 2> null)
+    string join \n $_git_status_value | \
+    while read -al line
+      switch $line[1]
+        case '#'
+          switch $line[2]
+            case 'branch.head'
+              set _git_branch_head $line[3]
+            case 'branch.upstream'
+              set _git_branch_upstream $line[3]
+            case 'branch.ab'
+              set _git_ahead (string sub -s 3 "x$line[3]")
+              set _git_behind (string sub -s 3 "x$line[4]")
+            case 'branch.oid'
+              set _git_oid $line[3]
+          end
+        case '1' '2' 'u'
+          set -l working_tree (string split '' $line[2])
+          switch $working_tree[1]
+            case '.'
+              # No changes here
+            case '*'
+              set _git_has_staged_changes "true"
+          end
+          switch $working_tree[2]
+            case '.'
+              # No changes here
+            case '*'
+              set _git_has_unstaged_changes "true"
+          end
+        case '?'
+          set _git_has_untracked_files "true"
+      end
+    end
+  else
+    return 1
+  end
 end
 
 function _git_is_head_symbolic_ref
-  not string match -r '^# branch.head \(detached\)' $_git_status_value > /dev/null
+  test "$_git_branch_head" != "(detached)"
 end
 
 function _git_tag
@@ -23,31 +68,22 @@ end
 # Gets the currently checked out git branch
 # name, if any.
 function _git_head
-  if not set -q _git_checkout_type_value
-    if _git_is_head_symbolic_ref
-      echo "branch"
-      echo (string match -r '^# branch.head (.*)' $_git_status_value)[2]
-    else if set -l _git_tag_name (_git_tag)
-      echo "tag"
-      echo $_git_tag_name
-    else
-      echo "detached"
-      echo (string match -r '^# branch.oid (......).*' $_git_status_value)[2]
-    end
+  if _git_is_head_symbolic_ref
+    echo "branch"
+    echo $_git_branch_head
+  else if set -l _git_tag_name (_git_tag)
+    echo "tag"
+    echo $_git_tag_name
+  else
+    echo "detached"
+    echo (string sub -l 6 $_git_branch_oid)[2]
   end
-end
-
-# Checks if the git repo is not synced
-# with its remote. Always returns false
-# for branches with no remote
-function _git_remote_not_synced
-  string match -r '^# branch.ab.*[1-9].*' $_git_status_value > /dev/null
 end
 
 function _git_remote_name
   set -l match (string match -r '^# branch.upstream ([^/]*)/[^/]*' $_git_status_value)
-  if test "$match"
-    echo $match[2]
+  if test "$_git_branch_upstream"
+    echo (string split '/' $_git_branch_upstream)[1]
   else
     return 1
   end
@@ -56,21 +92,18 @@ end
 # Returns the current git remote status like (+4, -1)
 # but only if the current branch is not synced
 function _git_remote_status
-  if _git_remote_not_synced
-    set -l remote_status (string match -r '^# branch.ab \\+([0-9]+) -([0-9]+)' $_git_status_value)
-    if test $remote_status[2] -gt 0 > /dev/null
-      if test $remote_status[3] -gt 0 > /dev/null
-        set remote_status "±"
-        use_simple_glyph
-          set remote_status "+-"
-      else
-        set remote_status "+"
-      end
-    else if test $remote_status[3] -gt 0 > /dev/null
-      set remote_status "-"
+  if test $_git_branch_ahead -gt 0 > /dev/null
+    if test $_git_branch_behind -gt 0 > /dev/null
+      set remote_status "±"
+      use_simple_glyph
+        set remote_status "+-"
+    else
+      set remote_status "+"
     end
-    echo $remote_status
+  else if test $_git_branch_behind -gt 0 > /dev/null
+    set remote_status "-"
   end
+  echo $remote_status
 end
 
 # Checks if the user is root
@@ -96,15 +129,15 @@ function _prompt_dir
 end
 
 function _git_unstaged_changes
-  string match -r "^[12u] [.AMDRC][AMDRC]" $_git_status_value > /dev/null
+  test "$_git_has_unstaged_changes"
 end
 
 function _git_staged_changes
-  string match -r "^[12u] [MADRC]" $_git_status_value > /dev/null
+  test "$_git_has_staged_changes"
 end
 
 function _git_untracked_files
-  string match -r "^\?" $_git_status_value > /dev/null
+  test "$_git_has_untracked_files"
 end
 
 function _git_status_symbols
@@ -183,7 +216,6 @@ function _prompt_git
     _prompt_segment $git_status_color "$git_glyphs $git_project_path"
   end
   _prompt_arrow $git_status_color
-  set -e -g _git_status_value
 end
 
 # Outputs the final arrow head
