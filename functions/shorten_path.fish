@@ -5,5 +5,5 @@ function shorten_path
     set prefix $argv[2]
     set replacement $argv[3]
   end
-  string replace -r "^$HOME(/|\$)" "~$1" | sed -e 's#\\(\\.\\?[^/]\\{1\\}\\)[^/]*/#\\1/#g'
+  string replace -r "^$prefix(/|\$)" "$replacement\$1" $argv[1] | sed -e 's#\\(\\.\\?[^/]\\{1\\}\\)[^/]*/#\\1/#g'
 end
