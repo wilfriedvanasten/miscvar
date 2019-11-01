@@ -81,7 +81,6 @@ function _git_head
 end
 
 function _git_remote_name
-  set -l match (string match -r '^# branch.upstream ([^/]*)/[^/]*' $_git_status_value)
   if test "$_git_branch_upstream"
     echo (string split '/' $_git_branch_upstream)[1]
   else
