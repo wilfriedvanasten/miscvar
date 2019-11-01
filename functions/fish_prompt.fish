@@ -193,8 +193,6 @@ function _prompt_git
   end
   _prompt_arrow $git_status_color
   set -e -g _git_status_value
-  set -e -g _git_checkout_type_value
-  set -e -g _git_tag_name
 end
 
 # Outputs the final arrow head
