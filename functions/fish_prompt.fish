@@ -57,21 +57,13 @@ function _git_set_status
   end
 end
 
-function _git_is_head_symbolic_ref
-  test "$_git_branch_head" != "(detached)"
-end
-
-function _git_tag
-  command git describe --tags --exact-match 2> /dev/null
-end
-
 # Gets the currently checked out git branch
 # name, if any.
 function _git_head
-  if _git_is_head_symbolic_ref
+  if test "$_git_branch_head" != "(detached)"
     echo "branch"
     echo $_git_branch_head
-  else if set -l _git_tag_name (_git_tag)
+  else if set -l _git_tag_name (command git describe --tags --exact-match 2> /dev/null)
     echo "tag"
     echo $_git_tag_name
   else
@@ -81,11 +73,7 @@ function _git_head
 end
 
 function _git_remote_name
-  if test "$_git_branch_upstream"
-    echo (string split '/' $_git_branch_upstream)[1]
-  else
-    return 1
-  end
+  echo (string split '/' $_git_branch_upstream)[1]
 end
 
 # Returns the current git remote status like (+4, -1)
@@ -127,29 +115,17 @@ function _prompt_dir
   _prompt_arrow $prompt_color
 end
 
-function _git_unstaged_changes
-  test "$_git_has_unstaged_changes"
-end
-
-function _git_staged_changes
-  test "$_git_has_staged_changes"
-end
-
-function _git_untracked_files
-  test "$_git_has_untracked_files"
-end
-
 function _git_status_symbols
   set -l git_status_symbols (_git_remote_status)
-  _git_staged_changes
+  test "$_git_has_staged_changes"
     and set git_status_symbols "$git_status_symbols^"
-  if _git_unstaged_changes
+  if test "$_git_has_unstaged_changes"
     set -l git_dirty_glyph "∗"
     use_simple_glyph
       and set git_dirty_glyph "*"
     set git_status_symbols "$git_status_symbols$git_dirty_glyph"
   end
-  _git_untracked_files
+  test "$_git_has_untracked_files"
     and set git_status_symbols "$git_status_symbols"_
   echo $git_status_symbols
 end
@@ -182,7 +158,7 @@ function _prompt_git
       test $git_status_symbols
         and set git_status_color yellow
       set git_branch_details "local"
-      set -l git_remote_name (_git_remote_name)
+      set -l git_remote_name (string split '/' $_git_branch_upstream[1])[1]
       if test $git_remote_name
         set git_branch_details "$git_remote_name"
       end
