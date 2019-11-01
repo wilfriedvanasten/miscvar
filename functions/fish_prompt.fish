@@ -8,15 +8,12 @@ end
 
 # Calls git status in such a way that it is suitable
 # for use in a script
-function _git_status
-  if not set -q _git_status_value
-    set -g _git_status_value (command git status --porcelain=v2 -b)
-  end
-  string join \n $_git_status_value
+function _git_set_status
+  set -g _git_status_value (command git status --porcelain=v2 -b 2> null)
 end
 
 function _git_is_head_symbolic_ref
-  not string match -r '^# branch.head \(detached\)' (_git_status) > /dev/null
+  not string match -r '^# branch.head \(detached\)' $_git_status_value > /dev/null
 end
 
 function _git_tag
@@ -29,13 +26,13 @@ function _git_head
   if not set -q _git_checkout_type_value
     if _git_is_head_symbolic_ref
       echo "branch"
-      echo (string match -r '^# branch.head (.*)' (_git_status))[2]
+      echo (string match -r '^# branch.head (.*)' $_git_status_value)[2]
     else if set -l _git_tag_name (_git_tag)
       echo "tag"
       echo $_git_tag_name
     else
       echo "detached"
-      echo (string match -r '^# branch.oid (......).*' (_git_status))[2]
+      echo (string match -r '^# branch.oid (......).*' $_git_status_value)[2]
     end
   end
 end
@@ -43,18 +40,18 @@ end
 # Checks if the git repo is dirty.
 function _git_is_git_dirty
   # If the repo is dirty git status returns more than one line
-  test (count (_git_status)) -gt 1
+  test (count $_git_status_value) -gt 1
 end
 
 # Checks if the git repo is not synced
 # with its remote. Always returns false
 # for branches with no remote
 function _git_remote_not_synced
-  string match -r '^# branch.ab.*[1-9].*' (_git_status) > /dev/null
+  string match -r '^# branch.ab.*[1-9].*' $_git_status_value > /dev/null
 end
 
 function _git_remote_name
-  set -l match (string match -r '^# branch.upstream ([^/]*)/[^/]*' (_git_status))
+  set -l match (string match -r '^# branch.upstream ([^/]*)/[^/]*' $_git_status_value)
   if test "$match"
     echo $match[2]
   else
@@ -66,7 +63,7 @@ end
 # but only if the current branch is not synced
 function _git_remote_status
   if _git_remote_not_synced
-    set -l remote_status (string match -r '^# branch.ab \\+([0-9]+) -([0-9]+)' (_git_status))
+    set -l remote_status (string match -r '^# branch.ab \\+([0-9]+) -([0-9]+)' $_git_status_value)
     if test $remote_status[2] -gt 0 > /dev/null
       if test $remote_status[3] -gt 0 > /dev/null
         set remote_status "±"
@@ -105,15 +102,15 @@ function _prompt_dir
 end
 
 function _git_unstaged_changes
-  string match -r "^[12u] [.AMDRC][AMDRC]" (_git_status) > /dev/null
+  string match -r "^[12u] [.AMDRC][AMDRC]" $_git_status_value > /dev/null
 end
 
 function _git_staged_changes
-  string match -r "^[12u] [MADRC]" (_git_status) > /dev/null
+  string match -r "^[12u] [MADRC]" $_git_status_value > /dev/null
 end
 
 function _git_untracked_files
-  string match -r "^\?" (_git_status) > /dev/null
+  string match -r "^\?" $_git_status_value > /dev/null
 end
 
 function _git_status_symbols
@@ -211,7 +208,7 @@ function _prompt_arrow
 end
 
 function _do_prompt_git
-  git_exists; and git_is_git_repo
+  git_exists; and _git_set_status
 end
 
 function fish_prompt
