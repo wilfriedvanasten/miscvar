@@ -1,7 +1,9 @@
 function shorten_path
-  if test (count $argv) -lt 3
-    echo $argv[1] | sed -e "s#$HOME\\(/\\|\$\\)#~\1#g" | sed -e 's#\\(\\.\\?[^/]\\{1\\}\\)[^/]*/#\\1/#g'
-  else
-    echo $argv[1] | sed -e "s#$argv[2]\\(/\\|\$\\)#$argv[3]\1#g" | sed -e 's#\\(\\.\\?[^/]\\{1\\}\\)[^/]*/#\\1/#g'
+  set -l prefix $HOME
+  set -l replacement "~"
+  if test (count $argv) -gt 2
+    set prefix $argv[2]
+    set replacement $argv[3]
   end
+  string replace -r "^$HOME(/|\$)" "~$1" | sed -e 's#\\(\\.\\?[^/]\\{1\\}\\)[^/]*/#\\1/#g'
 end
