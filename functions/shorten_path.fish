@@ -5,5 +5,6 @@ function shorten_path
     set prefix $argv[2]
     set replacement $argv[3]
   end
-  string replace -r "^$prefix(/|\$)" "$replacement\$1" $argv[1] | sed -e 's#\\(\\.\\?[^/]\\{1\\}\\)[^/]*/#\\1/#g'
+  set -l partial_result (string replace -r "^$prefix(/|\$)" "$replacement\$1" $argv[1])
+  string replace -ra '(\\.?[^/]{1})[^/]*/' '$1/' $partial_result
 end
