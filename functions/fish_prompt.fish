@@ -37,12 +37,6 @@ function _git_head
   end
 end
 
-# Checks if the git repo is dirty.
-function _git_is_git_dirty
-  # If the repo is dirty git status returns more than one line
-  test (count $_git_status_value) -gt 1
-end
-
 # Checks if the git repo is not synced
 # with its remote. Always returns false
 # for branches with no remote
