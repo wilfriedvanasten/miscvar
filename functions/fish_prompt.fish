@@ -18,7 +18,7 @@ function _git_set_status
   # Will only turn non-nil when an upstream is present
   set -g _git_branch_ahead 0
   set -g _git_branch_behind 0
-  if set -g _git_status_value (command git status --porcelain=v2 -b 2> null)
+  if set -g _git_status_value (command git status --porcelain=v2 -b 2> /dev/null)
     string join \n $_git_status_value | \
     while read -al line -d ' '
       switch $line[1]
