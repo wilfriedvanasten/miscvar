@@ -216,9 +216,13 @@ function fish_prompt
   set -g last_status $status
   set_color normal
   if _is_user_root
-    set prompt_color '-o FF8000 yellow'
+    set -g prompt_color '-o FF8000 yellow'
   else
-    set prompt_color '-o' 'brwhite'
+    if test (tput colors) = "8"
+      set -g prompt_color '-o' 'white'
+    else
+      set -g prompt_color '-o' 'brwhite'
+    end
   end
   if _do_prompt_git
     _prompt_git
