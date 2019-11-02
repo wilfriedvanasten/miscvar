@@ -1,8 +1,8 @@
 # Prints out an arrow segment.
 function _prompt_segment
-  set_color $argv[1]
+  set_color $argv[1..-2]
   echo -n " "
-  echo -n $argv[2..-1]
+  echo -n $argv[-1]
   echo -n " >"
 end
 
@@ -179,13 +179,12 @@ function _prompt_git
       set git_branch_details "detached"
   end
   set -l git_context_line (fold_string $git_path_replace (math $COLUMNS - 4) " $git_short_root@$git_branch ($git_branch_details)")
-  set -l git_upper_padding (math (string length $git_glyphs) + 1)
-  set_color -r $prompt_color
-  echo -n (repeatc $git_upper_padding " ")
-  echo -n $git_context_line
-  echo (repeatc (math $COLUMNS - (string length "$git_context_line") - $git_upper_padding) " ")
+  set -l git_upper_padding (math (string length $git_glyphs))
+  set_color $prompt_color
+  set_color -r
+  echo (repeatc $git_upper_padding " ")$git_context_line' '
   set_color normal
-  set_color $git_status_color
+  set_color -o $git_status_color
   if test $git_status_symbols
     _prompt_segment $git_status_color "$git_glyphs $git_project_path $git_status_symbols"
   else
@@ -215,20 +214,17 @@ end
 
 function fish_prompt
   set -g last_status $status
-  set_color 007FFF 2> /dev/null
-    and set -g prompt_color 007FFF
-    or set -g prompt_color cyan
+  set_color normal
   if _is_user_root
-    set_color FF8000 2> /dev/null
-      and set prompt_color FF8000
-      or set prompt_color yellow
+    set prompt_color '-o FF8000 yellow'
+  else
+    set prompt_color '-o' 'brwhite'
   end
   if _do_prompt_git
     _prompt_git
   else
     _prompt_dir
   end
-
   set_color normal
   echo -n " "
 end
