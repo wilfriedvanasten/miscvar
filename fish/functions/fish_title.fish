@@ -32,6 +32,12 @@ function fish_title
     case '*'
       set title "$_"
   end
+  set -l relative_shell_level $SHLVL
+  test "$TMUX"
+    and test "$TMUX_SHLVL"
+    and set relative_shell_level (math $SHLVL - $TMUX_SHLVL)
+  test "$relative_shell_level" -gt "1"
+    and set title "$title "(string repeat -n (math $relative_shell_level - 1) '<')
   if test "$SSH_CONNECTION"
     and not test "$TMUX"
     set title "$title - $USER@"(hostname)
