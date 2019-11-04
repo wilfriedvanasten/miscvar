@@ -153,7 +153,7 @@ function _prompt_git
   set -l git_branch_details ""
   set -l git_status_symbols (_git_status_symbols)
   set -g git_status_color $prompt_color
-  set -l git_glyphs "$git_branch_glyph"
+  set -l git_glyphs ""
   switch $git_head[1]
     case branch
       test $git_status_symbols
@@ -167,29 +167,29 @@ function _prompt_git
       set -l tag_glyph "⌂"
       use_simple_glyph
         and set tag_glyph 't'
-      set git_glyphs "$git_glyphs $tag_glyph"
+      set git_glyphs "$tag_glyph"
       set git_status_color red
       set git_branch_details "tag"
     case detached
       set -l detached_glyph "➦"
       use_simple_glyph
         and set detached_glyph 'd'
-      set git_glyphs "$git_glyphs $detached_glyph"
+      set git_glyphs "$detached_glyph"
       set git_status_color red
       set git_branch_details "detached"
   end
-  set -l git_context_line (fold_string $git_path_replace (math $COLUMNS - 4) " $git_short_root@$git_branch ($git_branch_details)")
-  set -l git_upper_padding (math (string length $git_glyphs))
+  set -l git_context_line (fold_string "$git_path_replace" (math $COLUMNS - 4) " $git_branch_glyph $git_short_root@$git_branch ($git_branch_details)")
   set_color $prompt_color
   set_color -r
-  echo (repeatc $git_upper_padding " ")$git_context_line' '
+  echo $git_context_line' '
   set_color normal
   set_color -o $git_status_color
-  if test $git_status_symbols
-    _prompt_segment $git_status_color "$git_glyphs $git_project_path $git_status_symbols"
-  else
-    _prompt_segment $git_status_color "$git_glyphs $git_project_path"
-  end
+  set -l final_segment $git_project_path
+  test "$git_glyphs"
+    and set -l final_segment "$git_glyphs $final_segment"
+  test "$git_status_symbols"
+    and set -l final_segment "$final_segment $git_status_symbols"
+  _prompt_segment $final_segment
   _prompt_arrow $git_status_color
 end
 

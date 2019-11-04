@@ -7,4 +7,5 @@ function shorten_path
   end
   set -l partial_result (string replace -r "^$prefix(/|\$)" "$replacement\$1" $argv[1])
   string replace -ra '(\\.?[^/])[^/]*/' '$1/' $partial_result
+  return 0
 end
