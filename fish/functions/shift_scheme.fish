@@ -1,5 +1,5 @@
 function shift_scheme
-  set fish_color_autosuggestion 7f7f7f brblack
+  set fish_color_autosuggestion 9f9f9f
   set fish_color_cancel -r
   set fish_color_command ffbf00
   set fish_color_comment 7f7f7f
