@@ -71,7 +71,7 @@ function _git_head
     echo $_git_tag_name
   else
     echo "detached"
-    echo (string sub -l 6 $_git_branch_oid)
+    string sub -l 6 $_git_branch_oid
   end
 end
 
