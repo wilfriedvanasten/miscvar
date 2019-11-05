@@ -1,5 +1,5 @@
 set title
-let &titlestring='%{substitute(substitute(expand(''%:p''), $HOME, ''~'', ''''), ''\(\.\?[^/]\)[^/]*/'', ''\1/'', ''g'')}%m - VIM'
+let &titlestring='%{substitute(substitute(expand(''%:p''), $HOME, ''~'', ''''), ''\(\.\?[^/]\)[^/]*/'', ''\1/'', ''g'')}%( %m%r%) - VIM'
 set tabstop=4
 set shiftwidth=4
 set relativenumber
