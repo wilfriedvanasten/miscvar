@@ -86,7 +86,7 @@ function _git_remote_status
     if test $_git_branch_behind -gt 0 > /dev/null
       set remote_status "±"
       use_simple_glyph
-        set remote_status "+-"
+        and set remote_status "+-"
     else
       set remote_status "+"
     end
