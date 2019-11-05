@@ -19,8 +19,7 @@ function shift_scheme
   set fish_color_param bfff00
   set fish_color_quote --bold ffffff
   set fish_color_redirection d5d500
-  # TODO: What does this do again
-  set fish_color_search_match --background=3f3f3f
+  set fish_color_search_match --background=5f5f5f
   set fish_color_selection c0c0c0
   set fish_color_status red
   set fish_color_user normal
@@ -29,6 +28,6 @@ function shift_scheme
   set fish_pager_color_progress --reverse brwhite
   set fish_pager_color_prefix brwhite --underline
   set fish_pager_color_description brwhite
-  set fish_pager_color_completion 7f7f7f brblack
+  set fish_pager_color_completion 9f9f9f
   return 0
 end
