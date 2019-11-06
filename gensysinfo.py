@@ -22,7 +22,10 @@ def create_bar(filled):
     bar = '#[fg=' + color + ']▕'
     bar += blocks[block]
     bar += '▏'
-    bar += str(filled) + "%"
+    if filled >= 100:
+        bar += str(filled)
+    else:
+        bar += "{0:2}%".format(filled)
     bar += '#[fg=default]'
     return bar
 

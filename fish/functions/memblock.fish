@@ -35,6 +35,10 @@ function memblock
   echo -n '▕'
   echo -n $blocks[$block]
   echo -n '▏'
-  echo -n "$perc%"
+  if $perc >= 100
+    printf $perc
+  else
+    printf "%2s%%" $perc
+  end
   echo -n '#[fg=default]'
 end

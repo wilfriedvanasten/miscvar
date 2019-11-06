@@ -25,6 +25,10 @@ function cpuutilblock
   echo -n '▕'
   echo -n $blocks[$block]
   echo -n '▏'
-  echo -n "$ld%"
+  if $ld >= 100
+    printf $ld
+  else
+    printf "%2s%%" $ld
+  end
   echo -n '#[fg=default]'
 end
