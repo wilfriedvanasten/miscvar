@@ -12,7 +12,7 @@ if not tmux has -t "default" 2>&1 > /dev/null
   tmux new -d -s "default"
 end
 if test -z "$TMUX"
-  set default_is_attached (string split ' ' (tmux ls -F '#{session_name} #{session_attached}' | grep "default"))[2]
+  set default_is_attached (string split ' ' (tmux ls -F '#{session_name} #{session_attached}' 2> /dev/null | grep "default"))[2]
   if test "$default_is_attached" = "0"
     exec tmux attach -t "default"
   end
