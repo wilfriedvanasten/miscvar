@@ -31,12 +31,10 @@ function memblock
   end
   set -l blocks '▁' '▂' '▃' '▄' '▅' '▆' '▇' '█'
   echo -n "#[fg=$color]"
-  if not use_simple_glyph
-    set -l block (math (math -s0 "(($perc / (100 / 7) + 0.5)/1)") + 1)
-    echo -n '▕'
-    echo -n $blocks[$block]
-    echo -n '▏'
-  end
+  set -l block (math (math -s0 "(($perc / (100 / 7) + 0.5)/1)") + 1)
+  echo -n '▕'
+  echo -n $blocks[$block]
+  echo -n '▏'
   echo -n "$perc%"
   echo -n '#[fg=default]'
 end

@@ -18,15 +18,13 @@ function cpuutilblock
   end
   set -l blocks '▁' '▂' '▃' '▄' '▅' '▆' '▇' '█'
   echo -n "#[fg=$color]"
-  if not use_simple_glyph
-    set -l block 8
-    if $perc < 100
-      set block (math (math -s0 "(($ld / (100 / 7) + 0.5)/1)") + 1)
-    end
-    echo -n '▕'
-    echo -n $blocks[$block]
-    echo -n '▏'
+  set -l block 8
+  if $perc < 100
+    set block (math (math -s0 "(($ld / (100 / 7) + 0.5)/1)") + 1)
   end
+  echo -n '▕'
+  echo -n $blocks[$block]
+  echo -n '▏'
   echo -n "$ld%"
   echo -n '#[fg=default]'
 end
