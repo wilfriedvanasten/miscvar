@@ -21,8 +21,9 @@ def create_bar(filled):
     block = math.floor(filled / (100 / 7) + 0.5)
     bar = '#[fg=' + color + ']▕'
     bar += blocks[block]
-    bar += '▏#[fg=default]'
+    bar += '▏'
     bar += str(filled) + "%"
+    bar += '#[fg=default]'
     return bar
 
 
