@@ -7,10 +7,6 @@ import math
 blocks = ['▁', '▂', '▃', '▄', '▅', '▆', '▇', '█']
 
 def create_bar(filled):
-    if filled > 1:
-        low = str(int(filled))
-        high = str(int(filled + 1))
-        filled = filled - int(filled)
     filled = int(filled * 100)
     if filled < 50:
         color = "green"
@@ -18,9 +14,12 @@ def create_bar(filled):
         color = "yellow"
     else:
         color = "red"
-    block = math.floor(filled / (100 / 7) + 0.5)
     bar = '#[fg=' + color + ']▕'
-    bar += blocks[block]
+    if filled < 100:
+        block = math.floor(filled / (100 / 7) + 0.5)
+        bar += blocks[block]
+    else:
+        bar += blocks[7]
     bar += '▏'
     if filled >= 100:
         bar += str(filled)
