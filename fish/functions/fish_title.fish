@@ -13,13 +13,6 @@ function fish_title
   switch $_
     case fish
       set title (prompt_pwd)
-    case vim
-      set -l args (_tokenize_command $argv[1])
-      if test (count $args) -gt 1
-        set title "$_ "(shorten_path $args[2])
-      else
-        set title "$_ *"
-      end
     case ssh
       set -l args (_tokenize_command $argv[1])
       set ssh_user (_ssh_find_config_value "User" $args[2..-1])
@@ -29,6 +22,24 @@ function fish_title
       else
         set title "$argv"
       end
+    case sudo
+      set -l c (_tokenize_command $argv[1])
+      argparse -s "A/askpass" "b/background" "B/bell"\
+                  "C/close-from=" "E/preserve-env=?"\
+                  "e/edit" "g/group" "H/set-home"\
+                  "h/help" "i/login"\
+                  "K/remove-timestamp" "k/reset-timestamp"\
+                  "l/list" "n/non-interactive"\
+                  "P/preserve-groups" "p/prompt="\
+                  "S/stdin" "s/shell" "T/command-timeout"\
+                  "U/other-user=" "u/user" "V/version" -- $c[2..-1]
+      if test "$status" -eq "0"
+        and test "$argv"
+        set title "# $argv"
+      else
+        # Fallback to just showing sudo
+        set title "$_"
+    end
     case '*'
       set title "$_"
   end
@@ -41,6 +52,9 @@ function fish_title
   if test "$SSH_CONNECTION"
     and not test "$TMUX"
     set title "$title - $USER@"(hostname)
+  end
+  if is_user_root
+    set title "# $title"
   end
   echo $title
 end

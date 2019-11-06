@@ -8,7 +8,7 @@ set -xg PATH ~/.local/bin $PATH
 
 # T(he )tmux session
 
-if status --is-interactive
+if status --is-login
   if not tmux has -t "default" 2> /dev/null
     tmux new -d -s "default"
   end

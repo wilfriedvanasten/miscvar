@@ -96,12 +96,6 @@ function _git_remote_status
   echo $remote_status
 end
 
-# Checks if the user is root
-function _is_user_root
-  set -l uid (id -u $USER)
-  test $uid -eq 0
-end
-
 # Outputs a segment if the currently
 # active user is root.
 function _prompt_root
@@ -215,7 +209,7 @@ end
 function fish_prompt
   set -g last_status $status
   set_color normal
-  if _is_user_root
+  if is_user_root
     set -g prompt_color '-o' 'FF8000' 'yellow'
   else
     if test (tput colors) = "8"
