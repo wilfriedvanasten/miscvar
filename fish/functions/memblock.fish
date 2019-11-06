@@ -18,19 +18,25 @@ function memblock
     set -l cached (string match -r '^Cached:[^0-9]*([0-9][0-9]*)' $meminfo)[2]
     set available (math "$free + $buffers + $cached")
   end
-  set -l raw_perc (math -s2 "(($total-$available)/$total)*10")
+  set -l raw_perc (math -s2 "(($total-$available)/$total)*100")
   set -l perc (math -s0 "(($raw_perc + 0.5)/1)")
   set -l color "green"
-  set -l normal 3
-  set -l problem 8
+  set -l normal 30
+  set -l problem 80
   if [ $perc -gt $normal ]
     set color "yellow"
     if [ $perc -gt $problem ]
       set color "red"
     end
   end
-  echo -n "#[fg=$color]["
-  repeatc $perc '|'
-  repeatc (math 10 - $perc) '.'
-  echo -n ']#[fg=default]'
+  set -l blocks '▁' '▂' '▃' '▄' '▅' '▆' '▇' '█'
+  echo -n "#[fg=$color]"
+  if not use_simple_glyph
+    set -l block (math (math -s0 "(($perc / (100 / 7) + 0.5)/1)") + 1)
+    echo -n '▕'
+    echo -n $blocks[$block]
+    echo -n '▏'
+  end
+  echo -n "$perc%"
+  echo -n '#[fg=default]'
 end

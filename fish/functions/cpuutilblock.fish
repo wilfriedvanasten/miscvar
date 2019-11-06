@@ -8,27 +8,25 @@ end
 function cpuutilblock
   set -l current_load (_current_load)
   set -l num_cpus (command nproc)
-  set -l ld (math -s 0 (math -s 2 "$current_load / $num_cpus * 10 + 0.5") / 1)
-  set -l low "."
-  set -l high "|"
+  set -l ld (math -s 0 (math -s 2 "$current_load / $num_cpus * 100 + 0.5") / 1)
   set -l color "green"
-  if [ $ld -gt 3 ]
+  if [ $ld -gt 30 ]
     set color "yellow"
-    if [ $ld -gt 8 ]
+    if [ $ld -gt 80 ]
       set color "red"
     end
   end
-  while [ $ld -gt 10 ]
-    set ld (math $ld - 10)
-    set low $high
-    if [ $high = "|" ]
-      set high 1
-    else
-      set high (math $high + 1)
+  set -l blocks '▁' '▂' '▃' '▄' '▅' '▆' '▇' '█'
+  echo -n "#[fg=$color]"
+  if not use_simple_glyph
+    set -l block 8
+    if $perc < 100
+      set block (math (math -s0 "(($ld / (100 / 7) + 0.5)/1)") + 1)
     end
+    echo -n '▕'
+    echo -n $blocks[$block]
+    echo -n '▏'
   end
-  echo -n "#[fg=$color]["
-  repeatc $ld $high
-  repeatc (math 10 - $ld) $low
-  echo -n ']#[fg=default]'
+  echo -n "$ld%"
+  echo -n '#[fg=default]'
 end
