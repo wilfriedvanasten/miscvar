@@ -7,4 +7,13 @@ set -xg VISUAL "vim"
 set -xg PATH ~/.local/bin $PATH
 
 # T(he )tmux session
-alias ttmux "tmux attach-session; or tmux"
+
+if not tmux has -t "default" 2>&1 > /dev/null
+  tmux new -d -s "default"
+end
+if test -z "$TMUX"
+  set default_is_attached (string split ' ' (tmux ls -F '#{session_name} #{session_attached}' | grep "default"))[2]
+  if test "$default_is_attached" = "0"
+    exec tmux attach -t "default"
+  end
+end
