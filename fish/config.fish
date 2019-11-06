@@ -8,7 +8,9 @@ set -xg PATH ~/.local/bin $PATH
 
 # T(he )tmux session
 
-if status --is-login
+if status --is-interactive
+  # When in a sudo starting tmux is almost always unintended
+  and not test "$SUDO_USER"
   if not tmux has -t "default" 2> /dev/null
     tmux new -d -s "default"
   end
