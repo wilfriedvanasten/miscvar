@@ -2,25 +2,27 @@
 import psutil
 import os
 import time
+import math
+
+blocks = ['▁', '▂', '▃', '▄', '▅', '▆', '▇', '█']
 
 def create_bar(filled):
-    low = '.'
-    high = '|'
     if filled > 1:
         low = str(int(filled))
         high = str(int(filled + 1))
         filled = filled - int(filled)
-    filled = int(filled * 10)
-    if filled < 5:
+    filled = int(filled * 100)
+    if filled < 50:
         color = "green"
-    elif filled < 8:
+    elif filled < 80:
         color = "yellow"
     else:
         color = "red"
-    bar = '#[fg=' + color + ']['
-    bar += high * filled
-    bar += low * (10 - filled)
-    bar += ']#[fg=default]'
+    block = math.floor(filled / (100 / 7) + 0.5)
+    bar = '#[fg=' + color + ']▕'
+    bar += blocks[block]
+    bar += '▏#[fg=default]'
+    bar += str(filled) + "%"
     return bar
 
 
