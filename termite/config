@@ -1,0 +1,6 @@
+[options]
+font = Liberation Mono 10
+
+[colors]
+foreground = #c0c0c0
+background = #1c1c1c
