@@ -140,7 +140,9 @@ function _prompt_git
   use_simple_glyph
     and set git_branch_glyph "Y"
   set -l git_project_root (command git rev-parse --show-toplevel)
-  set -l git_project_path (shorten_path $PWD $git_project_root ":")
+  set -l git_project_path (shorten_path $PWD)
+  test (string sub -l (count $git_project_root) $PWD) = $git_project_root
+    and set git_project_path (shorten_path $PWD $git_project_root ":")
   set -l git_short_root (shorten_path $git_project_root)
   set -l git_head (_git_head)
   set -l git_branch $git_head[2]
