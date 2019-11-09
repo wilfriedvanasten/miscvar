@@ -140,6 +140,8 @@ function _prompt_git
   use_simple_glyph
     and set git_branch_glyph "Y"
   set -l git_project_root (command git rev-parse --show-toplevel)
+  # Expose this for right prompt
+  set -g _git_project_root $git_project_root
   set -l git_project_path (shorten_path $PWD)
   test (string sub -l (string length $git_project_root) $PWD) = $git_project_root
     and set git_project_path (shorten_path $PWD $git_project_root ":")
@@ -205,7 +207,13 @@ function _prompt_arrow
 end
 
 function _do_prompt_git
-  git_exists; and _git_set_status
+  if git_exists; and _git_set_status
+    set -g _prompt_git
+    return 0
+  else
+    set -e _prompt_git
+    return 1
+  end
 end
 
 function fish_prompt
