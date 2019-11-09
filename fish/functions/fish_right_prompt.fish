@@ -1,8 +1,8 @@
 function fish_right_prompt
   if test (pwd -L) != (pwd -P)
     if git_exists
-      and git_is_git_repo
-      echo -n "<"(shorten_path (pwd -P) (command git rev-parse --show-toplevel) ":")">"
+      and set -l git_project_root (command git rev-parse --show-toplevel 2> /dev/null)
+      echo -n "<"(shorten_path (pwd -P) $git_project_root ":")">"
     else
       echo -n "<"(shorten_path (pwd -P))">"
     end
