@@ -32,8 +32,8 @@ function _git_set_status
             case 'branch.upstream'
               set _git_branch_upstream $line[3]
             case 'branch.ab'
-              set _git_branch_ahead (string sub -s 3 "x$line[3]")
-              set _git_branch_behind (string sub -s 3 "x$line[4]")
+              set _git_branch_ahead (string sub -s 2 -- "$line[3]")
+              set _git_branch_behind (string sub -s 2 -- "$line[4]")
             case 'branch.oid'
               set _git_branch_oid $line[3]
           end
