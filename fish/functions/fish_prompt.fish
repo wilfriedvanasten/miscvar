@@ -21,8 +21,9 @@ function _git_set_status
   # Use --no-optional-locks to prevent this command from
   # writing the updated index, which is costly and
   # can cause conflicts. Let the users commands reign!
-  if set -g _git_status_value (command git --no-optional-locks status --porcelain=v2 -b 2> /dev/null)
-    string join \n $_git_status_value | \
+  set -g _git_status_value ""
+  if command git --no-optional-locks status --porcelain=v2 -b 2> /dev/null | read -z _git_status_value
+    echo $_git_status_value | \
     while read -al line -d ' '
       switch $line[1]
         case '#'
