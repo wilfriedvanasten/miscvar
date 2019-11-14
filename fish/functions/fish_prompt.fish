@@ -39,17 +39,11 @@ function _git_set_status
           end
         case '1' '2' 'u'
           set -l working_tree (string split '' $line[2])
-          switch $working_tree[1]
-            case '.'
-              # No changes here
-            case '*'
-              set _git_has_staged_changes "true"
+          if test "$working_tree[1]" != "."
+            set _git_has_staged_changes "true"
           end
-          switch $working_tree[2]
-            case '.'
-              # No changes here
-            case '*'
-              set _git_has_unstaged_changes "true"
+          if test "$working_tree[2]" != "."
+            set _git_has_unstaged_changes "true"
           end
         case '?'
           set _git_has_untracked_files "true"
