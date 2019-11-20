@@ -22,9 +22,9 @@ function _git_set_status
   # writing the updated index, which is costly and
   # can cause conflicts. Let the users commands reign!
   set -g _git_status_value ""
-  if command git --no-optional-locks status --porcelain=v2 -b 2> /dev/null | read -z _git_status_value
-    echo $_git_status_value | \
-    while read -al line -d ' '
+  if set _git_status_value (command git --no-optional-locks status --porcelain=v2 -b 2> /dev/null)
+    for rawline in $_git_status_value
+      set -l line (string split ' ' $rawline)
       switch $line[1]
         case '#'
           switch $line[2]
