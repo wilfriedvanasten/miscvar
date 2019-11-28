@@ -10,22 +10,22 @@ function cpuutilblock
   set -l num_cpus (command nproc)
   set -l ld (math -s 0 (math -s 2 "$current_load / $num_cpus * 100 + 0.5") / 1)
   set -l color "green"
-  if [ $ld -gt 30 ]
+  if test "$ld" -gt 30
     set color "yellow"
-    if [ $ld -gt 80 ]
+    if test $ld -gt 80
       set color "red"
     end
   end
   set -l blocks '▁' '▂' '▃' '▄' '▅' '▆' '▇' '█'
   echo -n "#[fg=$color]"
-  set -l block 8
-  if $perc < 100
+  set -l block 7
+  if test "$perc" -lt 100
     set block (math (math -s0 "(($ld / (100 / 7) + 0.5)/1)") + 1)
   end
   echo -n '▕'
   echo -n $blocks[$block]
   echo -n '▏'
-  if $ld >= 100
+  if test "$ld" -gt 100
     printf $ld
   else
     printf "%2s%%" $ld

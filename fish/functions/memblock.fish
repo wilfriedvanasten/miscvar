@@ -23,9 +23,9 @@ function memblock
   set -l color "green"
   set -l normal 30
   set -l problem 80
-  if [ $perc -gt $normal ]
+  if test "$perc" -gt "$normal"
     set color "yellow"
-    if [ $perc -gt $problem ]
+    if test "$perc" -gt "$problem"
       set color "red"
     end
   end
@@ -35,7 +35,7 @@ function memblock
   echo -n '▕'
   echo -n $blocks[$block]
   echo -n '▏'
-  if $perc >= 100
+  if test "$perc" -ge 100
     printf $perc
   else
     printf "%2s%%" $perc
