@@ -19,7 +19,7 @@ function cpuutilblock
   set -l blocks '▁' '▂' '▃' '▄' '▅' '▆' '▇' '█'
   echo -n "#[fg=$color]"
   set -l block 8
-  if test "$perc" -lt 100
+  if test "$ld" -lt 100
     set block (math (math -s0 "(($ld / (100 / 7) + 0.5)/1)") + 1)
   end
   echo -n '▕'
