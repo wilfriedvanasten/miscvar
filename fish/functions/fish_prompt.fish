@@ -103,6 +103,7 @@ end
 # Outputs a segment with the
 # prompt_pwd output
 function _prompt_dir
+  _prompt_nix_segment $prompt_color
   _prompt_segment $prompt_color (prompt_pwd)
   _prompt_arrow $prompt_color
 end
@@ -182,8 +183,14 @@ function _prompt_git
     and set -l final_segment "$git_glyphs $final_segment"
   test "$git_status_symbols"
     and set -l final_segment "$final_segment $git_status_symbols"
+  _prompt_nix_segment $git_status_color
   _prompt_segment $final_segment
   _prompt_arrow $git_status_color
+end
+
+function _prompt_nix_segment
+  test -n "$IN_NIX_SHELL"
+    and _prompt_segment $argv[1..-1] "nix-shell"
 end
 
 # Outputs the final arrow head
