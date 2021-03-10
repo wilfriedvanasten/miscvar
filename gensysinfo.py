@@ -1,4 +1,5 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
+# coding=utf-8
 import psutil
 import os
 import time
@@ -16,7 +17,7 @@ def create_bar(filled):
         color = "red"
     bar = '#[fg=' + color + ']▕'
     if filled < 100:
-        block = math.floor(filled / (100 / 7) + 0.5)
+        block = int(math.floor(filled / (100 / 7) + 0.5))
         bar += blocks[block]
     else:
         bar += blocks[7]
