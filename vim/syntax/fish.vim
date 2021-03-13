@@ -28,21 +28,21 @@ syntax region fishStatement matchgroup=fishCommand start='\v\zs\k+>' skip='\\$' 
           \ fishRepeat,fishLabel,fishRedirect,fishNumber,fishString,fishCharacter,fishExpansion
 " Block statements. Contain but also skip comments. This ensures that
 " comments can't accidently end them
-syntax region fishStatement matchgroup=fishCommand start="if" skip='\v#.*$' end="\vend|\zeelse"
+syntax region fishStatement matchgroup=fishCommand start="if\>" skip='\v#.*$' end="\v<end>|<\zeelse>"
           \ keepend extend contains=fishComment,fishStatement
-syntax region fishStatement matchgroup=fishCommand start="else" skip='\v#.*$' end="end"
+syntax region fishStatement matchgroup=fishCommand start="else\>" skip='\v#.*$' end="\<end\>"
           \ keepend extend contains=fishComment,fishStatement
-syntax region fishStatement matchgroup=fishCommand start="while" skip='\v#.*$' end="end"
+syntax region fishStatement matchgroup=fishCommand start="while\>" skip='\v#.*$' end="\<end\>"
           \ keepend extend contains=fishComment,fishStatement
-syntax region fishFunctionHead matchgroup=fishCommand start="function" skip='\\$' end="\v\||;|$"
+syntax region fishFunctionHead matchgroup=fishCommand start="function\>" skip='\\$' end="\v\||;|$"
           \ contains=fishIdentifier,fishOption,fishGNULongOption
-syntax region fishStatement matchgroup=fishCommand start="and" skip='\\$' end="\v\||;|$"
+syntax region fishStatement matchgroup=fishCommand start="and\>" skip='\\$' end="\v\||;|$"
           \ contains=fishComment,fishStatement
-syntax region fishStatement matchgroup=fishCommand start="or" skip='\\$' end="\v\||;|$"
+syntax region fishStatement matchgroup=fishCommand start="or\>" skip='\\$' end="\v\||;|$"
           \ contains=fishComment,fishStatement
-syntax region fishStatement matchgroup=fishCommand start="command" skip='\\$' end="\v\||;|$"
+syntax region fishStatement matchgroup=fishCommand start="command\>" skip='\\$' end="\v\||;|$"
           \ contains=fishComment,fishStatement
-syntax region fishStatement matchgroup=fishCommand start="\[" keepend extend end="\]"
+syntax region fishStatement matchgroup=fishCommand start="\[" end="\]" keepend extend
           \ contains=fishCommandSub,fishExpansion,fishString,fishOption,fishGNULongOption,fishNumber,fishCharacter
 " This will prevent the else group from extending past an if
 syntax match fishElseIfMatch "\velse\ze\s+if"
