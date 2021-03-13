@@ -26,9 +26,13 @@ syntax match fishCommand contained '\v\s*\zs\k+>'
 syntax region fishStatement matchgroup=fishCommand start='\v\zs\k+>' skip='\\$' end='\v\||;|$'
           \ contains=fishComment,fishCommandSub,fishOption,fishGNULongOption,fishKeyword,fishConditional,
           \ fishRepeat,fishLabel,fishRedirect,fishNumber,fishString,fishCharacter,fishExpansion
-syntax region fishStatement matchgroup=fishCommand start="if" end="\vend|\zeelse"
+" Block statements. Contain but also skip comments. This ensures that
+" comments can't accidently end them
+syntax region fishStatement matchgroup=fishCommand start="if" skip='\v#.*$' end="\vend|\zeelse"
           \ keepend extend contains=fishComment,fishStatement
-syntax region fishStatement matchgroup=fishCommand start="else" end="end"
+syntax region fishStatement matchgroup=fishCommand start="else" skip='\v#.*$' end="end"
+          \ keepend extend contains=fishComment,fishStatement
+syntax region fishStatement matchgroup=fishCommand start="while" skip='\v#.*$' end="end"
           \ keepend extend contains=fishComment,fishStatement
 syntax region fishFunctionHead matchgroup=fishCommand start="function" skip='\\$' end="\v\||;|$"
           \ contains=fishIdentifier,fishOption,fishGNULongOption
@@ -37,8 +41,6 @@ syntax region fishStatement matchgroup=fishCommand start="and" skip='\\$' end="\
 syntax region fishStatement matchgroup=fishCommand start="or" skip='\\$' end="\v\||;|$"
           \ contains=fishComment,fishStatement
 syntax region fishStatement matchgroup=fishCommand start="command" skip='\\$' end="\v\||;|$"
-          \ contains=fishComment,fishStatement
-syntax region fishStatement matchgroup=fishCommand start="while" keepend extend end="end"
           \ contains=fishComment,fishStatement
 syntax region fishStatement matchgroup=fishCommand start="\[" keepend extend end="\]"
           \ contains=fishCommandSub,fishExpansion,fishString,fishOption,fishGNULongOption,fishNumber,fishCharacter
