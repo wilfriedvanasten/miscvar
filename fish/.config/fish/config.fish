@@ -1,5 +1,6 @@
-# Use vim for git
-if test -z "$SSH_AUTH_SOCK"
+# If necessary setup the SSH_AUTH_SOCK for the ssh-agent user unit
+if systemctl --user is-active --quiet ssh-agent
+  and test -z "$SSH_AUTH_SOCK"
   if test -z "$XDG_RUNTIME_DIR"
     echo 'Warning: no xdg runtime dir. Not setting SSH_AUTH_SOCK' > 2
   else
@@ -7,6 +8,7 @@ if test -z "$SSH_AUTH_SOCK"
   end
 end
 
+# Use vim for git
 set -xg VISUAL "vim"
 
 set -xg PATH ~/.local/bin $PATH
