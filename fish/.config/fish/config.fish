@@ -1,4 +1,12 @@
 # Use vim for git
+if test -z "$SSH_AUTH_SOCK"
+  if test -z "$XDG_RUNTIME_DIR"
+    echo 'Warning: no xdg runtime dir. Not setting SSH_AUTH_SOCK' > 2
+  else
+    set -xg SSH_AUTH_SOCK "$XDG_RUNTIME_DIR/ssh-agent.socket"
+  end
+end
+
 set -xg VISUAL "vim"
 
 set -xg PATH ~/.local/bin $PATH
