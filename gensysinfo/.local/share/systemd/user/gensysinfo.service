@@ -3,7 +3,7 @@ Description=Tmux status sysinfo generator
 
 [Service]
 Type=simple
-ExecStart=<gensysinfo.py here>
+ExecStart=/usr/bin/python %h/.local/bin/gensysinfo.py
 Restart=always
 
 [Install]
