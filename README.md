@@ -17,6 +17,8 @@ What could be done as such is packaged in a stow way with .stowrc setting
 the target to home. Disadvantage is that files are hidden. Remaining
 files are explicitly ignored.
 
+The .stowrc here requires at least stow 2.3.0.
+
 License Information
 ===================
 All of this "software" is MIT licensed.
