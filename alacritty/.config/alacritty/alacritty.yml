@@ -1,6 +1,14 @@
+window:
+  padding:
+    x: 2
 font:
-  family: liberation mono
-  size: 10
+  size: 9
+  normal:
+    family: Liberation Mono
+  bold:
+    family: Liberation Mono
+  italic:
+    family: Liberation Mono
 colors:
   primary:
     background: '#1c1c1c'
