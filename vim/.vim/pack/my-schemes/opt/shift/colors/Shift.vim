@@ -4,7 +4,7 @@ if &t_Co >= 256
   if exists("syntax_on")
     syntax reset
   endif
-  highlight Normal cterm=NONE ctermfg=250 ctermbg=234 gui=NONE guifg=#d5d5d5 guibg=#1c1c1c
+  highlight Normal cterm=NONE ctermfg=white ctermbg=black gui=NONE guifg=#fcfcfc guibg=#232627
 
   " Don't use the color column, nor cursor column
   highlight ColorColumn cterm=NONE ctermfg=fg ctermbg=bg gui=NONE guifg=fg guibg=bg
