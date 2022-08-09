@@ -56,5 +56,9 @@ function fish_title
   if is_user_root
     set title "# $title"
   end
+  set -l fold_char "…"
+  use_simple_glyph
+    and set fold_char "..."
+  set title (fold_string $fold_char 50 $title)
   echo $title
 end
