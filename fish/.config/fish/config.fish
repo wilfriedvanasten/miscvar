@@ -11,7 +11,7 @@ end
 # Use vim for git
 set -xg VISUAL "vim"
 
-set -xg PATH ~/.local/bin $PATH
+set -xg PATH ~/.yarn/bin ~/.local/bin $PATH
 
 # T(he )tmux session
 

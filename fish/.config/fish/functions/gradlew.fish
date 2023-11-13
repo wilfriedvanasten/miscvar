@@ -1,13 +1,14 @@
 function gradlew
-  set -l dir '.'
+  set -l start $PWD
   while git_exists
     and git_is_git_repo
-    if test -x "$dir/gradlew"
-      "$dir/gradlew" $argv
+    if test -x "./gradlew"
+      "./gradlew" $argv
       return $status
     else
-      set dir "../$dir"
+      cd ..
     end
   end
   echo >&2 Error: No gradlewrapper or repository
+  cd $start
 end

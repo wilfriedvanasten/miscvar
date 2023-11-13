@@ -74,7 +74,6 @@
             "text-color": "#ffffff"
         },
         "BuiltIn": {
-            "italic": false,
             "selected-text-color": "#ffbf00",
             "text-color": "#ffbf00"
         },
@@ -88,20 +87,19 @@
             "selected-text-color": "#afafaf",
             "text-color": "#7f7f7f"
         },
-        "CommentVar": {},
+        "CommentVar": {
+        },
         "Constant": {
-            "bold": false,
             "italic": true,
             "selected-text-color": "#7fff00",
             "text-color": "#7fff00"
         },
         "ControlFlow": {
             "bold": true,
-            "selected-text-color": "#ff7F00",
-            "text-color": "#ff7F00"
+            "selected-text-color": "#ff7f00",
+            "text-color": "#ff7f00"
         },
         "DataType": {
-            "bold": false,
             "selected-text-color": "#ffbf00",
             "text-color": "#ffbf00"
         },
@@ -129,14 +127,13 @@
             "text-color": "#ffffff"
         },
         "Function": {
-            "italic": false,
             "selected-text-color": "#7fff00",
             "text-color": "#7fff00"
         },
         "Import": {
             "bold": true,
-            "selected-text-color": "#ff7F00",
-            "text-color": "#ff7F00"
+            "selected-text-color": "#ff7f00",
+            "text-color": "#ff7f00"
         },
         "Information": {
             "selected-text-color": "#f67400",
@@ -144,8 +141,8 @@
         },
         "Keyword": {
             "bold": true,
-            "selected-text-color": "#ff7F00",
-            "text-color": "#ff7F00"
+            "selected-text-color": "#ff7f00",
+            "text-color": "#ff7f00"
         },
         "Normal": {
             "selected-text-color": "#d5d5d5",
@@ -160,8 +157,8 @@
             "text-color": "#bfff00"
         },
         "Preprocessor": {
-            "selected-text-color": "#ff7F00",
-            "text-color": "#ff7F00"
+            "selected-text-color": "#ff7f00",
+            "text-color": "#ff7f00"
         },
         "RegionMarker": {
             "selected-text-color": "#ffffff",
@@ -182,7 +179,6 @@
             "text-color": "#ffffff"
         },
         "Variable": {
-            "bold": false,
             "selected-text-color": "#bfff00",
             "text-color": "#bfff00"
         },

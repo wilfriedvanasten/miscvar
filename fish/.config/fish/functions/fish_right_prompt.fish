@@ -15,6 +15,11 @@ function fish_right_prompt
     echo -n "$virtual_env_short@$python_version"
     set_color normal
   end
+  if set -q NVM_BIN
+    set_color -b cyan
+    set_color black
+    echo -n "nvm@"($NVM_BIN/node --version)
+  end
   set_color normal
   echo ""
 end
